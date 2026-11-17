@@ -12,6 +12,7 @@ struct PlaceMap: View {
     @State private var position: MapCameraPosition
     @State private var showsNames = true
     @State private var adding: Spot?
+    @State private var nearMe = false
 
     init(model: MapHomeModel, place: Place, signOut: @escaping () -> Void, open: @escaping (Household) -> Void) {
         self.model = model
@@ -73,27 +74,20 @@ struct PlaceMap: View {
             }
             .presentationDetents([.medium, .large])
         }
+        .sheet(isPresented: $nearMe) {
+            NearMeSheet(households: model.households) { household in
+                nearMe = false
+                open(household)
+            }
+            .presentationDetents([.medium, .large])
+        }
     }
 
     @ViewBuilder private var bottom: some View {
         if let spot = model.selection {
             SelectionPanel(spot: spot, households: model.selectedHouseholds, open: open, add: { adding = spot }, close: model.clearSelection)
         } else {
-            HStack(alignment: .bottom) {
-                if model.households.isEmpty {
-                    YardSign(text: "NOBODY ADDED YET", kind: .panel)
-                }
-                Spacer()
-                if !model.footprints.isEmpty {
-                    // ODbL: the outlines are OSM data, so the credit sits on the map wherever they are drawn.
-                    Text("© OpenStreetMap contributors")
-                        .font(.caption2)
-                        .foregroundStyle(Palette.inkSecondary)
-                        .padding(.horizontal, Spacing.xs)
-                        .background(Palette.surface.opacity(0.85), in: .rect(cornerRadius: 3))
-                }
-            }
-            .padding(Spacing.sm)
+            MapDock(isEmpty: model.households.isEmpty, showsCredit: !model.footprints.isEmpty) { nearMe = true }
         }
     }
 }
