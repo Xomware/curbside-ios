@@ -1,0 +1,80 @@
+{
+ "data": {
+  "id": "01JDEM0HH00000000000000006",
+  "version": 1,
+  "lat": 37.447498,
+  "lng": -122.139478,
+  "building_id": "osm:way/1003",
+  "private": {
+   "label": "Pumpernickel",
+   "address": "11 Quillfeather Ln",
+   "last_talked_at": "2026-11-11T17:20:00+00:00",
+   "people": [
+    {
+     "id": "01JDEM00000000000000000001",
+     "name": "Barnaby",
+     "role": "adult",
+     "birth_year_approx": false,
+     "notes": "Builds birdhouses. Owns a table saw.",
+     "version": 1,
+     "created_at": "2026-11-10T12:00:00+00:00"
+    },
+    {
+     "id": "01JDEM00000000000000000002",
+     "name": "Clementine",
+     "role": "adult",
+     "birth_year_approx": false,
+     "notes": "Training for the spring half marathon.",
+     "version": 1,
+     "created_at": "2026-11-10T12:00:00+00:00"
+    },
+    {
+     "id": "01JDEM00000000000000000003",
+     "name": "Juniper",
+     "role": "kid",
+     "birth_year": 2018,
+     "birth_year_approx": false,
+     "notes": "Collects rocks; ask about the geode.",
+     "version": 1,
+     "created_at": "2026-11-10T12:00:00+00:00"
+    },
+    {
+     "id": "01JDEM00000000000000000004",
+     "name": "Odo",
+     "role": "kid",
+     "birth_year": 2021,
+     "birth_year_approx": true,
+     "version": 1,
+     "created_at": "2026-11-10T12:00:00+00:00"
+    }
+   ],
+   "pets": [
+    {
+     "id": "01JDEM00000000000000000005",
+     "name": "Waffles",
+     "species": "basset hound",
+     "notes": "Barks at the mail truck, nothing else.",
+     "version": 1,
+     "created_at": "2026-11-10T12:00:00+00:00"
+    }
+   ],
+   "notes": [
+    {
+     "id": "01JDEM0N0TE000000000000001",
+     "text": "Clementine's mom is staying through Thanksgiving.",
+     "source": "voice",
+     "created_at": "2026-11-10T18:00:00+00:00"
+    },
+    {
+     "id": "01JDEM0N0TE000000000000002",
+     "text": "Borrowed their extension ladder. Returned Oct 9.",
+     "source": "text",
+     "created_at": "2026-10-02T16:00:00+00:00"
+    }
+   ]
+  },
+  "published": null
+ },
+ "error": null,
+ "meta": {}
+}

@@ -1,0 +1,20 @@
+{
+ "data": {
+  "id": "01JDEM0HH0000000000000000A",
+  "version": 1,
+  "lat": 37.447329,
+  "lng": -122.13948,
+  "building_id": "osm:way/1004",
+  "private": {
+   "label": "Quillby",
+   "address": "9 Quillfeather Ln",
+   "last_talked_at": null,
+   "people": [],
+   "pets": [],
+   "notes": []
+  },
+  "published": null
+ },
+ "error": null,
+ "meta": {}
+}
