@@ -5,6 +5,7 @@ struct HouseholdSection: View {
     let section: HouseholdModel.Section
     let editPerson: (Person) -> Void
     let editPet: (Pet) -> Void
+    let deleteNote: (Note) -> Void
 
     private let year = Calendar.current.component(.year, from: .now)
     @ScaledMetric(relativeTo: .caption) private var dateColumn: CGFloat = 48
@@ -65,6 +66,10 @@ struct HouseholdSection: View {
                         .font(CurbsideFont.body)
                         .foregroundStyle(Palette.ink)
                 }
+                .contextMenu {
+                    Button("Delete note", systemImage: "trash", role: .destructive) { deleteNote(note) }
+                }
+                .accessibilityAction(named: "Delete note") { deleteNote(note) }
             }
         case .published:
             Entry(title: "From their card", detail: "They share their own details with you.")

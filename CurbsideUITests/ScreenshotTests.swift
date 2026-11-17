@@ -33,6 +33,13 @@ final class ScreenshotTests: XCTestCase {
         app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Waffles'")).firstMatch.tap()
         XCTAssert(app.navigationBars["Edit Waffles"].waitForExistence(timeout: 5))
         try snap("edit-pet", app)
+        app.buttons["Cancel"].tap()
+        app.buttons["Add a note"].tap()
+        let note = app.textFields["What did you learn?"]
+        XCTAssert(note.waitForExistence(timeout: 5))
+        note.tap()
+        note.typeText("Their geode is from Arizona.")
+        try snap("new-note", app)
     }
 
     func testSelection() throws {
