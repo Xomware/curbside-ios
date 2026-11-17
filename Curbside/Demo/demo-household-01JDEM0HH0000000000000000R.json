@@ -1,0 +1,29 @@
+{
+ "data": {
+  "id": "01JDEM0HH0000000000000000R",
+  "version": 1,
+  "lat": 37.447341,
+  "lng": -122.139098,
+  "building_id": "osm:way/1035",
+  "private": {
+   "label": "Hobnob",
+   "address": "10A Bramblewick Ct",
+   "last_talked_at": null,
+   "people": [
+    {
+     "id": "01JDEM0000000000000000000Q",
+     "name": "Cosmo",
+     "role": "adult",
+     "birth_year_approx": false,
+     "version": 1,
+     "created_at": "2026-11-10T12:00:00+00:00"
+    }
+   ],
+   "pets": [],
+   "notes": []
+  },
+  "published": null
+ },
+ "error": null,
+ "meta": {}
+}

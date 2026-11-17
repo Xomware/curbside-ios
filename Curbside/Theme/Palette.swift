@@ -15,6 +15,10 @@ enum Palette {
     // The mockup's brighter night red (#D63A32) drops white text to 4.2:1, under WCAG AA.
     static let stop = Color(light: 0xC4302A, dark: 0xC4302A)
 
+    /// School-zone pentagon (kids) and the blue information sign (notes).
+    static let school = Color(light: 0xC7DD33, dark: 0xC7DD33)
+    static let infoBlue = Color(light: 0x1F4FA3, dark: 0x3A6FD2)
+
     static let roof = Color(light: 0x6E5648, dark: 0x3B3230)
     static let roofAccessory = Color(light: 0x857A70, dark: 0x34302E)
 }

@@ -1,0 +1,37 @@
+{
+ "data": {
+  "id": "01JDEM0HH0000000000000000J",
+  "version": 1,
+  "lat": 37.447163,
+  "lng": -122.139481,
+  "building_id": "osm:way/1006",
+  "private": {
+   "label": "Mossbottom",
+   "address": "7 Quillfeather Ln",
+   "last_talked_at": null,
+   "people": [
+    {
+     "id": "01JDEM0000000000000000000G",
+     "name": "Harriet",
+     "role": "adult",
+     "birth_year_approx": false,
+     "version": 1,
+     "created_at": "2026-11-10T12:00:00+00:00"
+    }
+   ],
+   "pets": [
+    {
+     "id": "01JDEM0000000000000000000H",
+     "name": "Sir Reginald",
+     "species": "tortoise",
+     "version": 1,
+     "created_at": "2026-11-10T12:00:00+00:00"
+    }
+   ],
+   "notes": []
+  },
+  "published": null
+ },
+ "error": null,
+ "meta": {}
+}

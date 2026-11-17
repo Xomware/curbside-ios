@@ -17,13 +17,28 @@ final class ScreenshotTests: XCTestCase {
         try snap("map-zoomed", app)
     }
 
+    func testCard() throws {
+        let app = launch("street")
+        let plaque = app.buttons["11, Pumpernickel household"]
+        XCTAssert(plaque.waitForExistence(timeout: 10))
+        plaque.tap()
+        XCTAssert(app.staticTexts["Clementine's mom is staying through Thanksgiving."].waitForExistence(timeout: 5))
+        try snap("card", app)
+        app.swipeUp()
+        try snap("card-scrolled", app)
+    }
+
     func testSelection() throws {
         let app = launch("street")
-        let duplex = app.otherElements["10A, Hobnob household"]
+        let duplex = app.buttons["10A, Hobnob household"]
         XCTAssert(duplex.waitForExistence(timeout: 10))
-        duplex.tap()
+        // Just left of the plaque: still the duplex outline, but not the plaque button.
+        duplex.coordinate(withNormalizedOffset: CGVector(dx: -0.4, dy: 0.3)).tap()
         XCTAssert(app.buttons["Close"].waitForExistence(timeout: 5))
         try snap("building-selected", app)
+        app.buttons["10B, Wigglesworth household"].firstMatch.tap()
+        XCTAssert(app.staticTexts["Delphine"].waitForExistence(timeout: 5))
+        app.navigationBars.buttons.firstMatch.tap()
         app.buttons["Close"].tap()
         app.maps.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.12, dy: 0.62)).press(forDuration: 1)
         XCTAssert(app.staticTexts["Nobody added here yet."].waitForExistence(timeout: 5))

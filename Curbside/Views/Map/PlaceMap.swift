@@ -7,14 +7,16 @@ struct PlaceMap: View {
     let model: MapHomeModel
     let place: Place
     let signOut: () -> Void
+    let open: (Household) -> Void
 
     @State private var position: MapCameraPosition
     @State private var showsNames = true
 
-    init(model: MapHomeModel, place: Place, signOut: @escaping () -> Void) {
+    init(model: MapHomeModel, place: Place, signOut: @escaping () -> Void, open: @escaping (Household) -> Void) {
         self.model = model
         self.place = place
         self.signOut = signOut
+        self.open = open
         _position = State(initialValue: .region(place.region))
     }
 
@@ -31,9 +33,12 @@ struct PlaceMap: View {
                 }
                 ForEach(model.households) { household in
                     Annotation(household.mine.label, coordinate: household.coordinate) {
-                        HousePlaque(number: household.houseNumber, name: household.mine.label, size: showsNames ? .pin : .tab)
-                            // Past .large a plaque covers its neighbours' houses (S3's AX2 gallery).
-                            .dynamicTypeSize(...DynamicTypeSize.large)
+                        Button { open(household) } label: {
+                            HousePlaque(number: household.houseNumber, name: household.mine.label, size: showsNames ? .pin : .tab)
+                                // Past .large a plaque covers its neighbours' houses (S3's AX2 gallery).
+                                .dynamicTypeSize(...DynamicTypeSize.large)
+                        }
+                        .buttonStyle(SignPressStyle())
                     }
                     .annotationTitles(.hidden)
                 }
@@ -64,7 +69,7 @@ struct PlaceMap: View {
 
     @ViewBuilder private var bottom: some View {
         if let spot = model.selection {
-            SelectionPanel(spot: spot, households: model.selectedHouseholds, close: model.clearSelection)
+            SelectionPanel(spot: spot, households: model.selectedHouseholds, open: open, close: model.clearSelection)
         } else {
             HStack(alignment: .bottom) {
                 if model.households.isEmpty {

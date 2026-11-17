@@ -1,0 +1,37 @@
+{
+ "data": {
+  "id": "01JDEM0HH00000000000000009",
+  "version": 1,
+  "lat": 37.44767,
+  "lng": -122.13953,
+  "building_id": "osm:way/1001",
+  "private": {
+   "label": "Fizzwhistle",
+   "address": "13 Quillfeather Ln",
+   "last_talked_at": null,
+   "people": [
+    {
+     "id": "01JDEM00000000000000000007",
+     "name": "Marguerite",
+     "role": "adult",
+     "birth_year_approx": false,
+     "version": 1,
+     "created_at": "2026-11-10T12:00:00+00:00"
+    }
+   ],
+   "pets": [
+    {
+     "id": "01JDEM00000000000000000008",
+     "name": "Admiral Snooze",
+     "species": "cat",
+     "version": 1,
+     "created_at": "2026-11-10T12:00:00+00:00"
+    }
+   ],
+   "notes": []
+  },
+  "published": null
+ },
+ "error": null,
+ "meta": {}
+}

@@ -4,6 +4,7 @@ import SwiftUI
 struct SelectionPanel: View {
     let spot: Spot
     let households: [Household]
+    let open: (Household) -> Void
     let close: () -> Void
 
     var body: some View {
@@ -28,7 +29,11 @@ struct SelectionPanel: View {
                     .foregroundStyle(Palette.ink)
             }
             ForEach(households) { household in
-                HousePlaque(number: household.houseNumber, name: household.mine.label)
+                Button { open(household) } label: {
+                    HousePlaque(number: household.houseNumber, name: household.mine.label)
+                        .frame(minHeight: 44)
+                }
+                .buttonStyle(SignPressStyle())
             }
         }
         .padding(Spacing.md)

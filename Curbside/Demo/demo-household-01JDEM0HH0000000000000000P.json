@@ -1,0 +1,53 @@
+{
+ "data": {
+  "id": "01JDEM0HH0000000000000000P",
+  "version": 1,
+  "lat": 37.447838,
+  "lng": -122.139498,
+  "building_id": "osm:way/1056",
+  "private": {
+   "label": "Crumpet",
+   "address": "15 Quillfeather Ln",
+   "last_talked_at": "2026-11-02T15:00:00+00:00",
+   "people": [
+    {
+     "id": "01JDEM0000000000000000000K",
+     "name": "Desmond",
+     "role": "adult",
+     "birth_year_approx": false,
+     "version": 1,
+     "created_at": "2026-11-10T12:00:00+00:00"
+    },
+    {
+     "id": "01JDEM0000000000000000000M",
+     "name": "Opaline",
+     "role": "adult",
+     "birth_year_approx": false,
+     "version": 1,
+     "created_at": "2026-11-10T12:00:00+00:00"
+    },
+    {
+     "id": "01JDEM0000000000000000000N",
+     "name": "Fig",
+     "role": "kid",
+     "birth_year": 2017,
+     "birth_year_approx": false,
+     "version": 1,
+     "created_at": "2026-11-10T12:00:00+00:00"
+    }
+   ],
+   "pets": [],
+   "notes": [
+    {
+     "id": "01JDEM0N0TE000000000000003",
+     "text": "Fig turns 10 on Saturday.",
+     "source": "manual",
+     "created_at": "2026-11-02T15:00:00+00:00"
+    }
+   ]
+  },
+  "published": null
+ },
+ "error": null,
+ "meta": {}
+}
