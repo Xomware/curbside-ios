@@ -7,10 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04319ECE01A197D242AE350D /* StreetSign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D410863F693D8484113C05F /* StreetSign.swift */; };
 		10ECFDCED4320F29311F3884 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 68D0E13875333B9CE30D7A46 /* Assets.xcassets */; };
 		1B65ADA162923AECD5343A44 /* TestHostTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6147031BB412E577DB93EED2 /* TestHostTests.swift */; };
+		2865685D2507ED361EFF3A76 /* YardSign.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DBF4F652EFFFCCC3FAC0B0 /* YardSign.swift */; };
+		303214A91839802365DDF580 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1805C305C2D3F1983052B3 /* Palette.swift */; };
 		5A60EC8C4760A0EEC985A87B /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3966DE8C095F8EF485DD420A /* RootView.swift */; };
+		6A157660CA2920A93CBEB08A /* SignPressStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FC1700C1A74B2798EEB2D7 /* SignPressStyle.swift */; };
+		6AC2B58FA810070E79B5006F /* SignShapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDC28C64177C90F92B314FB /* SignShapes.swift */; };
+		7C3D8836011DB13995A54585 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = D3B4B16A8FBA1F0F501118D5 /* OFL.txt */; };
+		7D62F924597BDBD6B761AC13 /* CurbsideFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F7241D303E1B145E2884BB /* CurbsideFont.swift */; };
+		8C246DD20349B3F15411D709 /* Overpass.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EE43C1D052EBC034D13F3BE9 /* Overpass.ttf */; };
+		9C62ADB60E26BAE7FDBA3ED5 /* ThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11C513B584FBAC3D04EBFC2 /* ThemeTests.swift */; };
 		B32928267C17E53C37E6B3AE /* CurbsideApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC78FB47C9A005B3431CC194 /* CurbsideApp.swift */; };
+		CED7E808517684533F801E93 /* StopSignButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A38765A9ABDF232AC4DAFB /* StopSignButton.swift */; };
+		D892D368A91FC1B1EE52F602 /* HousePlaque.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C010F4BEC2C31F042244712 /* HousePlaque.swift */; };
+		EEE90BEC2F17D421764AE62F /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A315AE2BE2036C530F3A8B9C /* Spacing.swift */; };
+		F566CC01B424F1C5432474DB /* OverpassMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4DEDDEF24ADE41EB0EC21A1B /* OverpassMono.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,11 +37,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		11F7241D303E1B145E2884BB /* CurbsideFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurbsideFont.swift; sourceTree = "<group>"; };
+		1A2BA152F35487C4941C8AC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3966DE8C095F8EF485DD420A /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		4DEDDEF24ADE41EB0EC21A1B /* OverpassMono.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = OverpassMono.ttf; sourceTree = "<group>"; };
+		59A38765A9ABDF232AC4DAFB /* StopSignButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopSignButton.swift; sourceTree = "<group>"; };
+		5B1805C305C2D3F1983052B3 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
+		5C010F4BEC2C31F042244712 /* HousePlaque.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousePlaque.swift; sourceTree = "<group>"; };
+		5D410863F693D8484113C05F /* StreetSign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreetSign.swift; sourceTree = "<group>"; };
 		6147031BB412E577DB93EED2 /* TestHostTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHostTests.swift; sourceTree = "<group>"; };
 		68D0E13875333B9CE30D7A46 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		770980ECC0FDCF167E7D1405 /* CurbsideTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = CurbsideTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		95FC1700C1A74B2798EEB2D7 /* SignPressStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignPressStyle.swift; sourceTree = "<group>"; };
+		A315AE2BE2036C530F3A8B9C /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
+		B11C513B584FBAC3D04EBFC2 /* ThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeTests.swift; sourceTree = "<group>"; };
+		C1DBF4F652EFFFCCC3FAC0B0 /* YardSign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YardSign.swift; sourceTree = "<group>"; };
+		CBDC28C64177C90F92B314FB /* SignShapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignShapes.swift; sourceTree = "<group>"; };
+		D3B4B16A8FBA1F0F501118D5 /* OFL.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		DC78FB47C9A005B3431CC194 /* CurbsideApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurbsideApp.swift; sourceTree = "<group>"; };
+		EE43C1D052EBC034D13F3BE9 /* Overpass.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Overpass.ttf; sourceTree = "<group>"; };
 		EF985AA6CB2AFDAA7261650C /* Curbside.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Curbside.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -37,6 +64,8 @@
 			isa = PBXGroup;
 			children = (
 				68D0E13875333B9CE30D7A46 /* Assets.xcassets */,
+				1A2BA152F35487C4941C8AC6 /* Info.plist */,
+				701A98B01FBD3114B91CC6AB /* Fonts */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -53,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				6147031BB412E577DB93EED2 /* TestHostTests.swift */,
+				B11C513B584FBAC3D04EBFC2 /* ThemeTests.swift */,
 			);
 			path = CurbsideTests;
 			sourceTree = "<group>";
@@ -64,6 +94,16 @@
 				770980ECC0FDCF167E7D1405 /* CurbsideTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		701A98B01FBD3114B91CC6AB /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D3B4B16A8FBA1F0F501118D5 /* OFL.txt */,
+				EE43C1D052EBC034D13F3BE9 /* Overpass.ttf */,
+				4DEDDEF24ADE41EB0EC21A1B /* OverpassMono.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		865F1F7691A9A6D8486A1223 = {
@@ -79,8 +119,20 @@
 			isa = PBXGroup;
 			children = (
 				3966DE8C095F8EF485DD420A /* RootView.swift */,
+				C013A95E41D2879E669B8F15 /* Signs */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		C013A95E41D2879E669B8F15 /* Signs */ = {
+			isa = PBXGroup;
+			children = (
+				5C010F4BEC2C31F042244712 /* HousePlaque.swift */,
+				59A38765A9ABDF232AC4DAFB /* StopSignButton.swift */,
+				5D410863F693D8484113C05F /* StreetSign.swift */,
+				C1DBF4F652EFFFCCC3FAC0B0 /* YardSign.swift */,
+			);
+			path = Signs;
 			sourceTree = "<group>";
 		};
 		C572B10097A98B9C4FE461A5 /* Curbside */ = {
@@ -88,9 +140,22 @@
 			children = (
 				130B49097277698581C70568 /* App */,
 				054E54A71182A02169BE175B /* Resources */,
+				FF1358D1E9361770D835C7DD /* Theme */,
 				A1B2289B90FB311E800DD855 /* Views */,
 			);
 			path = Curbside;
+			sourceTree = "<group>";
+		};
+		FF1358D1E9361770D835C7DD /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				11F7241D303E1B145E2884BB /* CurbsideFont.swift */,
+				5B1805C305C2D3F1983052B3 /* Palette.swift */,
+				95FC1700C1A74B2798EEB2D7 /* SignPressStyle.swift */,
+				CBDC28C64177C90F92B314FB /* SignShapes.swift */,
+				A315AE2BE2036C530F3A8B9C /* Spacing.swift */,
+			);
+			path = Theme;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,6 +242,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				10ECFDCED4320F29311F3884 /* Assets.xcassets in Resources */,
+				7C3D8836011DB13995A54585 /* OFL.txt in Resources */,
+				8C246DD20349B3F15411D709 /* Overpass.ttf in Resources */,
+				F566CC01B424F1C5432474DB /* OverpassMono.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,7 +256,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				B32928267C17E53C37E6B3AE /* CurbsideApp.swift in Sources */,
+				7D62F924597BDBD6B761AC13 /* CurbsideFont.swift in Sources */,
+				D892D368A91FC1B1EE52F602 /* HousePlaque.swift in Sources */,
+				303214A91839802365DDF580 /* Palette.swift in Sources */,
 				5A60EC8C4760A0EEC985A87B /* RootView.swift in Sources */,
+				6A157660CA2920A93CBEB08A /* SignPressStyle.swift in Sources */,
+				6AC2B58FA810070E79B5006F /* SignShapes.swift in Sources */,
+				EEE90BEC2F17D421764AE62F /* Spacing.swift in Sources */,
+				CED7E808517684533F801E93 /* StopSignButton.swift in Sources */,
+				04319ECE01A197D242AE350D /* StreetSign.swift in Sources */,
+				2865685D2507ED361EFF3A76 /* YardSign.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B65ADA162923AECD5343A44 /* TestHostTests.swift in Sources */,
+				9C62ADB60E26BAE7FDBA3ED5 /* ThemeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +296,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Curbside/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Curbside;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -384,6 +463,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Curbside/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Curbside;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
