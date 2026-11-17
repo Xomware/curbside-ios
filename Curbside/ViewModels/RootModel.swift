@@ -14,7 +14,7 @@ final class RootModel {
     }
 
     let auth: AuthSession
-    private let api: APIClient
+    let api: APIClient
     private var state = Route.loading
     private(set) var isBusy = false
     private(set) var errorMessage: String?

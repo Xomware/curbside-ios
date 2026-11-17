@@ -20,6 +20,9 @@ enum CurbsideFont {
     static let detail = font(.regular, 13, .subheadline)
     static let number = font(.monoBold, 15, .headline)
     static let mono = font(.monoSemiBold, 11, .caption)
+    // The mockup's map plaques are smaller than its card type; these keep neighbouring pins from stacking.
+    static let pinNumber = font(.monoBold, 12, .caption)
+    static let pinName = font(.extraBold, 11, .caption)
 
     private static func font(_ face: Face, _ size: CGFloat, _ style: Font.TextStyle) -> Font {
         .custom(face.rawValue, size: size, relativeTo: style)

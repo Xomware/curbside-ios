@@ -1,0 +1,321 @@
+{
+ "data": {
+  "map": {
+   "id": "01JDEM0MAP0000000000000001",
+   "name": "Quillfeather Ln",
+   "center": {
+    "lat": 37.4475,
+    "lng": -122.1395
+   },
+   "radius_m": 150,
+   "footprint": {
+    "status": "ready",
+    "source": "osm",
+    "version": 1,
+    "count": 66
+   },
+   "version": 1,
+   "created_at": "2026-11-10T12:00:00+00:00",
+   "role": "owner"
+  },
+  "households": [
+   {
+    "id": "01JDEM0HH00000000000000006",
+    "version": 1,
+    "lat": 37.447498,
+    "lng": -122.139478,
+    "building_id": "osm:way/1003",
+    "private": {
+     "label": "Pumpernickel",
+     "address": "11 Quillfeather Ln",
+     "last_talked_at": "2026-11-11T17:20:00+00:00",
+     "people": [
+      {
+       "id": "01JDEM00000000000000000001",
+       "name": "Barnaby",
+       "role": "adult",
+       "birth_year_approx": false,
+       "notes": "Builds birdhouses. Owns a table saw.",
+       "version": 1,
+       "created_at": "2026-11-10T12:00:00+00:00"
+      },
+      {
+       "id": "01JDEM00000000000000000002",
+       "name": "Clementine",
+       "role": "adult",
+       "birth_year_approx": false,
+       "notes": "Training for the spring half marathon.",
+       "version": 1,
+       "created_at": "2026-11-10T12:00:00+00:00"
+      },
+      {
+       "id": "01JDEM00000000000000000003",
+       "name": "Juniper",
+       "role": "kid",
+       "birth_year": 2018,
+       "birth_year_approx": false,
+       "notes": "Collects rocks; ask about the geode.",
+       "version": 1,
+       "created_at": "2026-11-10T12:00:00+00:00"
+      },
+      {
+       "id": "01JDEM00000000000000000004",
+       "name": "Odo",
+       "role": "kid",
+       "birth_year": 2021,
+       "birth_year_approx": true,
+       "version": 1,
+       "created_at": "2026-11-10T12:00:00+00:00"
+      }
+     ],
+     "pets": [
+      {
+       "id": "01JDEM00000000000000000005",
+       "name": "Waffles",
+       "species": "basset hound",
+       "notes": "Barks at the mail truck, nothing else.",
+       "version": 1,
+       "created_at": "2026-11-10T12:00:00+00:00"
+      }
+     ]
+    },
+    "published": null
+   },
+   {
+    "id": "01JDEM0HH00000000000000009",
+    "version": 1,
+    "lat": 37.44767,
+    "lng": -122.13953,
+    "building_id": "osm:way/1001",
+    "private": {
+     "label": "Fizzwhistle",
+     "address": "13 Quillfeather Ln",
+     "last_talked_at": null,
+     "people": [
+      {
+       "id": "01JDEM00000000000000000007",
+       "name": "Marguerite",
+       "role": "adult",
+       "birth_year_approx": false,
+       "version": 1,
+       "created_at": "2026-11-10T12:00:00+00:00"
+      }
+     ],
+     "pets": [
+      {
+       "id": "01JDEM00000000000000000008",
+       "name": "Admiral Snooze",
+       "species": "cat",
+       "version": 1,
+       "created_at": "2026-11-10T12:00:00+00:00"
+      }
+     ]
+    },
+    "published": null
+   },
+   {
+    "id": "01JDEM0HH0000000000000000A",
+    "version": 1,
+    "lat": 37.447329,
+    "lng": -122.13948,
+    "building_id": "osm:way/1004",
+    "private": {
+     "label": "Quillby",
+     "address": "9 Quillfeather Ln",
+     "last_talked_at": null,
+     "people": [],
+     "pets": []
+    },
+    "published": null
+   },
+   {
+    "id": "01JDEM0HH0000000000000000C",
+    "version": 1,
+    "lat": 37.447497,
+    "lng": -122.139123,
+    "building_id": "osm:way/1032",
+    "private": {
+     "label": "Thistlewaite",
+     "address": "12 Bramblewick Ct",
+     "last_talked_at": null,
+     "people": [
+      {
+       "id": "01JDEM0000000000000000000B",
+       "name": "Ambrose",
+       "role": "adult",
+       "birth_year_approx": false,
+       "version": 1,
+       "created_at": "2026-11-10T12:00:00+00:00"
+      }
+     ],
+     "pets": []
+    },
+    "published": null
+   },
+   {
+    "id": "01JDEM0HH0000000000000000F",
+    "version": 1,
+    "lat": 37.44766,
+    "lng": -122.139131,
+    "building_id": "osm:way/1030",
+    "private": {
+     "label": "Tumbleweed",
+     "address": "14 Bramblewick Ct",
+     "last_talked_at": null,
+     "people": [
+      {
+       "id": "01JDEM0000000000000000000D",
+       "name": "Rosalind",
+       "role": "adult",
+       "birth_year_approx": false,
+       "version": 1,
+       "created_at": "2026-11-10T12:00:00+00:00"
+      },
+      {
+       "id": "01JDEM0000000000000000000E",
+       "name": "Percival",
+       "role": "adult",
+       "birth_year_approx": false,
+       "version": 1,
+       "created_at": "2026-11-10T12:00:00+00:00"
+      }
+     ],
+     "pets": []
+    },
+    "published": null
+   },
+   {
+    "id": "01JDEM0HH0000000000000000J",
+    "version": 1,
+    "lat": 37.447163,
+    "lng": -122.139481,
+    "building_id": "osm:way/1006",
+    "private": {
+     "label": "Mossbottom",
+     "address": "7 Quillfeather Ln",
+     "last_talked_at": null,
+     "people": [
+      {
+       "id": "01JDEM0000000000000000000G",
+       "name": "Harriet",
+       "role": "adult",
+       "birth_year_approx": false,
+       "version": 1,
+       "created_at": "2026-11-10T12:00:00+00:00"
+      }
+     ],
+     "pets": [
+      {
+       "id": "01JDEM0000000000000000000H",
+       "name": "Sir Reginald",
+       "species": "tortoise",
+       "version": 1,
+       "created_at": "2026-11-10T12:00:00+00:00"
+      }
+     ]
+    },
+    "published": null
+   },
+   {
+    "id": "01JDEM0HH0000000000000000P",
+    "version": 1,
+    "lat": 37.447838,
+    "lng": -122.139498,
+    "building_id": "osm:way/1056",
+    "private": {
+     "label": "Crumpet",
+     "address": "15 Quillfeather Ln",
+     "last_talked_at": "2026-11-02T15:00:00+00:00",
+     "people": [
+      {
+       "id": "01JDEM0000000000000000000K",
+       "name": "Desmond",
+       "role": "adult",
+       "birth_year_approx": false,
+       "version": 1,
+       "created_at": "2026-11-10T12:00:00+00:00"
+      },
+      {
+       "id": "01JDEM0000000000000000000M",
+       "name": "Opaline",
+       "role": "adult",
+       "birth_year_approx": false,
+       "version": 1,
+       "created_at": "2026-11-10T12:00:00+00:00"
+      },
+      {
+       "id": "01JDEM0000000000000000000N",
+       "name": "Fig",
+       "role": "kid",
+       "birth_year": 2017,
+       "birth_year_approx": false,
+       "version": 1,
+       "created_at": "2026-11-10T12:00:00+00:00"
+      }
+     ],
+     "pets": []
+    },
+    "published": null
+   },
+   {
+    "id": "01JDEM0HH0000000000000000R",
+    "version": 1,
+    "lat": 37.447341,
+    "lng": -122.139098,
+    "building_id": "osm:way/1035",
+    "private": {
+     "label": "Hobnob",
+     "address": "10A Bramblewick Ct",
+     "last_talked_at": null,
+     "people": [
+      {
+       "id": "01JDEM0000000000000000000Q",
+       "name": "Cosmo",
+       "role": "adult",
+       "birth_year_approx": false,
+       "version": 1,
+       "created_at": "2026-11-10T12:00:00+00:00"
+      }
+     ],
+     "pets": []
+    },
+    "published": null
+   },
+   {
+    "id": "01JDEM0HH0000000000000000V",
+    "version": 1,
+    "lat": 37.447371,
+    "lng": -122.139068,
+    "building_id": "osm:way/1035",
+    "private": {
+     "label": "Wigglesworth",
+     "address": "10B Bramblewick Ct",
+     "last_talked_at": null,
+     "people": [
+      {
+       "id": "01JDEM0000000000000000000S",
+       "name": "Delphine",
+       "role": "adult",
+       "birth_year_approx": false,
+       "version": 1,
+       "created_at": "2026-11-10T12:00:00+00:00"
+      },
+      {
+       "id": "01JDEM0000000000000000000T",
+       "name": "Tobias",
+       "role": "kid",
+       "birth_year": 2015,
+       "birth_year_approx": false,
+       "version": 1,
+       "created_at": "2026-11-10T12:00:00+00:00"
+      }
+     ],
+     "pets": []
+    },
+    "published": null
+   }
+  ]
+ },
+ "error": null,
+ "meta": {}
+}

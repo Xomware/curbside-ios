@@ -1,25 +1,49 @@
 import SwiftUI
 
-/// Placeholder until the map lands.
+/// Signed-in home: the place's map, or place setup when the account has none yet.
 struct HomeView: View {
-    let account: Account
     let signOut: () -> Void
 
-    var body: some View {
-        VStack(spacing: Spacing.md) {
-            Spacer()
-            StreetSign(name: account.displayName)
-            Text("Your map is on its way.")
-                .font(CurbsideFont.body)
-                .foregroundStyle(Palette.inkSecondary)
-            Spacer()
-            SignButton(title: "Sign out", action: signOut)
-        }
-        .padding(Spacing.md)
-    }
-}
+    @State private var model: MapHomeModel
 
-#Preview {
-    HomeView(account: Account(accountID: "a1", displayName: "Pumpernickel")) {}
-        .background(Palette.background)
+    init(api: APIClient, signOut: @escaping () -> Void) {
+        self.signOut = signOut
+        _model = State(initialValue: MapHomeModel(api: api))
+    }
+
+    var body: some View {
+        content
+            .task { await model.load() }
+    }
+
+    @ViewBuilder private var content: some View {
+        switch model.state {
+        case .loading:
+            ProgressView()
+                .controlSize(.large)
+                .tint(Palette.signGreen)
+                .accessibilityLabel("Loading your map")
+        case .failed:
+            VStack(spacing: Spacing.md) {
+                Text("Couldn't load your map.")
+                    .font(CurbsideFont.body)
+                    .foregroundStyle(Palette.ink)
+                SignButton(title: "Try again") { Task { await model.load() } }
+            }
+            .padding(Spacing.md)
+        case .noPlace:
+            VStack(spacing: Spacing.md) {
+                StreetSign(name: "New place")
+                Text("Place setup is on its way.")
+                    .font(CurbsideFont.body)
+                    .foregroundStyle(Palette.inkSecondary)
+                SignButton(title: "Sign out", action: signOut)
+            }
+            .padding(Spacing.md)
+        case .ready:
+            if let place = model.place {
+                PlaceMap(place: place, households: model.households, signOut: signOut)
+            }
+        }
+    }
 }
