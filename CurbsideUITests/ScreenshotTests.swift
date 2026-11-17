@@ -29,6 +29,10 @@ final class ScreenshotTests: XCTestCase {
         app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Juniper'")).firstMatch.tap()
         XCTAssert(app.navigationBars["Edit Juniper"].waitForExistence(timeout: 5))
         try snap("edit-person", app)
+        app.buttons["Cancel"].tap()
+        app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Waffles'")).firstMatch.tap()
+        XCTAssert(app.navigationBars["Edit Waffles"].waitForExistence(timeout: 5))
+        try snap("edit-pet", app)
     }
 
     func testSelection() throws {

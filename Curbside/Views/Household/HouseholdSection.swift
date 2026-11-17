@@ -4,6 +4,7 @@ import SwiftUI
 struct HouseholdSection: View {
     let section: HouseholdModel.Section
     let editPerson: (Person) -> Void
+    let editPet: (Pet) -> Void
 
     private let year = Calendar.current.component(.year, from: .now)
     @ScaledMetric(relativeTo: .caption) private var dateColumn: CGFloat = 48
@@ -43,7 +44,12 @@ struct HouseholdSection: View {
             }
         case .pets(let pets):
             ForEach(pets) { pet in
-                Entry(title: pet.name, detail: [pet.species?.capitalized, pet.notes].compactMap { $0 }.joined(separator: ". "))
+                Button { editPet(pet) } label: {
+                    Entry(title: pet.name, detail: [pet.species?.capitalized, pet.notes].compactMap { $0 }.joined(separator: ". "))
+                        .contentShape(.rect)
+                }
+                .buttonStyle(SignPressStyle())
+                .accessibilityHint("Edit")
             }
         case .notes(let notes):
             if notes.isEmpty {

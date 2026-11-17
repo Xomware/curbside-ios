@@ -95,6 +95,36 @@ final class HouseholdModel {
         return true
     }
 
+    /// Creates a pet, or PATCHes only what changed against the card's latest copy of `id`.
+    func savePet(_ draft: PetDraft, id: String?) async -> SaveResult {
+        let pets = household.mine.pets ?? []
+        do {
+            if let id, let current = pets.first(where: { $0.id == id }) {
+                let patch = draft.patch(from: current)
+                guard !patch.isEmpty else { return .saved }
+                let pet: Pet = try await api.request("\(path)/pets/\(id)", method: "PATCH", body: patch)
+                household.mine.pets = pets.map { $0.id == id ? pet : $0 }
+            } else {
+                let pet: Pet = try await api.request("\(path)/pets", method: "POST", body: draft.create)
+                household.mine.pets = pets + [pet]
+            }
+        } catch APIError.conflict {
+            await load()
+            return .conflict
+        } catch {
+            return .failed
+        }
+        changed(household)
+        return .saved
+    }
+
+    func deletePet(_ id: String) async -> Bool {
+        guard await delete("\(path)/pets/\(id)") else { return false }
+        household.mine.pets?.removeAll { $0.id == id }
+        changed(household)
+        return true
+    }
+
     /// True once the item is gone, including when someone else already deleted it (404).
     private func delete(_ path: String) async -> Bool {
         do {

@@ -4,6 +4,7 @@ import SwiftUI
 struct HouseholdView: View {
     @State private var model: HouseholdModel
     @State private var editingPerson: EditTarget<Person>?
+    @State private var editingPet: EditTarget<Pet>?
 
     init(model: HouseholdModel) {
         _model = State(initialValue: model)
@@ -14,7 +15,7 @@ struct HouseholdView: View {
             VStack(alignment: .leading, spacing: 0) {
                 HouseholdHero(household: model.household)
                 ForEach(Array(model.sections.enumerated()), id: \.offset) { _, section in
-                    HouseholdSection(section: section) { editingPerson = EditTarget(item: $0) }
+                    HouseholdSection(section: section) { editingPerson = EditTarget(item: $0) } editPet: { editingPet = EditTarget(item: $0) }
                     Divider().overlay(Palette.inkSecondary.opacity(0.3))
                 }
                 if model.isLoading && model.household.mine.notes == nil {
@@ -24,8 +25,11 @@ struct HouseholdView: View {
                         .padding(Spacing.md)
                         .accessibilityLabel("Loading notes")
                 }
-                SignButton(title: "Add a person") { editingPerson = EditTarget(item: nil) }
-                    .padding(Spacing.md)
+                HStack(spacing: Spacing.sm) {
+                    SignButton(title: "Add a person") { editingPerson = EditTarget(item: nil) }
+                    SignButton(title: "Add a pet") { editingPet = EditTarget(item: nil) }
+                }
+                .padding(Spacing.md)
                 if model.failed {
                     VStack(alignment: .leading, spacing: Spacing.sm) {
                         Text("Couldn't load their notes.")
@@ -40,6 +44,7 @@ struct HouseholdView: View {
         .background(Palette.background)
         .task { await model.load() }
         .sheet(item: $editingPerson) { PersonEditor(model: model, person: $0.item) }
+        .sheet(item: $editingPet) { PetEditor(model: model, pet: $0.item) }
     }
 }
 
