@@ -43,6 +43,15 @@ final class ScreenshotTests: XCTestCase {
         app.maps.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.12, dy: 0.62)).press(forDuration: 1)
         XCTAssert(app.staticTexts["Nobody added here yet."].waitForExistence(timeout: 5))
         try snap("pin-dropped", app)
+        app.buttons["Add a household here"].tap()
+        let name = app.textFields["Family or household name"]
+        XCTAssert(name.waitForExistence(timeout: 5))
+        name.tap()
+        name.typeText("Newcombe")
+        try snap("add-household", app)
+        app.buttons["Add them"].tap()
+        XCTAssert(app.staticTexts["Newcombe"].waitForExistence(timeout: 5))
+        try snap("added-card", app)
     }
 
     /// Needs location granted first: `xcrun simctl privacy <device> grant location com.Xomware.Curbside`.

@@ -91,6 +91,11 @@ final class MapHomeModel {
         }
     }
 
+    func added(_ household: Household) {
+        upsert(household)
+        selection = nil
+    }
+
     func clearSelection() {
         selection = nil
     }

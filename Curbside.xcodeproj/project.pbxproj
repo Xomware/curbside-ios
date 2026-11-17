@@ -21,6 +21,8 @@
 		284616DF6CA720B7B66197CC /* KeychainTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4E36C2AABFE7FE144A33F3 /* KeychainTokenStore.swift */; };
 		2865685D2507ED361EFF3A76 /* YardSign.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DBF4F652EFFFCCC3FAC0B0 /* YardSign.swift */; };
 		303214A91839802365DDF580 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1805C305C2D3F1983052B3 /* Palette.swift */; };
+		31B4730CDAB43DCC297DEF28 /* NewHouseholdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A58763E695FC69E9D8A3148 /* NewHouseholdView.swift */; };
+		34B6DBCF1EF0C9F7291ECA40 /* demo-household-01JDEM0HH0000000000000000Z.json in Resources */ = {isa = PBXBuildFile; fileRef = C193783F9B9CB3D5BAA23333 /* demo-household-01JDEM0HH0000000000000000Z.json */; };
 		3944961879F687B04D29F479 /* PKCE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B3FA5E23842F90C3756E28 /* PKCE.swift */; };
 		3C59115E60CE668BCC41B240 /* demo-footprints.geojson.gz in Resources */ = {isa = PBXBuildFile; fileRef = AD4A009CD8C755C61E38BA26 /* demo-footprints.geojson.gz */; };
 		3C82BAF18EA8937F9AAB0F60 /* PlaceSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0075592DAC4AB67C8A593C48 /* PlaceSetupView.swift */; };
@@ -40,6 +42,7 @@
 		6A157660CA2920A93CBEB08A /* SignPressStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FC1700C1A74B2798EEB2D7 /* SignPressStyle.swift */; };
 		6A85ED2444AAAE0C39BE0926 /* HouseholdModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3E0D6546E18AEA6D28211 /* HouseholdModel.swift */; };
 		6AC2B58FA810070E79B5006F /* SignShapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDC28C64177C90F92B314FB /* SignShapes.swift */; };
+		74356F64DCFD916EA55F59D5 /* demo-household-created.json in Resources */ = {isa = PBXBuildFile; fileRef = 90930663FCC13FFAC2F53EBB /* demo-household-created.json */; };
 		7C3D8836011DB13995A54585 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = D3B4B16A8FBA1F0F501118D5 /* OFL.txt */; };
 		7D62F924597BDBD6B761AC13 /* CurbsideFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F7241D303E1B145E2884BB /* CurbsideFont.swift */; };
 		8461696C0A936A5D698C3877 /* demo-household-01JDEM0HH00000000000000006.json in Resources */ = {isa = PBXBuildFile; fileRef = 8FC76DE92564875A0E80326D /* demo-household-01JDEM0HH00000000000000006.json */; };
@@ -78,9 +81,11 @@
 		CED7E808517684533F801E93 /* StopSignButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A38765A9ABDF232AC4DAFB /* StopSignButton.swift */; };
 		D41AE2FE93BB4738C8CA8295 /* Gzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B727845E54A95C07B554D60 /* Gzip.swift */; };
 		D62CFBDE4BD567D46B78FF48 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC249AE21D1A91C9CDE5B728 /* Config.swift */; };
+		D6AB81F66E22BAE94C08F820 /* NewHouseholdModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4BD5134DEA33D6CE078A56 /* NewHouseholdModel.swift */; };
 		D892D368A91FC1B1EE52F602 /* HousePlaque.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C010F4BEC2C31F042244712 /* HousePlaque.swift */; };
 		DDACF4C561C1FF1F186A3CE3 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA254F97B1E0775012C67294 /* OnboardingView.swift */; };
 		E4A3595D99C91E0E14D807CF /* demo-household-01JDEM0HH0000000000000000A.json in Resources */ = {isa = PBXBuildFile; fileRef = 0450189A5403A9F91D75E853 /* demo-household-01JDEM0HH0000000000000000A.json */; };
+		E9E8E9FD91B2F31266FC05CF /* NewHouseholdModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F038B82F1827B0F4BD7FD5 /* NewHouseholdModelTests.swift */; };
 		EA513BBF8AA3AEFCAEAAC6A8 /* demo-maps-none.json in Resources */ = {isa = PBXBuildFile; fileRef = 723CA5132B0207854CB47311 /* demo-maps-none.json */; };
 		EB4EB85746308D6A908269EE /* RootModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BD4175C0B6DBF11752E8BE /* RootModel.swift */; };
 		EE0D1BE8A7EB932519EAD023 /* demo-household-01JDEM0HH0000000000000000F.json in Resources */ = {isa = PBXBuildFile; fileRef = 46FB022A12F5FA6446A26704 /* demo-household-01JDEM0HH0000000000000000F.json */; };
@@ -111,6 +116,7 @@
 
 /* Begin PBXFileReference section */
 		0075592DAC4AB67C8A593C48 /* PlaceSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSetupView.swift; sourceTree = "<group>"; };
+		00F038B82F1827B0F4BD7FD5 /* NewHouseholdModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHouseholdModelTests.swift; sourceTree = "<group>"; };
 		040ACEBEBB76359445E8D248 /* ScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotTests.swift; sourceTree = "<group>"; };
 		0450189A5403A9F91D75E853 /* demo-household-01JDEM0HH0000000000000000A.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-household-01JDEM0HH0000000000000000A.json"; sourceTree = "<group>"; };
 		06975FCFF956C0FBC4EF27DD /* AuthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTests.swift; sourceTree = "<group>"; };
@@ -129,6 +135,7 @@
 		216226A4C8DB9FF8E3A9EF36 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		235C74F432B173E29B0CF8AB /* AgeSign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeSign.swift; sourceTree = "<group>"; };
 		29CDA50EBF803585C9ABB00E /* PlaceMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMap.swift; sourceTree = "<group>"; };
+		2A58763E695FC69E9D8A3148 /* NewHouseholdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHouseholdView.swift; sourceTree = "<group>"; };
 		2F6F1B3ECE744C92F8973488 /* StubURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubURLProtocol.swift; sourceTree = "<group>"; };
 		3606E597C66C1B93B12C168D /* Pentagon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pentagon.swift; sourceTree = "<group>"; };
 		367D309AB44D54F1E17736CE /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
@@ -161,7 +168,9 @@
 		7702239C187E8C05A2173557 /* MapHomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHomeModel.swift; sourceTree = "<group>"; };
 		770980ECC0FDCF167E7D1405 /* CurbsideTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = CurbsideTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D8BF2B3D5E0734BD32607BB /* AuthSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSession.swift; sourceTree = "<group>"; };
+		8C4BD5134DEA33D6CE078A56 /* NewHouseholdModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHouseholdModel.swift; sourceTree = "<group>"; };
 		8FC76DE92564875A0E80326D /* demo-household-01JDEM0HH00000000000000006.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-household-01JDEM0HH00000000000000006.json"; sourceTree = "<group>"; };
+		90930663FCC13FFAC2F53EBB /* demo-household-created.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-household-created.json"; sourceTree = "<group>"; };
 		925F0616EA4AE85CCED76C95 /* demo-household-01JDEM0HH0000000000000000R.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-household-01JDEM0HH0000000000000000R.json"; sourceTree = "<group>"; };
 		9461DF14AF60C87B982F9699 /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
 		95FC1700C1A74B2798EEB2D7 /* SignPressStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignPressStyle.swift; sourceTree = "<group>"; };
@@ -175,6 +184,7 @@
 		B2C3E0D6546E18AEA6D28211 /* HouseholdModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseholdModel.swift; sourceTree = "<group>"; };
 		BC3F4C499162CD1D4C2E7E22 /* CurbsideUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = CurbsideUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD4990A06E05AED23C4D7432 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		C193783F9B9CB3D5BAA23333 /* demo-household-01JDEM0HH0000000000000000Z.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-household-01JDEM0HH0000000000000000Z.json"; sourceTree = "<group>"; };
 		C1DBF4F652EFFFCCC3FAC0B0 /* YardSign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YardSign.swift; sourceTree = "<group>"; };
 		C4FB3719C27C59B0E6FBAA89 /* SectionSign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionSign.swift; sourceTree = "<group>"; };
 		C71AE430F7A891534C91485F /* HouseholdModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseholdModelTests.swift; sourceTree = "<group>"; };
@@ -229,6 +239,7 @@
 				C71AE430F7A891534C91485F /* HouseholdModelTests.swift */,
 				FB193D2F83186FB48C29D054 /* KeychainTokenStoreTests.swift */,
 				D8677900C304E8A0B4567970 /* MapHomeModelTests.swift */,
+				00F038B82F1827B0F4BD7FD5 /* NewHouseholdModelTests.swift */,
 				423CF06AC3DAC78C83F25FA4 /* PlaceSetupModelTests.swift */,
 				E39C5034DAFEC45F0FDD707E /* RootModelTests.swift */,
 				0949A8A6EA21A82B7119863E /* SelectionTests.swift */,
@@ -350,6 +361,7 @@
 				235C74F432B173E29B0CF8AB /* AgeSign.swift */,
 				55687DE9166102BE01185351 /* HouseholdSection.swift */,
 				F5A8B091F003B05CE4CF718C /* HouseholdView.swift */,
+				2A58763E695FC69E9D8A3148 /* NewHouseholdView.swift */,
 				C4FB3719C27C59B0E6FBAA89 /* SectionSign.swift */,
 			);
 			path = Household;
@@ -377,8 +389,10 @@
 				D4DBDF8D769A157FAEC851EE /* demo-household-01JDEM0HH0000000000000000P.json */,
 				925F0616EA4AE85CCED76C95 /* demo-household-01JDEM0HH0000000000000000R.json */,
 				1A184949E8EC5C3EE37D318E /* demo-household-01JDEM0HH0000000000000000V.json */,
+				C193783F9B9CB3D5BAA23333 /* demo-household-01JDEM0HH0000000000000000Z.json */,
 				8FC76DE92564875A0E80326D /* demo-household-01JDEM0HH00000000000000006.json */,
 				4111370F99725CB770578CBA /* demo-household-01JDEM0HH00000000000000009.json */,
+				90930663FCC13FFAC2F53EBB /* demo-household-created.json */,
 				9D52D4F8F60278F1A67AC729 /* demo-map-created.json */,
 				0D2D3523673AE523A4DC4464 /* demo-map.json */,
 				723CA5132B0207854CB47311 /* demo-maps-none.json */,
@@ -410,6 +424,7 @@
 			children = (
 				B2C3E0D6546E18AEA6D28211 /* HouseholdModel.swift */,
 				7702239C187E8C05A2173557 /* MapHomeModel.swift */,
+				8C4BD5134DEA33D6CE078A56 /* NewHouseholdModel.swift */,
 				D90DAE38B3F9F1E355D31559 /* PlaceSetupModel.swift */,
 				42BD4175C0B6DBF11752E8BE /* RootModel.swift */,
 			);
@@ -551,6 +566,8 @@
 				6726359C3B779C3497A3AA15 /* demo-household-01JDEM0HH0000000000000000P.json in Resources */,
 				06CEAAAAB7174E816BC44046 /* demo-household-01JDEM0HH0000000000000000R.json in Resources */,
 				C276B622EE193CCBFE326281 /* demo-household-01JDEM0HH0000000000000000V.json in Resources */,
+				34B6DBCF1EF0C9F7291ECA40 /* demo-household-01JDEM0HH0000000000000000Z.json in Resources */,
+				74356F64DCFD916EA55F59D5 /* demo-household-created.json in Resources */,
 				9A1D644AD6987103CAC08C70 /* demo-map-created.json in Resources */,
 				C30D4BDB89261AC138A65E8C /* demo-map.json in Resources */,
 				EA513BBF8AA3AEFCAEAAC6A8 /* demo-maps-none.json in Resources */,
@@ -589,6 +606,8 @@
 				284616DF6CA720B7B66197CC /* KeychainTokenStore.swift in Sources */,
 				91CFCEF6A54D0CBBC8F9301E /* MapHeader.swift in Sources */,
 				9D97EF7EAC917A6B9D8F827D /* MapHomeModel.swift in Sources */,
+				D6AB81F66E22BAE94C08F820 /* NewHouseholdModel.swift in Sources */,
+				31B4730CDAB43DCC297DEF28 /* NewHouseholdView.swift in Sources */,
 				27160BE3626A19225D66D8D7 /* Note.swift in Sources */,
 				DDACF4C561C1FF1F186A3CE3 /* OnboardingView.swift in Sources */,
 				3944961879F687B04D29F479 /* PKCE.swift in Sources */,
@@ -637,6 +656,7 @@
 				5A76EC159082DE2CC11D9493 /* HouseholdModelTests.swift in Sources */,
 				87C4161A12E575951BFFF95A /* KeychainTokenStoreTests.swift in Sources */,
 				C0163681C85AB9C428F97ACA /* MapHomeModelTests.swift in Sources */,
+				E9E8E9FD91B2F31266FC05CF /* NewHouseholdModelTests.swift in Sources */,
 				F6DA2B8605945496BCD1E8E1 /* PlaceSetupModelTests.swift in Sources */,
 				98C99173B944B410EBCBE09D /* RootModelTests.swift in Sources */,
 				BD6A97B9D8241627AC457546 /* SelectionTests.swift in Sources */,
