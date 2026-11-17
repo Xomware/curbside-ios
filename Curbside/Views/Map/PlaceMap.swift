@@ -11,6 +11,7 @@ struct PlaceMap: View {
 
     @State private var position: MapCameraPosition
     @State private var showsNames = true
+    @State private var adding: Spot?
 
     init(model: MapHomeModel, place: Place, signOut: @escaping () -> Void, open: @escaping (Household) -> Void) {
         self.model = model
@@ -65,11 +66,18 @@ struct PlaceMap: View {
         .sensoryFeedback(.selection, trigger: model.selection)
         .safeAreaInset(edge: .top) { MapHeader(name: place.name, count: model.households.count, signOut: signOut) }
         .safeAreaInset(edge: .bottom) { bottom }
+        .sheet(item: $adding) { spot in
+            NewHouseholdView(model: NewHouseholdModel(spot: spot, mapID: place.id, api: model.api)) { household in
+                model.added(household)
+                open(household)
+            }
+            .presentationDetents([.medium, .large])
+        }
     }
 
     @ViewBuilder private var bottom: some View {
         if let spot = model.selection {
-            SelectionPanel(spot: spot, households: model.selectedHouseholds, open: open, close: model.clearSelection)
+            SelectionPanel(spot: spot, households: model.selectedHouseholds, open: open, add: { adding = spot }, close: model.clearSelection)
         } else {
             HStack(alignment: .bottom) {
                 if model.households.isEmpty {

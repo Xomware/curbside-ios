@@ -1,0 +1,20 @@
+{
+ "data": {
+  "id": "01JDEM0HH0000000000000000Z",
+  "version": 1,
+  "lat": 37.447,
+  "lng": -122.1394,
+  "building_id": null,
+  "private": {
+   "label": "Newcombe",
+   "address": "5 Quillfeather Ln",
+   "last_talked_at": null,
+   "people": [],
+   "pets": [],
+   "notes": []
+  },
+  "published": null
+ },
+ "error": null,
+ "meta": {}
+}
