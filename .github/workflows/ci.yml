@@ -17,6 +17,8 @@ jobs:
     timeout-minutes: 30
     env:
       DESTINATION: platform=iOS Simulator,name=iPhone 17
+      # Ad-hoc signing, no team: the simulator Keychain rejects unsigned apps with -34018.
+      SIGNING: CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM=
     steps:
       - uses: actions/checkout@v6
 
@@ -30,7 +32,7 @@ jobs:
             -scheme Curbside \
             -destination "$DESTINATION" \
             -derivedDataPath DerivedData \
-            CODE_SIGNING_ALLOWED=NO
+            $SIGNING
 
       - name: Test
         run: |
@@ -40,7 +42,7 @@ jobs:
             -destination "$DESTINATION" \
             -derivedDataPath DerivedData \
             -resultBundlePath TestResults.xcresult \
-            CODE_SIGNING_ALLOWED=NO
+            $SIGNING
 
       - name: Upload test results
         if: failure()
