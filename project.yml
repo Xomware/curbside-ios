@@ -36,6 +36,9 @@ targets:
         CURBSIDE_API_HOST: api.curbside.xomware.com
         CURBSIDE_COGNITO_DOMAIN: xomware-curbside.auth.us-east-1.amazoncognito.com
         CURBSIDE_COGNITO_CLIENT_ID: 5e36kviu5jas2sip0aj7mat0ga
+      configs:
+        Release:
+          EXCLUDED_SOURCE_FILE_NAMES: "*/Demo/*"
 
   CurbsideTests:
     type: bundle.unit-test
@@ -46,6 +49,19 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.Xomware.CurbsideTests
         GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: Curbside
+
+  CurbsideUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - CurbsideUITests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.Xomware.CurbsideUITests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: Curbside
     dependencies:
       - target: Curbside
 
@@ -63,3 +79,13 @@ schemes:
         - CurbsideTests
     archive:
       config: Release
+  # Not in CI: walks every screen in demo mode and writes light and dark PNGs to $TEST_RUNNER_SCREENSHOT_DIR.
+  Screenshots:
+    build:
+      targets:
+        Curbside: all
+        CurbsideUITests: [test]
+    test:
+      config: Debug
+      targets:
+        - CurbsideUITests

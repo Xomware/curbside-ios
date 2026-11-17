@@ -1,0 +1,51 @@
+import Foundation
+
+/// `-demo <scenario>` launch argument: signed in, with every API call answered from the `demo-*.json` fixtures beside
+/// this file. Screenshots and UI tests use it because nobody can sign in on a simulator. Release builds exclude this
+/// folder (`EXCLUDED_SOURCE_FILE_NAMES` in project.yml), so the call site is `#if DEBUG`.
+enum Demo {
+    /// The fixture set to answer from; `street` when `-demo` has no value.
+    static var scenario: String? {
+        let args = ProcessInfo.processInfo.arguments
+        guard let flag = args.firstIndex(of: "-demo") else { return nil }
+        return args.indices.contains(flag + 1) ? args[flag + 1] : "street"
+    }
+
+    @MainActor static func rootModel() -> RootModel {
+        let store = KeychainTokenStore(service: "com.Xomware.Curbside.demo")
+        try? store.save(Tokens(access: "demo", id: "demo", refresh: "demo"))
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [DemoURLProtocol.self]
+        let session = URLSession(configuration: config)
+        let auth = AuthSession(cognito: Config.cognito, store: store, session: session)
+        return RootModel(auth: auth, api: APIClient(baseURL: Config.apiBaseURL, tokens: auth, session: session))
+    }
+
+    /// Fixture name for a request, keyed by method and path with ids replaced by `{id}`.
+    static func fixture(for request: URLRequest) -> String? {
+        let path = (request.url?.path() ?? "").replacing(/\/[0-9A-HJKMNP-TV-Z]{26}/, with: "/{id}")
+        switch (scenario, request.httpMethod ?? "GET", path) {
+        case (_, "GET", "/v1/me"): return "demo-me"
+        default: return nil
+        }
+    }
+}
+
+final class DemoURLProtocol: URLProtocol {
+    override class func canInit(with request: URLRequest) -> Bool { true }
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+
+    override func startLoading() {
+        // A missing route answers 404 so the screen under test shows its error state instead of hanging.
+        let url = Demo.fixture(for: request).flatMap { Bundle.main.url(forResource: $0, withExtension: "json") }
+        let body = url.flatMap { try? Data(contentsOf: $0) } ?? Data(#"{"data": null, "error": {"code": "demo_missing", "message": "No demo fixture"}, "meta": {}}"#.utf8)
+        let response = HTTPURLResponse(url: request.url ?? Config.apiBaseURL, statusCode: url == nil ? 404 : 200, httpVersion: nil, headerFields: nil)
+        if let response {
+            client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        }
+        client?.urlProtocol(self, didLoad: body)
+        client?.urlProtocolDidFinishLoading(self)
+    }
+
+    override func stopLoading() {}
+}

@@ -32,11 +32,13 @@
 		948F74A975AC46148AF80B54 /* AuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF2B3D5E0734BD32607BB /* AuthSession.swift */; };
 		98C99173B944B410EBCBE09D /* RootModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39C5034DAFEC45F0FDD707E /* RootModelTests.swift */; };
 		9C62ADB60E26BAE7FDBA3ED5 /* ThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11C513B584FBAC3D04EBFC2 /* ThemeTests.swift */; };
+		A02E3237C18F99053C3ABE03 /* demo-me.json in Resources */ = {isa = PBXBuildFile; fileRef = 13A2932AF19DCEA335A9EC43 /* demo-me.json */; };
 		AEC9ACA2F52D54AE68988641 /* StubURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F1B3ECE744C92F8973488 /* StubURLProtocol.swift */; };
 		B32928267C17E53C37E6B3AE /* CurbsideApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC78FB47C9A005B3431CC194 /* CurbsideApp.swift */; };
 		B412967EB852B07001EFEF6F /* AuthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06975FCFF956C0FBC4EF27DD /* AuthTests.swift */; };
 		B70E758174A3A4401EBD42CD /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB55C88E5320E7327533F35 /* SignInView.swift */; };
 		C1A1C2532C22A01F91D3B139 /* SignButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6EA5A9A6C979959F5A8C02 /* SignButton.swift */; };
+		C8C671F9AB8A196F49A96351 /* ScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040ACEBEBB76359445E8D248 /* ScreenshotTests.swift */; };
 		CED7E808517684533F801E93 /* StopSignButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A38765A9ABDF232AC4DAFB /* StopSignButton.swift */; };
 		D62CFBDE4BD567D46B78FF48 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC249AE21D1A91C9CDE5B728 /* Config.swift */; };
 		D892D368A91FC1B1EE52F602 /* HousePlaque.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C010F4BEC2C31F042244712 /* HousePlaque.swift */; };
@@ -45,6 +47,7 @@
 		EEE90BEC2F17D421764AE62F /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A315AE2BE2036C530F3A8B9C /* Spacing.swift */; };
 		F021A024D0B1587E8C3A922A /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3061B9FD4AA9D8035A7C221 /* APIClientTests.swift */; };
 		F566CC01B424F1C5432474DB /* OverpassMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4DEDDEF24ADE41EB0EC21A1B /* OverpassMono.ttf */; };
+		FA7765B2DF131DA7770D62F9 /* Demo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AD5623720BB5D730E11BF8 /* Demo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,13 +58,23 @@
 			remoteGlobalIDString = 6BACE72B486EEA99F0B89217;
 			remoteInfo = Curbside;
 		};
+		D1FB80AC7BB258BD88216C23 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F28A13EB9CF9146EEA8A631E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6BACE72B486EEA99F0B89217;
+			remoteInfo = Curbside;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		040ACEBEBB76359445E8D248 /* ScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotTests.swift; sourceTree = "<group>"; };
 		06975FCFF956C0FBC4EF27DD /* AuthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTests.swift; sourceTree = "<group>"; };
 		06B3FA5E23842F90C3756E28 /* PKCE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKCE.swift; sourceTree = "<group>"; };
+		07AD5623720BB5D730E11BF8 /* Demo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Demo.swift; sourceTree = "<group>"; };
 		090E0B71411AA90C9CBE8B9E /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		11F7241D303E1B145E2884BB /* CurbsideFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurbsideFont.swift; sourceTree = "<group>"; };
+		13A2932AF19DCEA335A9EC43 /* demo-me.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-me.json"; sourceTree = "<group>"; };
 		1969692E2E0B9165D20796C2 /* ConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigTests.swift; sourceTree = "<group>"; };
 		1A2BA152F35487C4941C8AC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1C6EA5A9A6C979959F5A8C02 /* SignButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignButton.swift; sourceTree = "<group>"; };
@@ -86,6 +99,7 @@
 		AC249AE21D1A91C9CDE5B728 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		AEB55C88E5320E7327533F35 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		B11C513B584FBAC3D04EBFC2 /* ThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeTests.swift; sourceTree = "<group>"; };
+		BC3F4C499162CD1D4C2E7E22 /* CurbsideUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = CurbsideUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1DBF4F652EFFFCCC3FAC0B0 /* YardSign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YardSign.swift; sourceTree = "<group>"; };
 		C98000122D707CD9D63BE9CB /* Cognito.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cognito.swift; sourceTree = "<group>"; };
 		CBDC28C64177C90F92B314FB /* SignShapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignShapes.swift; sourceTree = "<group>"; };
@@ -141,6 +155,7 @@
 			children = (
 				EF985AA6CB2AFDAA7261650C /* Curbside.app */,
 				770980ECC0FDCF167E7D1405 /* CurbsideTests.xctest */,
+				BC3F4C499162CD1D4C2E7E22 /* CurbsideUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -153,6 +168,14 @@
 				4DEDDEF24ADE41EB0EC21A1B /* OverpassMono.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		7E48210FFF88D84E87F4B5E2 /* CurbsideUITests */ = {
+			isa = PBXGroup;
+			children = (
+				040ACEBEBB76359445E8D248 /* ScreenshotTests.swift */,
+			);
+			path = CurbsideUITests;
 			sourceTree = "<group>";
 		};
 		85D760C136851EDC2EFF6C93 /* Services */ = {
@@ -173,6 +196,7 @@
 			children = (
 				C572B10097A98B9C4FE461A5 /* Curbside */,
 				5FEBC1A0B4395D44A451D54D /* CurbsideTests */,
+				7E48210FFF88D84E87F4B5E2 /* CurbsideUITests */,
 				6172A5F4B1F930E20120E5C5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -206,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				130B49097277698581C70568 /* App */,
+				DB8D6DF427AA1B94C501F460 /* Demo */,
 				ED0CE388C9A73FB6B3B682F0 /* Models */,
 				054E54A71182A02169BE175B /* Resources */,
 				85D760C136851EDC2EFF6C93 /* Services */,
@@ -214,6 +239,15 @@
 				A1B2289B90FB311E800DD855 /* Views */,
 			);
 			path = Curbside;
+			sourceTree = "<group>";
+		};
+		DB8D6DF427AA1B94C501F460 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				13A2932AF19DCEA335A9EC43 /* demo-me.json */,
+				07AD5623720BB5D730E11BF8 /* Demo.swift */,
+			);
+			path = Demo;
 			sourceTree = "<group>";
 		};
 		ED0CE388C9A73FB6B3B682F0 /* Models */ = {
@@ -284,6 +318,24 @@
 			productReference = EF985AA6CB2AFDAA7261650C /* Curbside.app */;
 			productType = "com.apple.product-type.application";
 		};
+		8058D5A37DD369E685BD729B /* CurbsideUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5E07DDD2793ADC415B23165A /* Build configuration list for PBXNativeTarget "CurbsideUITests" */;
+			buildPhases = (
+				CABE8DC483C204852E40F8E1 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EDBDEB4FD9B23C565F2882CD /* PBXTargetDependency */,
+			);
+			name = CurbsideUITests;
+			packageProductDependencies = (
+			);
+			productName = CurbsideUITests;
+			productReference = BC3F4C499162CD1D4C2E7E22 /* CurbsideUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -300,6 +352,11 @@
 					6BACE72B486EEA99F0B89217 = {
 						DevelopmentTeam = A3HMLDS2AL;
 						ProvisioningStyle = Automatic;
+					};
+					8058D5A37DD369E685BD729B = {
+						DevelopmentTeam = A3HMLDS2AL;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 6BACE72B486EEA99F0B89217;
 					};
 				};
 			};
@@ -319,6 +376,7 @@
 			targets = (
 				6BACE72B486EEA99F0B89217 /* Curbside */,
 				0D79EE05670C7B4EE11F0798 /* CurbsideTests */,
+				8058D5A37DD369E685BD729B /* CurbsideUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -332,6 +390,7 @@
 				7C3D8836011DB13995A54585 /* OFL.txt in Resources */,
 				8C246DD20349B3F15411D709 /* Overpass.ttf in Resources */,
 				F566CC01B424F1C5432474DB /* OverpassMono.ttf in Resources */,
+				A02E3237C18F99053C3ABE03 /* demo-me.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +409,7 @@
 				D62CFBDE4BD567D46B78FF48 /* Config.swift in Sources */,
 				B32928267C17E53C37E6B3AE /* CurbsideApp.swift in Sources */,
 				7D62F924597BDBD6B761AC13 /* CurbsideFont.swift in Sources */,
+				FA7765B2DF131DA7770D62F9 /* Demo.swift in Sources */,
 				8CAE65151013277419EAC94C /* HomeView.swift in Sources */,
 				D892D368A91FC1B1EE52F602 /* HousePlaque.swift in Sources */,
 				284616DF6CA720B7B66197CC /* KeychainTokenStore.swift in Sources */,
@@ -368,6 +428,14 @@
 				04319ECE01A197D242AE350D /* StreetSign.swift in Sources */,
 				6335EB212BD3698373510079 /* Tokens.swift in Sources */,
 				2865685D2507ED361EFF3A76 /* YardSign.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CABE8DC483C204852E40F8E1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C8C671F9AB8A196F49A96351 /* ScreenshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +462,11 @@
 			target = 6BACE72B486EEA99F0B89217 /* Curbside */;
 			targetProxy = 6FB0EDF4D46049F24D642C37 /* PBXContainerItemProxy */;
 		};
+		EDBDEB4FD9B23C565F2882CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6BACE72B486EEA99F0B89217 /* Curbside */;
+			targetProxy = D1FB80AC7BB258BD88216C23 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -406,6 +479,7 @@
 				CURBSIDE_COGNITO_CLIENT_ID = 5e36kviu5jas2sip0aj7mat0ga;
 				CURBSIDE_COGNITO_DOMAIN = "xomware-curbside.auth.us-east-1.amazoncognito.com";
 				CURRENT_PROJECT_VERSION = 1;
+				EXCLUDED_SOURCE_FILE_NAMES = "*/Demo/*";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Curbside/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Curbside;
@@ -420,6 +494,23 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Xomware.Curbside;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5F11D42C831DA56B72BC2649 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.Xomware.CurbsideUITests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Curbside;
 			};
 			name = Release;
 		};
@@ -487,6 +578,23 @@
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		92340C46FFA5081889986447 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.Xomware.CurbsideUITests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Curbside;
 			};
 			name = Debug;
 		};
@@ -627,6 +735,15 @@
 			buildConfigurations = (
 				DFA4C9F600A859B2E13D6CD8 /* Debug */,
 				B0B5DD14FD72BA5F04DC49B4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		5E07DDD2793ADC415B23165A /* Build configuration list for PBXNativeTarget "CurbsideUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92340C46FFA5081889986447 /* Debug */,
+				5F11D42C831DA56B72BC2649 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
