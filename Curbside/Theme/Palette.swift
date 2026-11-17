@@ -14,6 +14,9 @@ enum Palette {
     static let workZone = Color(light: 0xE9711A, dark: 0xF08232)
     // The mockup's brighter night red (#D63A32) drops white text to 4.2:1, under WCAG AA.
     static let stop = Color(light: 0xC4302A, dark: 0xC4302A)
+
+    static let roof = Color(light: 0x6E5648, dark: 0x3B3230)
+    static let roofAccessory = Color(light: 0x857A70, dark: 0x34302E)
 }
 
 private extension Color {

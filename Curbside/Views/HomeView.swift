@@ -35,7 +35,7 @@ struct HomeView: View {
             PlaceSetupView(api: model.api, created: model.show)
         case .ready:
             if let place = model.place {
-                PlaceMap(place: place, households: model.households, signOut: signOut)
+                PlaceMap(place: place, households: model.households, footprints: model.footprints, signOut: signOut)
             }
         }
     }

@@ -14,11 +14,15 @@ final class MapHomeModel {
     private(set) var state = State.loading
     private(set) var place: Place?
     private(set) var households: [Household] = []
+    /// Empty until the file loads, and for good when the place has none; households then stand alone as pins.
+    private(set) var footprints: [Footprint] = []
 
     let api: APIClient
+    private let footprintLoader: FootprintLoader
 
-    init(api: APIClient) {
+    init(api: APIClient, footprintLoader: FootprintLoader? = nil) {
         self.api = api
+        self.footprintLoader = footprintLoader ?? FootprintLoader(api: api)
     }
 
     func load() async {
@@ -33,6 +37,7 @@ final class MapHomeModel {
             place = loaded.map
             households = loaded.households
             state = .ready
+            await loadFootprints()
         } catch APIError.unauthorized {
             // APIClient signed out; RootModel's route follows.
         } catch {
@@ -40,11 +45,18 @@ final class MapHomeModel {
         }
     }
 
-    /// A place just created: no households yet.
+    /// A place just created: no households yet, footprints still pending.
     func show(_ place: Place) {
         self.place = place
         households = []
+        footprints = []
         state = .ready
+    }
+
+    func loadFootprints() async {
+        guard let place else { return }
+        // Any failure leaves pins only, which is the designed fallback; the next appear tries again.
+        footprints = (try? await footprintLoader.load(place)) ?? []
     }
 }
 
