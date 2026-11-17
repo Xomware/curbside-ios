@@ -11,6 +11,7 @@
 		04319ECE01A197D242AE350D /* StreetSign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D410863F693D8484113C05F /* StreetSign.swift */; };
 		06CEAAAAB7174E816BC44046 /* demo-household-01JDEM0HH0000000000000000R.json in Resources */ = {isa = PBXBuildFile; fileRef = 925F0616EA4AE85CCED76C95 /* demo-household-01JDEM0HH0000000000000000R.json */; };
 		0BBF874C8A3EBEFBB53C9662 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216226A4C8DB9FF8E3A9EF36 /* APIClient.swift */; };
+		0CD5499FBCFEDB33BA92CD95 /* EditPeopleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC06BFA68A4523274AB0189 /* EditPeopleTests.swift */; };
 		10C5EAC4DD507B979312AFEB /* ConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1969692E2E0B9165D20796C2 /* ConfigTests.swift */; };
 		10ECFDCED4320F29311F3884 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 68D0E13875333B9CE30D7A46 /* Assets.xcassets */; };
 		12D3DA2534AA7CDF950F7A78 /* demo-household-01JDEM0HH0000000000000000C.json in Resources */ = {isa = PBXBuildFile; fileRef = 9E55E8B00917406AD199038C /* demo-household-01JDEM0HH0000000000000000C.json */; };
@@ -45,6 +46,7 @@
 		74356F64DCFD916EA55F59D5 /* demo-household-created.json in Resources */ = {isa = PBXBuildFile; fileRef = 90930663FCC13FFAC2F53EBB /* demo-household-created.json */; };
 		7C3D8836011DB13995A54585 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = D3B4B16A8FBA1F0F501118D5 /* OFL.txt */; };
 		7D62F924597BDBD6B761AC13 /* CurbsideFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F7241D303E1B145E2884BB /* CurbsideFont.swift */; };
+		80F1C24369CB5774B0CB4EB8 /* Patch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55344A9288137D13955E5ECC /* Patch.swift */; };
 		8461696C0A936A5D698C3877 /* demo-household-01JDEM0HH00000000000000006.json in Resources */ = {isa = PBXBuildFile; fileRef = 8FC76DE92564875A0E80326D /* demo-household-01JDEM0HH00000000000000006.json */; };
 		87C4161A12E575951BFFF95A /* KeychainTokenStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB193D2F83186FB48C29D054 /* KeychainTokenStoreTests.swift */; };
 		8C07718795E0248DF374B4A3 /* PlaceMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CDA50EBF803585C9ABB00E /* PlaceMap.swift */; };
@@ -62,6 +64,7 @@
 		9E9A02CB9C6DD8947DB45A79 /* FootprintLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB10AC96F0F822958B1B12B /* FootprintLoader.swift */; };
 		A02E3237C18F99053C3ABE03 /* demo-me.json in Resources */ = {isa = PBXBuildFile; fileRef = 13A2932AF19DCEA335A9EC43 /* demo-me.json */; };
 		A57B3C0C368A3A04B77A1BED /* Geo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADD4F8826CE9B2D8B756C60 /* Geo.swift */; };
+		A98E8B6557B9A56840CE7EFA /* PersonDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D486FDC308DD758DA16C47 /* PersonDraft.swift */; };
 		AEC9ACA2F52D54AE68988641 /* StubURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F1B3ECE744C92F8973488 /* StubURLProtocol.swift */; };
 		B32928267C17E53C37E6B3AE /* CurbsideApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC78FB47C9A005B3431CC194 /* CurbsideApp.swift */; };
 		B412967EB852B07001EFEF6F /* AuthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06975FCFF956C0FBC4EF27DD /* AuthTests.swift */; };
@@ -92,6 +95,7 @@
 		EEE90BEC2F17D421764AE62F /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A315AE2BE2036C530F3A8B9C /* Spacing.swift */; };
 		F021A024D0B1587E8C3A922A /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3061B9FD4AA9D8035A7C221 /* APIClientTests.swift */; };
 		F566CC01B424F1C5432474DB /* OverpassMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4DEDDEF24ADE41EB0EC21A1B /* OverpassMono.ttf */; };
+		F6C2AA75F4FB27654BFEA6CC /* PersonEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F84320EBD5480A671F3C6A /* PersonEditor.swift */; };
 		F6DA2B8605945496BCD1E8E1 /* PlaceSetupModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423CF06AC3DAC78C83F25FA4 /* PlaceSetupModelTests.swift */; };
 		F9AE13C9118AB566707FEF6B /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4990A06E05AED23C4D7432 /* Place.swift */; };
 		FA7765B2DF131DA7770D62F9 /* Demo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AD5623720BB5D730E11BF8 /* Demo.swift */; };
@@ -153,6 +157,7 @@
 		4A09D5E6CF38CD3D0002DDB2 /* Household.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Household.swift; sourceTree = "<group>"; };
 		4DEDDEF24ADE41EB0EC21A1B /* OverpassMono.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = OverpassMono.ttf; sourceTree = "<group>"; };
 		5032BED1D3057F74AB6D346C /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		55344A9288137D13955E5ECC /* Patch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patch.swift; sourceTree = "<group>"; };
 		55687DE9166102BE01185351 /* HouseholdSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseholdSection.swift; sourceTree = "<group>"; };
 		59A38765A9ABDF232AC4DAFB /* StopSignButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopSignButton.swift; sourceTree = "<group>"; };
 		5ADD4F8826CE9B2D8B756C60 /* Geo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geo.swift; sourceTree = "<group>"; };
@@ -168,6 +173,7 @@
 		7702239C187E8C05A2173557 /* MapHomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHomeModel.swift; sourceTree = "<group>"; };
 		770980ECC0FDCF167E7D1405 /* CurbsideTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = CurbsideTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D8BF2B3D5E0734BD32607BB /* AuthSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSession.swift; sourceTree = "<group>"; };
+		8AC06BFA68A4523274AB0189 /* EditPeopleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPeopleTests.swift; sourceTree = "<group>"; };
 		8C4BD5134DEA33D6CE078A56 /* NewHouseholdModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHouseholdModel.swift; sourceTree = "<group>"; };
 		8FC76DE92564875A0E80326D /* demo-household-01JDEM0HH00000000000000006.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-household-01JDEM0HH00000000000000006.json"; sourceTree = "<group>"; };
 		90930663FCC13FFAC2F53EBB /* demo-household-created.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-household-created.json"; sourceTree = "<group>"; };
@@ -176,12 +182,14 @@
 		95FC1700C1A74B2798EEB2D7 /* SignPressStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignPressStyle.swift; sourceTree = "<group>"; };
 		9D52D4F8F60278F1A67AC729 /* demo-map-created.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-map-created.json"; sourceTree = "<group>"; };
 		9E55E8B00917406AD199038C /* demo-household-01JDEM0HH0000000000000000C.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-household-01JDEM0HH0000000000000000C.json"; sourceTree = "<group>"; };
+		A2D486FDC308DD758DA16C47 /* PersonDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDraft.swift; sourceTree = "<group>"; };
 		A315AE2BE2036C530F3A8B9C /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
 		AC249AE21D1A91C9CDE5B728 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		AD4A009CD8C755C61E38BA26 /* demo-footprints.geojson.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = "demo-footprints.geojson.gz"; sourceTree = "<group>"; };
 		AEB55C88E5320E7327533F35 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		B11C513B584FBAC3D04EBFC2 /* ThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeTests.swift; sourceTree = "<group>"; };
 		B2C3E0D6546E18AEA6D28211 /* HouseholdModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseholdModel.swift; sourceTree = "<group>"; };
+		B2F84320EBD5480A671F3C6A /* PersonEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonEditor.swift; sourceTree = "<group>"; };
 		BC3F4C499162CD1D4C2E7E22 /* CurbsideUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = CurbsideUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD4990A06E05AED23C4D7432 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		C193783F9B9CB3D5BAA23333 /* demo-household-01JDEM0HH0000000000000000Z.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-household-01JDEM0HH0000000000000000Z.json"; sourceTree = "<group>"; };
@@ -235,6 +243,7 @@
 				F3061B9FD4AA9D8035A7C221 /* APIClientTests.swift */,
 				06975FCFF956C0FBC4EF27DD /* AuthTests.swift */,
 				1969692E2E0B9165D20796C2 /* ConfigTests.swift */,
+				8AC06BFA68A4523274AB0189 /* EditPeopleTests.swift */,
 				D781E4E890469D5DDF5E9016 /* FootprintLoaderTests.swift */,
 				C71AE430F7A891534C91485F /* HouseholdModelTests.swift */,
 				FB193D2F83186FB48C29D054 /* KeychainTokenStoreTests.swift */,
@@ -289,6 +298,7 @@
 				5ADD4F8826CE9B2D8B756C60 /* Geo.swift */,
 				3B727845E54A95C07B554D60 /* Gzip.swift */,
 				DB4E36C2AABFE7FE144A33F3 /* KeychainTokenStore.swift */,
+				55344A9288137D13955E5ECC /* Patch.swift */,
 				06B3FA5E23842F90C3756E28 /* PKCE.swift */,
 			);
 			path = Services;
@@ -362,6 +372,7 @@
 				55687DE9166102BE01185351 /* HouseholdSection.swift */,
 				F5A8B091F003B05CE4CF718C /* HouseholdView.swift */,
 				2A58763E695FC69E9D8A3148 /* NewHouseholdView.swift */,
+				B2F84320EBD5480A671F3C6A /* PersonEditor.swift */,
 				C4FB3719C27C59B0E6FBAA89 /* SectionSign.swift */,
 			);
 			path = Household;
@@ -411,6 +422,7 @@
 				4A09D5E6CF38CD3D0002DDB2 /* Household.swift */,
 				5032BED1D3057F74AB6D346C /* Note.swift */,
 				C977E4C05205C9BC183B8FEB /* Person.swift */,
+				A2D486FDC308DD758DA16C47 /* PersonDraft.swift */,
 				9461DF14AF60C87B982F9699 /* Pet.swift */,
 				BD4990A06E05AED23C4D7432 /* Place.swift */,
 				42E2E7AC7F1020857D536A19 /* Spot.swift */,
@@ -612,8 +624,11 @@
 				DDACF4C561C1FF1F186A3CE3 /* OnboardingView.swift in Sources */,
 				3944961879F687B04D29F479 /* PKCE.swift in Sources */,
 				303214A91839802365DDF580 /* Palette.swift in Sources */,
+				80F1C24369CB5774B0CB4EB8 /* Patch.swift in Sources */,
 				B68CE2502EF03EF7A9311A48 /* Pentagon.swift in Sources */,
 				95071D00471AB395232FA2CB /* Person.swift in Sources */,
+				A98E8B6557B9A56840CE7EFA /* PersonDraft.swift in Sources */,
+				F6C2AA75F4FB27654BFEA6CC /* PersonEditor.swift in Sources */,
 				CBD7C4E9C079512DBC353B8F /* Pet.swift in Sources */,
 				F9AE13C9118AB566707FEF6B /* Place.swift in Sources */,
 				8C07718795E0248DF374B4A3 /* PlaceMap.swift in Sources */,
@@ -652,6 +667,7 @@
 				F021A024D0B1587E8C3A922A /* APIClientTests.swift in Sources */,
 				B412967EB852B07001EFEF6F /* AuthTests.swift in Sources */,
 				10C5EAC4DD507B979312AFEB /* ConfigTests.swift in Sources */,
+				0CD5499FBCFEDB33BA92CD95 /* EditPeopleTests.swift in Sources */,
 				4D5E9D00CFFACEA38F27A2EE /* FootprintLoaderTests.swift in Sources */,
 				5A76EC159082DE2CC11D9493 /* HouseholdModelTests.swift in Sources */,
 				87C4161A12E575951BFFF95A /* KeychainTokenStoreTests.swift in Sources */,

@@ -35,7 +35,7 @@ final class RootModel {
     }
 
     /// Trimmed name if the backend will accept it (1-80 characters), else nil.
-    static func validName(_ raw: String) -> String? {
+    nonisolated static func validName(_ raw: String) -> String? {
         let name = raw.trimmingCharacters(in: .whitespacesAndNewlines)
         return (1...80).contains(name.count) ? name : nil
     }

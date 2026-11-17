@@ -3,6 +3,7 @@ import SwiftUI
 /// One card section: its sign pictogram on the left, the entries on the right.
 struct HouseholdSection: View {
     let section: HouseholdModel.Section
+    let editPerson: (Person) -> Void
 
     private let year = Calendar.current.component(.year, from: .now)
     @ScaledMetric(relativeTo: .caption) private var dateColumn: CGFloat = 48
@@ -28,12 +29,17 @@ struct HouseholdSection: View {
         switch section {
         case .adults(let people), .kids(let people):
             ForEach(people) { person in
-                HStack(alignment: .top) {
-                    Entry(title: person.name, detail: [person.born, person.notes].compactMap { $0 }.joined(separator: ". "))
-                    if person.role == .kid, let age = person.age(in: year) {
-                        AgeSign(age: age)
+                Button { editPerson(person) } label: {
+                    HStack(alignment: .top) {
+                        Entry(title: person.name, detail: [person.born, person.notes].compactMap { $0 }.joined(separator: ". "))
+                        if person.role == .kid, let age = person.age(in: year) {
+                            AgeSign(age: age)
+                        }
                     }
+                    .contentShape(.rect)
                 }
+                .buttonStyle(SignPressStyle())
+                .accessibilityHint("Edit")
             }
         case .pets(let pets):
             ForEach(pets) { pet in
