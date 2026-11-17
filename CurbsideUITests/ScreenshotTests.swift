@@ -26,6 +26,9 @@ final class ScreenshotTests: XCTestCase {
         try snap("card", app)
         app.swipeUp()
         try snap("card-scrolled", app)
+        app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Juniper'")).firstMatch.tap()
+        XCTAssert(app.navigationBars["Edit Juniper"].waitForExistence(timeout: 5))
+        try snap("edit-person", app)
     }
 
     func testSelection() throws {

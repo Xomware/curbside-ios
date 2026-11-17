@@ -3,6 +3,7 @@ import SwiftUI
 /// The household card: who lives here, their kids and pets, and what you've noted.
 struct HouseholdView: View {
     @State private var model: HouseholdModel
+    @State private var editingPerson: EditTarget<Person>?
 
     init(model: HouseholdModel) {
         _model = State(initialValue: model)
@@ -13,7 +14,7 @@ struct HouseholdView: View {
             VStack(alignment: .leading, spacing: 0) {
                 HouseholdHero(household: model.household)
                 ForEach(Array(model.sections.enumerated()), id: \.offset) { _, section in
-                    HouseholdSection(section: section)
+                    HouseholdSection(section: section) { editingPerson = EditTarget(item: $0) }
                     Divider().overlay(Palette.inkSecondary.opacity(0.3))
                 }
                 if model.isLoading && model.household.mine.notes == nil {
@@ -23,6 +24,8 @@ struct HouseholdView: View {
                         .padding(Spacing.md)
                         .accessibilityLabel("Loading notes")
                 }
+                SignButton(title: "Add a person") { editingPerson = EditTarget(item: nil) }
+                    .padding(Spacing.md)
                 if model.failed {
                     VStack(alignment: .leading, spacing: Spacing.sm) {
                         Text("Couldn't load their notes.")
@@ -36,7 +39,14 @@ struct HouseholdView: View {
         }
         .background(Palette.background)
         .task { await model.load() }
+        .sheet(item: $editingPerson) { PersonEditor(model: model, person: $0.item) }
     }
+}
+
+/// Sheet item for an editor: an existing item, or nil for a new one.
+struct EditTarget<Item: Identifiable<String>>: Identifiable {
+    let item: Item?
+    var id: String { item?.id ?? "new" }
 }
 
 private struct HouseholdHero: View {

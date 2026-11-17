@@ -12,6 +12,13 @@ final class HouseholdModel {
         case published
     }
 
+    enum SaveResult: Equatable {
+        case saved
+        /// Someone else changed it first. The card now shows their copy; the draft is still the user's.
+        case conflict
+        case failed
+    }
+
     private(set) var household: Household
     private(set) var isLoading = false
     private(set) var failed = false
@@ -57,4 +64,50 @@ final class HouseholdModel {
             failed = true
         }
     }
+
+    /// Creates a person, or PATCHes only what changed against the card's latest copy of `id`.
+    func savePerson(_ draft: PersonDraft, id: String?) async -> SaveResult {
+        let people = household.mine.people ?? []
+        do {
+            if let id, let current = people.first(where: { $0.id == id }) {
+                let patch = draft.patch(from: current)
+                guard !patch.isEmpty else { return .saved }
+                let person: Person = try await api.request("\(path)/people/\(id)", method: "PATCH", body: patch)
+                household.mine.people = people.map { $0.id == id ? person : $0 }
+            } else {
+                let person: Person = try await api.request("\(path)/people", method: "POST", body: draft.create)
+                household.mine.people = people + [person]
+            }
+        } catch APIError.conflict {
+            await load()
+            return .conflict
+        } catch {
+            return .failed
+        }
+        changed(household)
+        return .saved
+    }
+
+    func deletePerson(_ id: String) async -> Bool {
+        guard await delete("\(path)/people/\(id)") else { return false }
+        household.mine.people?.removeAll { $0.id == id }
+        changed(household)
+        return true
+    }
+
+    /// True once the item is gone, including when someone else already deleted it (404).
+    private func delete(_ path: String) async -> Bool {
+        do {
+            let _: Deleted = try await api.request(path, method: "DELETE")
+            return true
+        } catch APIError.server(status: 404, _) {
+            return true
+        } catch {
+            return false
+        }
+    }
+}
+
+private struct Deleted: Decodable, Sendable {
+    let id: String
 }
