@@ -29,6 +29,7 @@ enum Demo {
         case ("new", "GET", "/v1/maps"): return "demo-maps-none"
         case (_, "GET", "/v1/maps"): return "demo-maps"
         case (_, "GET", "/v1/maps/{id}"): return "demo-map"
+        case (_, "POST", "/v1/maps"): return "demo-map-created"
         default: return nil
         }
     }

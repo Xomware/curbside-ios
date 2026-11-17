@@ -39,6 +39,13 @@ final class MapHomeModel {
             state = .failed
         }
     }
+
+    /// A place just created: no households yet.
+    func show(_ place: Place) {
+        self.place = place
+        households = []
+        state = .ready
+    }
 }
 
 private struct Loaded: Decodable, Sendable {

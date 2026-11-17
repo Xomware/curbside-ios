@@ -32,6 +32,7 @@ targets:
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
+        INFOPLIST_KEY_NSLocationWhenInUseUsageDescription: "Curbside uses your location to center the map on your street and to show which houses you're walking past."
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         CURBSIDE_API_HOST: api.curbside.xomware.com
         CURBSIDE_COGNITO_DOMAIN: xomware-curbside.auth.us-east-1.amazoncognito.com

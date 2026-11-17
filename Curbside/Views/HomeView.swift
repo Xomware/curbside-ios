@@ -32,14 +32,7 @@ struct HomeView: View {
             }
             .padding(Spacing.md)
         case .noPlace:
-            VStack(spacing: Spacing.md) {
-                StreetSign(name: "New place")
-                Text("Place setup is on its way.")
-                    .font(CurbsideFont.body)
-                    .foregroundStyle(Palette.inkSecondary)
-                SignButton(title: "Sign out", action: signOut)
-            }
-            .padding(Spacing.md)
+            PlaceSetupView(api: model.api, created: model.show)
         case .ready:
             if let place = model.place {
                 PlaceMap(place: place, households: model.households, signOut: signOut)
