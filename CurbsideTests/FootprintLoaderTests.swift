@@ -12,9 +12,11 @@ enum FootprintFixtures {
     /// The gzip CLI's output, which carries the file name (FNAME flag).
     static let gzippedWithName = Data(base64Encoded: "H4sICHhr/GoAA3YxLmdlb2pzb24AnZPBboQgEIbfhbNdQWtFr016a9K7IQ3VWZeElQ1gGmN896LbGsvqmvY4n8OE72fske0ugHL0Aty2Gp6VlFBaoRoUoOOVGZQXvdfnvorKlcqc80/ehYQ4UoM6g9Udyuf2NyW7ehpWKqUr0XA7zSuKBxJFBxLE6YGw4FrhLKPrAOPoh5F1wFw5H8qS7yacLEfdp2RJs/vUTWBsCNBFqwtoK0anHn20QjrF2nmfVGvGkLgG/n6OUB5T7KqyBGPUmNCRSwPDEOwGG/0rWHfZ1I/yKdkgXiLpNtyxNieoltJR8svZ6nZPWYPk4/aFJF73fm2lFdvy832x50qzdeBeeGGJNxmbFmw+7O8p9dOm6e0oSjcZ20m2c2QZLP77NjWqgpA8bq2TaOxNnsv/y7/dMLDhC0NHXh0+BAAA")!
 
+    /// `footprints_get` output: pending is a bare status with 202.
     static func info(_ status: String, version: Int, url: String?) -> StubURLProtocol.Reply {
+        if status == "pending" { return .init(status: 202, body: #"{"data": {"status": "pending"}, "error": null, "meta": {}}"#) }
         let url = url.map { "\"\($0)\"" } ?? "null"
-        return .init(status: status == "pending" ? 202 : 200, body: #"{"data": {"status": "\#(status)", "version": \#(version), "count": 3, "url": \#(url)}, "error": null, "meta": {}}"#)
+        return .init(status: 200, body: #"{"data": {"status": "\#(status)", "source": "osm", "version": \#(version), "count": 3, "url": \#(url)}, "error": null, "meta": {}}"#)
     }
 }
 

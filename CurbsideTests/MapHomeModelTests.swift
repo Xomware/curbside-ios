@@ -9,7 +9,7 @@ enum MapFixtures {
     static let household = #"{"id": "01M7MYZ2HN482TDYCDP6CB5D9W", "version": 2, "lat": 37.1, "lng": -122.1, "building_id": "osm:way/1", "private": {"label": "Pumpernickel", "address": "11 Quillfeather Ln", "last_talked_at": "2026-11-17T14:35:52+00:00", "people": [{"id": "01M7MYZ2HQV0211WPK9QDKNCXT", "name": "Juniper", "role": "kid", "birth_year": 2018, "birth_year_approx": false, "version": 2, "created_at": "2026-11-17T14:35:52+00:00", "notes": "Collects rocks"}], "pets": [{"id": "01M7MYZ2HYK2HABX0PK0M9JEJT", "name": "Waffles", "species": "dog", "version": 1, "created_at": "2026-11-17T14:35:52+00:00"}]}, "published": null}"#
     static let list = StubURLProtocol.Reply(status: 200, body: #"{"data": [\#(place)], "error": null, "meta": {}}"#)
     static let none = StubURLProtocol.Reply(status: 200, body: #"{"data": [], "error": null, "meta": {}}"#)
-    static let footprintsPending = StubURLProtocol.Reply(status: 202, body: #"{"data": {"status": "pending", "version": 0, "count": 0, "url": null}, "error": null, "meta": {}}"#)
+    static let footprintsPending = StubURLProtocol.Reply(status: 202, body: #"{"data": {"status": "pending"}, "error": null, "meta": {}}"#)
     static let loaded = StubURLProtocol.Reply(status: 200, body: #"{"data": {"map": \#(place), "households": [\#(household)]}, "error": null, "meta": {}}"#)
 }
 

@@ -1,7 +1,7 @@
 import Foundation
 
 /// Fetches a place's footprint file and caches it on disk by (mapId, version).
-/// The response contract is in xom-research `docs/features/curbside/ios-map-footprints/PLAN.md`.
+/// Response shape: curbside-backend `lambdas/footprints_get/handler.py`.
 @MainActor
 struct FootprintLoader {
     let api: APIClient
@@ -13,8 +13,8 @@ struct FootprintLoader {
             return try Footprint.decode(data)
         }
         let info: Info = try await api.request("/v1/maps/\(place.id)/footprints")
-        guard info.status == .ready, let url = info.url else { return [] }
-        let file = file(place.id, info.version)
+        guard info.status == .ready, let url = info.url, let version = info.version else { return [] }
+        let file = file(place.id, version)
         if let data = try? Data(contentsOf: file) {
             return try Footprint.decode(data)
         }
@@ -36,9 +36,10 @@ struct FootprintLoader {
         cache.appending(path: mapID).appending(path: "v\(version).geojson")
     }
 
+    /// `footprints_get`: 202 `{status: "pending"}` alone; otherwise status, source, version, count and url.
     private struct Info: Decodable, Sendable {
         let status: Place.Footprint.Status
-        let version: Int
+        let version: Int?
         let url: URL?
     }
 }
