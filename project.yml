@@ -1,0 +1,61 @@
+name: Curbside
+options:
+  bundleIdPrefix: com.Xomware
+  deploymentTarget:
+    iOS: "26.0"
+  xcodeVersion: "26.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    TARGETED_DEVICE_FAMILY: "1"
+    DEVELOPMENT_TEAM: A3HMLDS2AL
+    CODE_SIGN_STYLE: Automatic
+
+targets:
+  Curbside:
+    type: application
+    platform: iOS
+    sources:
+      - path: Curbside
+        excludes: ["**/.gitkeep"]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.Xomware.Curbside
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Curbside
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+
+  CurbsideTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - CurbsideTests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.Xomware.CurbsideTests
+        GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: Curbside
+
+schemes:
+  Curbside:
+    build:
+      targets:
+        Curbside: all
+        CurbsideTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - CurbsideTests
+    archive:
+      config: Release
