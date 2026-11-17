@@ -42,6 +42,20 @@ final class ScreenshotTests: XCTestCase {
         try snap("new-note", app)
     }
 
+    /// Walk a route first for LEFT/RIGHT (the simulator has no compass, so course stands in):
+    /// `xcrun simctl location <device> start --speed=1.4 37.4470,-122.1393 37.4482,-122.1393`
+    func testNearMe() throws {
+        let app = launch("street")
+        let button = app.buttons["Near me"]
+        XCTAssert(button.waitForExistence(timeout: 10))
+        button.tap()
+        XCTAssert(app.staticTexts["Next houses"].waitForExistence(timeout: 5))
+        XCTAssert(app.buttons.matching(NSPredicate(format: "label CONTAINS ' M'")).firstMatch.waitForExistence(timeout: 10))
+        try snap("near-me", app)
+        app.swipeUp()
+        try snap("near-me-large", app)
+    }
+
     func testSelection() throws {
         let app = launch("street")
         let duplex = app.buttons["10A, Hobnob household"]
