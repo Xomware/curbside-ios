@@ -1,7 +1,11 @@
 import Foundation
 import Synchronization
+import Testing
 
-/// Answers every request from a queue of canned responses. Suites using it must be `.serialized`.
+/// Suites that use `StubURLProtocol` nest in here: its queues are global, so they must not run in parallel.
+@Suite(.serialized) enum StubbedNetwork {}
+
+/// Answers every request from a queue of canned responses. Suites using it nest in `StubbedNetwork`.
 final class StubURLProtocol: URLProtocol {
     struct Reply {
         let status: Int
@@ -32,4 +36,19 @@ final class StubURLProtocol: URLProtocol {
     }
 
     override func stopLoading() {}
+
+    /// URLSession hands protocols the body as a stream, so `httpBody` is nil by the time it is recorded.
+    static func body(of request: URLRequest) -> String {
+        guard let stream = request.httpBodyStream else { return "" }
+        stream.open()
+        defer { stream.close() }
+        var data = Data()
+        var buffer = [UInt8](repeating: 0, count: 1024)
+        while stream.hasBytesAvailable {
+            let count = stream.read(&buffer, maxLength: buffer.count)
+            guard count > 0 else { break }
+            data.append(buffer, count: count)
+        }
+        return String(decoding: data, as: UTF8.self)
+    }
 }

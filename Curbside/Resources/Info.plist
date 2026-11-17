@@ -4,6 +4,10 @@
 <dict>
 	<key>CurbsideAPIHost</key>
 	<string>$(CURBSIDE_API_HOST)</string>
+	<key>CurbsideCognitoClientID</key>
+	<string>$(CURBSIDE_COGNITO_CLIENT_ID)</string>
+	<key>CurbsideCognitoDomain</key>
+	<string>$(CURBSIDE_COGNITO_DOMAIN)</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Overpass.ttf</string>
