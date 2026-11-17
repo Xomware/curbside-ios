@@ -125,6 +125,46 @@ final class HouseholdModel {
         return true
     }
 
+    /// Logs a note. The server also sets `last_talked_at` to the note's time without bumping `version`; mirrored here.
+    func addNote(_ text: String) async -> Bool {
+        let text = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard (1...2000).contains(text.count) else { return false }
+        do {
+            let note: Note = try await api.request("\(path)/notes", method: "POST", body: NewNote(text: text))
+            household.mine.notes = [note] + (household.mine.notes ?? [])
+            household.mine.lastTalkedAt = note.createdAt
+        } catch {
+            return false
+        }
+        changed(household)
+        return true
+    }
+
+    func deleteNote(_ id: String) async -> Bool {
+        guard await delete("\(path)/notes/\(id)") else { return false }
+        household.mine.notes?.removeAll { $0.id == id }
+        changed(household)
+        return true
+    }
+
+    /// Marks a conversation without a note. The PATCH response omits people, pets and notes, so those stay local.
+    func talkedToday(now: Date = .now) async -> SaveResult {
+        var patch = Patch(version: household.version)
+        patch.fields["last_talked_at"] = .string(now.formatted(.iso8601))
+        do {
+            let updated: Household = try await api.request(path, method: "PATCH", body: patch)
+            household.version = updated.version
+            household.mine.lastTalkedAt = updated.mine.lastTalkedAt
+        } catch APIError.conflict {
+            await load()
+            return .conflict
+        } catch {
+            return .failed
+        }
+        changed(household)
+        return .saved
+    }
+
     /// True once the item is gone, including when someone else already deleted it (404).
     private func delete(_ path: String) async -> Bool {
         do {
@@ -136,6 +176,11 @@ final class HouseholdModel {
             return false
         }
     }
+}
+
+private struct NewNote: Encodable, Sendable {
+    let text: String
+    let source = "manual"
 }
 
 private struct Deleted: Decodable, Sendable {

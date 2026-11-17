@@ -34,6 +34,7 @@
 		4A5292055D5209FAD8D9A359 /* AgeSign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235C74F432B173E29B0CF8AB /* AgeSign.swift */; };
 		4D5E9D00CFFACEA38F27A2EE /* FootprintLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D781E4E890469D5DDF5E9016 /* FootprintLoaderTests.swift */; };
 		569169D7E05052487A7AD579 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 367D309AB44D54F1E17736CE /* APIError.swift */; };
+		5852652CDB31BFFC9DD6D0ED /* HouseholdHero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E28914808827DA074D3DE9E /* HouseholdHero.swift */; };
 		58FB2AE34F373797F4FBEC97 /* SectionSign.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FB3719C27C59B0E6FBAA89 /* SectionSign.swift */; };
 		5A60EC8C4760A0EEC985A87B /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3966DE8C095F8EF485DD420A /* RootView.swift */; };
 		5A76EC159082DE2CC11D9493 /* HouseholdModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71AE430F7A891534C91485F /* HouseholdModelTests.swift */; };
@@ -84,6 +85,7 @@
 		C8C671F9AB8A196F49A96351 /* ScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040ACEBEBB76359445E8D248 /* ScreenshotTests.swift */; };
 		CBD7C4E9C079512DBC353B8F /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9461DF14AF60C87B982F9699 /* Pet.swift */; };
 		CED7E808517684533F801E93 /* StopSignButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A38765A9ABDF232AC4DAFB /* StopSignButton.swift */; };
+		D1FD22663857C7F0F3313910 /* NoteEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB9BF323F811767AE79AD9E /* NoteEditor.swift */; };
 		D41AE2FE93BB4738C8CA8295 /* Gzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B727845E54A95C07B554D60 /* Gzip.swift */; };
 		D62CFBDE4BD567D46B78FF48 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC249AE21D1A91C9CDE5B728 /* Config.swift */; };
 		D6AB81F66E22BAE94C08F820 /* NewHouseholdModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4BD5134DEA33D6CE078A56 /* NewHouseholdModel.swift */; };
@@ -97,6 +99,7 @@
 		EE0D1BE8A7EB932519EAD023 /* demo-household-01JDEM0HH0000000000000000F.json in Resources */ = {isa = PBXBuildFile; fileRef = 46FB022A12F5FA6446A26704 /* demo-household-01JDEM0HH0000000000000000F.json */; };
 		EEE90BEC2F17D421764AE62F /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A315AE2BE2036C530F3A8B9C /* Spacing.swift */; };
 		F021A024D0B1587E8C3A922A /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3061B9FD4AA9D8035A7C221 /* APIClientTests.swift */; };
+		F1BD8E6C79AD7460847FEF45 /* NotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E9E5AA71CAEC42B15CDF2D5 /* NotesTests.swift */; };
 		F566CC01B424F1C5432474DB /* OverpassMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4DEDDEF24ADE41EB0EC21A1B /* OverpassMono.ttf */; };
 		F6C2AA75F4FB27654BFEA6CC /* PersonEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F84320EBD5480A671F3C6A /* PersonEditor.swift */; };
 		F6DA2B8605945496BCD1E8E1 /* PlaceSetupModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423CF06AC3DAC78C83F25FA4 /* PlaceSetupModelTests.swift */; };
@@ -144,6 +147,7 @@
 		299B6DBAAFAC31FABE2CEE13 /* EditPetsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPetsTests.swift; sourceTree = "<group>"; };
 		29CDA50EBF803585C9ABB00E /* PlaceMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMap.swift; sourceTree = "<group>"; };
 		2A58763E695FC69E9D8A3148 /* NewHouseholdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHouseholdView.swift; sourceTree = "<group>"; };
+		2BB9BF323F811767AE79AD9E /* NoteEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditor.swift; sourceTree = "<group>"; };
 		2F6F1B3ECE744C92F8973488 /* StubURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubURLProtocol.swift; sourceTree = "<group>"; };
 		3606E597C66C1B93B12C168D /* Pentagon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pentagon.swift; sourceTree = "<group>"; };
 		367D309AB44D54F1E17736CE /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
@@ -173,6 +177,8 @@
 		6147031BB412E577DB93EED2 /* TestHostTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHostTests.swift; sourceTree = "<group>"; };
 		68D0E13875333B9CE30D7A46 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6CB10AC96F0F822958B1B12B /* FootprintLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootprintLoader.swift; sourceTree = "<group>"; };
+		6E28914808827DA074D3DE9E /* HouseholdHero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseholdHero.swift; sourceTree = "<group>"; };
+		6E9E5AA71CAEC42B15CDF2D5 /* NotesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTests.swift; sourceTree = "<group>"; };
 		6FD14843CADB323F4B75D0ED /* ProviderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderButton.swift; sourceTree = "<group>"; };
 		723CA5132B0207854CB47311 /* demo-maps-none.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-maps-none.json"; sourceTree = "<group>"; };
 		736BBDA814E95E0FC989834A /* Tokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokens.swift; sourceTree = "<group>"; };
@@ -256,6 +262,7 @@
 				FB193D2F83186FB48C29D054 /* KeychainTokenStoreTests.swift */,
 				D8677900C304E8A0B4567970 /* MapHomeModelTests.swift */,
 				00F038B82F1827B0F4BD7FD5 /* NewHouseholdModelTests.swift */,
+				6E9E5AA71CAEC42B15CDF2D5 /* NotesTests.swift */,
 				423CF06AC3DAC78C83F25FA4 /* PlaceSetupModelTests.swift */,
 				E39C5034DAFEC45F0FDD707E /* RootModelTests.swift */,
 				0949A8A6EA21A82B7119863E /* SelectionTests.swift */,
@@ -376,9 +383,11 @@
 			isa = PBXGroup;
 			children = (
 				235C74F432B173E29B0CF8AB /* AgeSign.swift */,
+				6E28914808827DA074D3DE9E /* HouseholdHero.swift */,
 				55687DE9166102BE01185351 /* HouseholdSection.swift */,
 				F5A8B091F003B05CE4CF718C /* HouseholdView.swift */,
 				2A58763E695FC69E9D8A3148 /* NewHouseholdView.swift */,
+				2BB9BF323F811767AE79AD9E /* NoteEditor.swift */,
 				B2F84320EBD5480A671F3C6A /* PersonEditor.swift */,
 				479FC36217A6201A199D7B52 /* PetEditor.swift */,
 				C4FB3719C27C59B0E6FBAA89 /* SectionSign.swift */,
@@ -621,6 +630,7 @@
 				8CAE65151013277419EAC94C /* HomeView.swift in Sources */,
 				D892D368A91FC1B1EE52F602 /* HousePlaque.swift in Sources */,
 				B7A8CDA59047125D5638BE96 /* Household.swift in Sources */,
+				5852652CDB31BFFC9DD6D0ED /* HouseholdHero.swift in Sources */,
 				6A85ED2444AAAE0C39BE0926 /* HouseholdModel.swift in Sources */,
 				B952232A2DA7350E355F03DA /* HouseholdSection.swift in Sources */,
 				929D9CF3F4D30C66B8583F4B /* HouseholdView.swift in Sources */,
@@ -630,6 +640,7 @@
 				D6AB81F66E22BAE94C08F820 /* NewHouseholdModel.swift in Sources */,
 				31B4730CDAB43DCC297DEF28 /* NewHouseholdView.swift in Sources */,
 				27160BE3626A19225D66D8D7 /* Note.swift in Sources */,
+				D1FD22663857C7F0F3313910 /* NoteEditor.swift in Sources */,
 				DDACF4C561C1FF1F186A3CE3 /* OnboardingView.swift in Sources */,
 				3944961879F687B04D29F479 /* PKCE.swift in Sources */,
 				303214A91839802365DDF580 /* Palette.swift in Sources */,
@@ -685,6 +696,7 @@
 				87C4161A12E575951BFFF95A /* KeychainTokenStoreTests.swift in Sources */,
 				C0163681C85AB9C428F97ACA /* MapHomeModelTests.swift in Sources */,
 				E9E8E9FD91B2F31266FC05CF /* NewHouseholdModelTests.swift in Sources */,
+				F1BD8E6C79AD7460847FEF45 /* NotesTests.swift in Sources */,
 				F6DA2B8605945496BCD1E8E1 /* PlaceSetupModelTests.swift in Sources */,
 				98C99173B944B410EBCBE09D /* RootModelTests.swift in Sources */,
 				BD6A97B9D8241627AC457546 /* SelectionTests.swift in Sources */,
