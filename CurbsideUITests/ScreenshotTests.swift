@@ -1,3 +1,4 @@
+import CoreLocation
 import XCTest
 
 /// Walks each screen in `-demo` mode and writes a PNG per screen.
@@ -16,10 +17,18 @@ final class ScreenshotTests: XCTestCase {
         try snap("map-zoomed", app)
     }
 
-    func testMapWithNoPlace() throws {
+    /// Needs location granted first: `xcrun simctl privacy <device> grant location com.Xomware.Curbside`.
+    func testPlaceSetup() throws {
+        XCUIDevice.shared.location = XCUILocation(location: CLLocation(latitude: 37.4475, longitude: -122.1395))
         let app = launch("new")
         XCTAssert(app.staticTexts["New place"].waitForExistence(timeout: 10))
-        try snap("no-place", app)
+        try snap("setup", app)
+        app.buttons["Use my location"].tap()
+        XCTAssert(app.textFields["Place name"].waitForExistence(timeout: 10))
+        try snap("setup-located", app)
+        app.buttons["Make the map"].tap()
+        XCTAssert(app.buttons["Map options"].waitForExistence(timeout: 10))
+        try snap("setup-created", app)
     }
 
     func launch(_ scenario: String) -> XCUIApplication {
