@@ -17,6 +17,19 @@ final class ScreenshotTests: XCTestCase {
         try snap("map-zoomed", app)
     }
 
+    func testSelection() throws {
+        let app = launch("street")
+        let duplex = app.otherElements["10A, Hobnob household"]
+        XCTAssert(duplex.waitForExistence(timeout: 10))
+        duplex.tap()
+        XCTAssert(app.buttons["Close"].waitForExistence(timeout: 5))
+        try snap("building-selected", app)
+        app.buttons["Close"].tap()
+        app.maps.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.12, dy: 0.62)).press(forDuration: 1)
+        XCTAssert(app.staticTexts["Nobody added here yet."].waitForExistence(timeout: 5))
+        try snap("pin-dropped", app)
+    }
+
     /// Needs location granted first: `xcrun simctl privacy <device> grant location com.Xomware.Curbside`.
     func testPlaceSetup() throws {
         XCUIDevice.shared.location = XCUILocation(location: CLLocation(latitude: 37.4475, longitude: -122.1395))
