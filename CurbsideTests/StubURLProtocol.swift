@@ -9,7 +9,18 @@ import Testing
 final class StubURLProtocol: URLProtocol {
     struct Reply {
         let status: Int
-        let body: String
+        let data: Data
+
+        init(status: Int, body: String) {
+            self.init(status: status, data: Data(body.utf8))
+        }
+
+        init(status: Int, data: Data) {
+            self.status = status
+            self.data = data
+        }
+
+        var body: String { String(decoding: data, as: UTF8.self) }
     }
 
     static let replies = Mutex<[Reply]>([])
@@ -28,10 +39,11 @@ final class StubURLProtocol: URLProtocol {
 
     override func startLoading() {
         Self.requests.withLock { $0.append(request) }
-        let reply = Self.replies.withLock { $0.removeFirst() }
+        // An unplanned request fails the test through its assertions instead of crashing the host app.
+        let reply = Self.replies.withLock { $0.isEmpty ? Reply(status: 599, body: "no stub") : $0.removeFirst() }
         let response = HTTPURLResponse(url: request.url!, statusCode: reply.status, httpVersion: nil, headerFields: nil)!
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
-        client?.urlProtocol(self, didLoad: Data(reply.body.utf8))
+        client?.urlProtocol(self, didLoad: reply.data)
         client?.urlProtocolDidFinishLoading(self)
     }
 

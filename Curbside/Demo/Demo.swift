@@ -1,6 +1,6 @@
 import Foundation
 
-/// `-demo <scenario>` launch argument: signed in, with every API call answered from the `demo-*.json` fixtures beside
+/// `-demo <scenario>` launch argument: signed in, with every API call answered from the `demo-*` fixtures beside
 /// this file. Screenshots and UI tests use it because nobody can sign in on a simulator. Release builds exclude this
 /// folder (`EXCLUDED_SOURCE_FILE_NAMES` in project.yml), so the call site is `#if DEBUG`.
 enum Demo {
@@ -21,15 +21,17 @@ enum Demo {
         return RootModel(auth: auth, api: APIClient(baseURL: Config.apiBaseURL, tokens: auth, session: session))
     }
 
-    /// Fixture name for a request, keyed by method and path with ids replaced by `{id}`.
+    /// Fixture file for a request, keyed by method and path with ids replaced by `{id}`.
     static func fixture(for request: URLRequest) -> String? {
+        if request.url?.host() == "footprints.demo.invalid" { return "demo-footprints.geojson.gz" }
         let path = (request.url?.path() ?? "").replacing(/\/[0-9A-HJKMNP-TV-Z]{26}/, with: "/{id}")
         switch (scenario, request.httpMethod ?? "GET", path) {
-        case (_, "GET", "/v1/me"): return "demo-me"
-        case ("new", "GET", "/v1/maps"): return "demo-maps-none"
-        case (_, "GET", "/v1/maps"): return "demo-maps"
-        case (_, "GET", "/v1/maps/{id}"): return "demo-map"
-        case (_, "POST", "/v1/maps"): return "demo-map-created"
+        case (_, "GET", "/v1/me"): return "demo-me.json"
+        case ("new", "GET", "/v1/maps"): return "demo-maps-none.json"
+        case (_, "GET", "/v1/maps"): return "demo-maps.json"
+        case (_, "GET", "/v1/maps/{id}"): return "demo-map.json"
+        case (_, "GET", "/v1/maps/{id}/footprints"): return "demo-footprints-info.json"
+        case (_, "POST", "/v1/maps"): return "demo-map-created.json"
         default: return nil
         }
     }
@@ -41,7 +43,7 @@ final class DemoURLProtocol: URLProtocol {
 
     override func startLoading() {
         // A missing route answers 404 so the screen under test shows its error state instead of hanging.
-        let url = Demo.fixture(for: request).flatMap { Bundle.main.url(forResource: $0, withExtension: "json") }
+        let url = Demo.fixture(for: request).flatMap { Bundle.main.url(forResource: $0, withExtension: nil) }
         let body = url.flatMap { try? Data(contentsOf: $0) } ?? Data(#"{"data": null, "error": {"code": "demo_missing", "message": "No demo fixture"}, "meta": {}}"#.utf8)
         let response = HTTPURLResponse(url: request.url ?? Config.apiBaseURL, statusCode: url == nil ? 404 : 200, httpVersion: nil, headerFields: nil)
         if let response {

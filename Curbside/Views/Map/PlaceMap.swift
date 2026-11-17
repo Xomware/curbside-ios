@@ -5,20 +5,29 @@ import SwiftUI
 struct PlaceMap: View {
     let place: Place
     let households: [Household]
+    let footprints: [Footprint]
     let signOut: () -> Void
 
     @State private var position: MapCameraPosition
     @State private var showsNames = true
 
-    init(place: Place, households: [Household], signOut: @escaping () -> Void) {
+    init(place: Place, households: [Household], footprints: [Footprint], signOut: @escaping () -> Void) {
         self.place = place
         self.households = households
+        self.footprints = footprints
         self.signOut = signOut
         _position = State(initialValue: .region(place.region))
     }
 
     var body: some View {
         Map(position: $position) {
+            ForEach(footprints) { footprint in
+                ForEach(footprint.polygons, id: \.self) { polygon in
+                    MapPolygon(polygon)
+                        .foregroundStyle(footprint.accessory ? Palette.roofAccessory : Palette.roof)
+                        .stroke(.black.opacity(0.3), lineWidth: 0.5)
+                }
+            }
             ForEach(households) { household in
                 Annotation(household.mine.label, coordinate: household.coordinate) {
                     HousePlaque(number: household.houseNumber, name: household.mine.label, size: showsNames ? .pin : .tab)
@@ -36,6 +45,17 @@ struct PlaceMap: View {
             if households.isEmpty {
                 YardSign(text: "NOBODY ADDED YET", kind: .panel)
                     .padding(Spacing.md)
+            }
+        }
+        .overlay(alignment: .bottomTrailing) {
+            if !footprints.isEmpty {
+                // ODbL: the outlines are OSM data, so the credit sits on the map wherever they are drawn.
+                Text("© OpenStreetMap contributors")
+                    .font(.caption2)
+                    .foregroundStyle(Palette.inkSecondary)
+                    .padding(.horizontal, Spacing.xs)
+                    .background(Palette.surface.opacity(0.85), in: .rect(cornerRadius: 3))
+                    .padding(Spacing.sm)
             }
         }
     }
