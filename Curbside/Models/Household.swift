@@ -2,13 +2,17 @@ import CoreLocation
 
 /// A household on a map. `mine` is the API's `private` block; `published` is the post-MVP card, always null for now.
 struct Household: Decodable, Equatable, Identifiable, Sendable {
+    /// `people`/`pets` are absent from PATCH responses and `notes` from map loads; nil means "not sent", not "none".
     struct Mine: Decodable, Equatable, Sendable {
         var label: String
         var address: String?
         var lastTalkedAt: String?
+        var people: [Person]?
+        var pets: [Pet]?
+        var notes: [Note]?
 
         enum CodingKeys: String, CodingKey {
-            case label, address
+            case label, address, people, pets, notes
             case lastTalkedAt = "last_talked_at"
         }
     }

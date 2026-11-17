@@ -77,6 +77,20 @@ final class MapHomeModel {
         await select(Spot(coordinate, buildingID: nil))
     }
 
+    /// The card for a household on this map, wired to keep the map's copy current.
+    func card(for id: String) -> HouseholdModel? {
+        guard let place, let household = households.first(where: { $0.id == id }) else { return nil }
+        return HouseholdModel(household: household, mapID: place.id, api: api) { [weak self] in self?.upsert($0) }
+    }
+
+    func upsert(_ household: Household) {
+        if let index = households.firstIndex(where: { $0.id == household.id }) {
+            households[index] = household
+        } else {
+            households.append(household)
+        }
+    }
+
     func clearSelection() {
         selection = nil
     }
