@@ -4,7 +4,7 @@ import Foundation
 /// this file. Screenshots and UI tests use it because nobody can sign in on a simulator. Release builds exclude this
 /// folder (`EXCLUDED_SOURCE_FILE_NAMES` in project.yml), so the call site is `#if DEBUG`.
 enum Demo {
-    /// The fixture set to answer from; `street` when `-demo` has no value.
+    /// `street` (the default) is a loaded block; `new` is an account with no place yet.
     static var scenario: String? {
         let args = ProcessInfo.processInfo.arguments
         guard let flag = args.firstIndex(of: "-demo") else { return nil }
@@ -26,6 +26,9 @@ enum Demo {
         let path = (request.url?.path() ?? "").replacing(/\/[0-9A-HJKMNP-TV-Z]{26}/, with: "/{id}")
         switch (scenario, request.httpMethod ?? "GET", path) {
         case (_, "GET", "/v1/me"): return "demo-me"
+        case ("new", "GET", "/v1/maps"): return "demo-maps-none"
+        case (_, "GET", "/v1/maps"): return "demo-maps"
+        case (_, "GET", "/v1/maps/{id}"): return "demo-map"
         default: return nil
         }
     }

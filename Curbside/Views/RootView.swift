@@ -21,8 +21,8 @@ struct RootView: View {
                 .accessibilityLabel("Loading your account")
         case .onboarding:
             OnboardingView(model: model)
-        case .home(let account):
-            HomeView(account: account, signOut: model.signOut)
+        case .home:
+            HomeView(api: model.api, signOut: model.signOut)
         case .failed:
             VStack(spacing: Spacing.md) {
                 Text("Couldn't reach Curbside.")

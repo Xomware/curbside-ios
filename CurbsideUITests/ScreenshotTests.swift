@@ -8,10 +8,18 @@ final class ScreenshotTests: XCTestCase {
         continueAfterFailure = false
     }
 
-    func testHome() throws {
+    func testMap() throws {
         let app = launch("street")
-        XCTAssert(app.staticTexts["Demo"].waitForExistence(timeout: 10))
-        try snap("home", app)
+        XCTAssert(app.staticTexts["Quillfeather Ln"].waitForExistence(timeout: 10))
+        try snap("map", app)
+        app.maps.firstMatch.pinch(withScale: 3, velocity: 2)
+        try snap("map-zoomed", app)
+    }
+
+    func testMapWithNoPlace() throws {
+        let app = launch("new")
+        XCTAssert(app.staticTexts["New place"].waitForExistence(timeout: 10))
+        try snap("no-place", app)
     }
 
     func launch(_ scenario: String) -> XCUIApplication {
