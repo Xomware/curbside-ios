@@ -25,3 +25,28 @@ struct Footprint: Identifiable {
         let accessory: Bool
     }
 }
+
+extension Footprint {
+    /// Inside any part of the outline and outside its holes. Even-odd ray casting in map points, exact enough at
+    /// house scale.
+    func contains(_ coordinate: CLLocationCoordinate2D) -> Bool {
+        let point = MKMapPoint(coordinate)
+        return polygons.contains { polygon in
+            Self.ring(polygon, contains: point) && !(polygon.interiorPolygons ?? []).contains { Self.ring($0, contains: point) }
+        }
+    }
+
+    private static func ring(_ polygon: MKPolygon, contains point: MKMapPoint) -> Bool {
+        let corners = UnsafeBufferPointer(start: polygon.points(), count: polygon.pointCount)
+        var inside = false
+        var previous = corners.count - 1
+        for index in corners.indices {
+            let a = corners[index], b = corners[previous]
+            if (a.y > point.y) != (b.y > point.y), point.x < (b.x - a.x) * (point.y - a.y) / (b.y - a.y) + a.x {
+                inside.toggle()
+            }
+            previous = index
+        }
+        return inside
+    }
+}

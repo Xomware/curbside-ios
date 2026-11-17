@@ -1,3 +1,4 @@
+import CoreLocation
 import Foundation
 import Observation
 
@@ -16,13 +17,22 @@ final class MapHomeModel {
     private(set) var households: [Household] = []
     /// Empty until the file loads, and for good when the place has none; households then stand alone as pins.
     private(set) var footprints: [Footprint] = []
+    private(set) var selection: Spot?
 
     let api: APIClient
     private let footprintLoader: FootprintLoader
+    private let geo: Geo
 
-    init(api: APIClient, footprintLoader: FootprintLoader? = nil) {
+    init(api: APIClient, footprintLoader: FootprintLoader? = nil, geo: Geo = .live) {
         self.api = api
         self.footprintLoader = footprintLoader ?? FootprintLoader(api: api)
+        self.geo = geo
+    }
+
+    /// Households in the selected building. Duplexes and apartments put several in one outline.
+    var selectedHouseholds: [Household] {
+        guard let id = selection?.buildingID else { return [] }
+        return households.filter { $0.buildingID == id }
     }
 
     func load() async {
@@ -51,6 +61,32 @@ final class MapHomeModel {
         households = []
         footprints = []
         state = .ready
+    }
+
+    /// A tap selects the building under it; accessory buildings and open ground clear the selection.
+    func tap(_ coordinate: CLLocationCoordinate2D) async {
+        guard let building = footprints.first(where: { !$0.accessory && $0.contains(coordinate) }) else {
+            selection = nil
+            return
+        }
+        await select(Spot(coordinate, buildingID: building.id))
+    }
+
+    /// A long-press drops a pin anywhere: the fallback for houses with no outline.
+    func drop(_ coordinate: CLLocationCoordinate2D) async {
+        await select(Spot(coordinate, buildingID: nil))
+    }
+
+    func clearSelection() {
+        selection = nil
+    }
+
+    private func select(_ spot: Spot) async {
+        selection = spot
+        let address = await geo.address(spot.coordinate)
+        // A newer tap may have landed while Apple answered.
+        guard selection == spot else { return }
+        selection?.address = address
     }
 
     func loadFootprints() async {
