@@ -83,6 +83,21 @@ final class MapHomeModel {
         return HouseholdModel(household: household, mapID: place.id, api: api) { [weak self] in self?.upsert($0) }
     }
 
+    /// Capture centred on the picked building or pin, if any. Its first household is the one being talked about.
+    func capture() -> CaptureModel? {
+        guard let place else { return nil }
+        return CaptureModel(place: place, households: households, selection: selection, focus: selectedHouseholds.first, api: api, geo: geo)
+    }
+
+    /// Picks up what a capture wrote. Apply answers with ids only, so the map is the cheapest complete copy.
+    func refresh() async {
+        guard let place else { return }
+        // A failed refresh leaves the old pins; the next load catches up, and the capture itself already saved.
+        guard let loaded: Loaded = try? await api.request("/v1/maps/\(place.id)") else { return }
+        households = loaded.households
+        selection = nil
+    }
+
     func upsert(_ household: Household) {
         if let index = households.firstIndex(where: { $0.id == household.id }) {
             households[index] = household

@@ -4,6 +4,7 @@ struct Patch: Encodable, Sendable, Equatable {
     enum Value: Encodable, Sendable, Equatable {
         case string(String)
         case int(Int)
+        case double(Double)
         case bool(Bool)
         case null
 
@@ -12,6 +13,7 @@ struct Patch: Encodable, Sendable, Equatable {
             switch self {
             case .string(let value): try container.encode(value)
             case .int(let value): try container.encode(value)
+            case .double(let value): try container.encode(value)
             case .bool(let value): try container.encode(value)
             case .null: try container.encodeNil()
             }
@@ -47,4 +49,26 @@ struct Patch: Encodable, Sendable, Equatable {
 extension Patch.Value {
     static func nullable(_ value: String?) -> Patch.Value { value.map(Patch.Value.string) ?? .null }
     static func nullable(_ value: Int?) -> Patch.Value { value.map(Patch.Value.int) ?? .null }
+}
+
+/// Capture ops carry fields of mixed types; JSON `true` never decodes as an Int, so the order here is safe.
+extension Patch.Value: Decodable {
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if container.decodeNil() {
+            self = .null
+        } else if let value = try? container.decode(Bool.self) {
+            self = .bool(value)
+        } else if let value = try? container.decode(Int.self) {
+            self = .int(value)
+        } else if let value = try? container.decode(Double.self) {
+            self = .double(value)
+        } else {
+            self = .string(try container.decode(String.self))
+        }
+    }
+
+    var text: String? {
+        if case .string(let value) = self { value } else { nil }
+    }
 }
