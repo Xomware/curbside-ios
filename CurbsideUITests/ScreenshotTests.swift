@@ -154,6 +154,11 @@ final class ScreenshotTests: XCTestCase {
         settings.tap()
         XCTAssert(app.navigationBars["Settings"].waitForExistence(timeout: 5))
         try snap("settings", app)
+        app.buttons["Remove"].tap()
+        XCTAssert(app.staticTexts["Remove Apple sign-in?"].waitForExistence(timeout: 5))
+        try snap("settings-remove", app)
+        // iOS 26 shows the dialog as a popover with no Cancel; tapping outside dismisses it.
+        app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.95)).tap()
         app.swipeUp()
         try snap("settings-scrolled", app)
     }

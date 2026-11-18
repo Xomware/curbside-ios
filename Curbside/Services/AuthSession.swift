@@ -22,18 +22,24 @@ final class AuthSession: TokenProvider {
 
     /// `authenticate` presents the authorize URL and returns the `curbside://` callback URL.
     func signIn(with provider: IdentityProvider, authenticate: (URL) async throws -> URL) async throws {
+        let tokens = try await authorize(with: provider, authenticate: authenticate)
+        try store.save(tokens)
+        self.tokens = tokens
+    }
+
+    /// A full sign-in round whose tokens are handed back, not kept: linking spends the new ID token while the
+    /// current session stays signed in.
+    func authorize(with provider: IdentityProvider, authenticate: (URL) async throws -> URL) async throws -> Tokens {
         let pkce = PKCE.random()
         let state = randomToken()
         let callback = try await authenticate(cognito.authorizeURL(provider, pkce: pkce, state: state))
         let code = try cognito.code(from: callback, state: state)
-        let tokens = try await cognito.exchange([
+        return try await cognito.exchange([
             "grant_type": "authorization_code",
             "code": code,
             "code_verifier": pkce.verifier,
             "redirect_uri": Cognito.redirectURI,
         ], session: session)
-        try store.save(tokens)
-        self.tokens = tokens
     }
 
     func accessToken() -> String? {

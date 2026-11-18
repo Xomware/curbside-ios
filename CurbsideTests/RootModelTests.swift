@@ -16,7 +16,7 @@ private let needsOnboarding = StubURLProtocol.Reply(
     body: #"{"data": null, "error": {"code": "needs_onboarding", "message": "No account"}, "meta": {}}"#
 )
 private let issued = StubURLProtocol.Reply(status: 200, body: #"{"access_token": "a1", "id_token": "i1", "refresh_token": "r1"}"#)
-private let pumpernickel = Account(accountID: "acc1", displayName: "Pumpernickel")
+private let pumpernickel = Account(accountID: "acc1", displayName: "Pumpernickel", identities: [])
 
 /// One stub session serves both Cognito and the API, in reply order. The Keychain item is per test.
 @MainActor

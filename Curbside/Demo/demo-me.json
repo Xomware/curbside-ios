@@ -3,7 +3,18 @@
   "account_id": "01JDEM0ACCT000000000000001",
   "display_name": "Demo",
   "created_at": "2026-11-10T12:00:00+00:00",
-  "identities": []
+  "identities": [
+   {
+    "sub": "demo-apple",
+    "provider": "apple",
+    "created_at": "2026-11-10T12:00:00+00:00"
+   },
+   {
+    "sub": "demo-google",
+    "provider": "google",
+    "created_at": "2026-11-10T12:00:00+00:00"
+   }
+  ]
  },
  "error": null,
  "meta": {}

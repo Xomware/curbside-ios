@@ -64,7 +64,7 @@ struct APIClient: Sendable {
         switch (status, envelope?.error?.code) {
         case (401, _): throw APIError.unauthorized
         case (429, _): throw APIError.rateLimited
-        case (409, _): throw APIError.conflict(message: envelope?.error?.message)
+        case (409, _): throw APIError.conflict(code: envelope?.error?.code)
         case (_, "needs_onboarding"): throw APIError.needsOnboarding
         case (_, let code): throw APIError.server(status: status, code: code)
         }
