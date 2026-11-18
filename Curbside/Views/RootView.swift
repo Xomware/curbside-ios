@@ -43,7 +43,7 @@ struct RootView: View {
         case .onboarding:
             OnboardingView(model: model)
         case .home:
-            HomeView(api: model.api, signOut: model.signOut)
+            HomeView(root: model)
         case .failed:
             VStack(spacing: Spacing.md) {
                 Text("Couldn't reach Curbside.")
