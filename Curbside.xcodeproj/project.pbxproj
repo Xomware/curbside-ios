@@ -56,6 +56,7 @@
 		6A157660CA2920A93CBEB08A /* SignPressStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FC1700C1A74B2798EEB2D7 /* SignPressStyle.swift */; };
 		6A85ED2444AAAE0C39BE0926 /* HouseholdModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3E0D6546E18AEA6D28211 /* HouseholdModel.swift */; };
 		6AC2B58FA810070E79B5006F /* SignShapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDC28C64177C90F92B314FB /* SignShapes.swift */; };
+		6EA3B487D8AE02A0945BDDE8 /* AppLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913F0E658EA64B58DF3FFC0C /* AppLock.swift */; };
 		74356F64DCFD916EA55F59D5 /* demo-household-created.json in Resources */ = {isa = PBXBuildFile; fileRef = 90930663FCC13FFAC2F53EBB /* demo-household-created.json */; };
 		7C3D8836011DB13995A54585 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = D3B4B16A8FBA1F0F501118D5 /* OFL.txt */; };
 		7D62F924597BDBD6B761AC13 /* CurbsideFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F7241D303E1B145E2884BB /* CurbsideFont.swift */; };
@@ -104,6 +105,7 @@
 		CCA4DA899B6CD2B62D0D004F /* CaptureOp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87075CD0D0C103E5367BFF21 /* CaptureOp.swift */; };
 		CE4D1EA138D2802C0EBF8E21 /* NearbyRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497BF76D0C277AFC20E43FD0 /* NearbyRow.swift */; };
 		CED7E808517684533F801E93 /* StopSignButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A38765A9ABDF232AC4DAFB /* StopSignButton.swift */; };
+		CFAB339272AB92429B3CFED3 /* AppLockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BB4AEC17219292C21B7743 /* AppLockTests.swift */; };
 		D1FD22663857C7F0F3313910 /* NoteEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB9BF323F811767AE79AD9E /* NoteEditor.swift */; };
 		D41AE2FE93BB4738C8CA8295 /* Gzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B727845E54A95C07B554D60 /* Gzip.swift */; };
 		D62CFBDE4BD567D46B78FF48 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC249AE21D1A91C9CDE5B728 /* Config.swift */; };
@@ -122,6 +124,7 @@
 		F021A024D0B1587E8C3A922A /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3061B9FD4AA9D8035A7C221 /* APIClientTests.swift */; };
 		F154221829B77270829C5523 /* LocationFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6362632636F02FA6B7BBCF /* LocationFeed.swift */; };
 		F1BD8E6C79AD7460847FEF45 /* NotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E9E5AA71CAEC42B15CDF2D5 /* NotesTests.swift */; };
+		F4B572EE492A464FBE7FF00E /* LockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08F8FCEF770AE0B01290427 /* LockView.swift */; };
 		F51DCAA8B05A3083AA9920B1 /* NearMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393E707504D36C7D23E1C7F5 /* NearMeTests.swift */; };
 		F566CC01B424F1C5432474DB /* OverpassMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4DEDDEF24ADE41EB0EC21A1B /* OverpassMono.ttf */; };
 		F6C2AA75F4FB27654BFEA6CC /* PersonEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F84320EBD5480A671F3C6A /* PersonEditor.swift */; };
@@ -225,6 +228,7 @@
 		8DDFDEC0AD45BA8F76595CF9 /* OpRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpRow.swift; sourceTree = "<group>"; };
 		8FC76DE92564875A0E80326D /* demo-household-01JDEM0HH00000000000000006.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-household-01JDEM0HH00000000000000006.json"; sourceTree = "<group>"; };
 		90930663FCC13FFAC2F53EBB /* demo-household-created.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-household-created.json"; sourceTree = "<group>"; };
+		913F0E658EA64B58DF3FFC0C /* AppLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLock.swift; sourceTree = "<group>"; };
 		925F0616EA4AE85CCED76C95 /* demo-household-01JDEM0HH0000000000000000R.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-household-01JDEM0HH0000000000000000R.json"; sourceTree = "<group>"; };
 		9461DF14AF60C87B982F9699 /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
 		95FC1700C1A74B2798EEB2D7 /* SignPressStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignPressStyle.swift; sourceTree = "<group>"; };
@@ -246,6 +250,7 @@
 		B2F84320EBD5480A671F3C6A /* PersonEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonEditor.swift; sourceTree = "<group>"; };
 		BC3F4C499162CD1D4C2E7E22 /* CurbsideUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = CurbsideUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD4990A06E05AED23C4D7432 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		C08F8FCEF770AE0B01290427 /* LockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockView.swift; sourceTree = "<group>"; };
 		C193783F9B9CB3D5BAA23333 /* demo-household-01JDEM0HH0000000000000000Z.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-household-01JDEM0HH0000000000000000Z.json"; sourceTree = "<group>"; };
 		C1DBF4F652EFFFCCC3FAC0B0 /* YardSign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YardSign.swift; sourceTree = "<group>"; };
 		C4FB3719C27C59B0E6FBAA89 /* SectionSign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionSign.swift; sourceTree = "<group>"; };
@@ -271,6 +276,7 @@
 		EF985AA6CB2AFDAA7261650C /* Curbside.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Curbside.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3061B9FD4AA9D8035A7C221 /* APIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
 		F5A8B091F003B05CE4CF718C /* HouseholdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseholdView.swift; sourceTree = "<group>"; };
+		F6BB4AEC17219292C21B7743 /* AppLockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockTests.swift; sourceTree = "<group>"; };
 		FB193D2F83186FB48C29D054 /* KeychainTokenStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainTokenStoreTests.swift; sourceTree = "<group>"; };
 		FE7376C42D725B8F51C99928 /* MapHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -299,6 +305,7 @@
 			isa = PBXGroup;
 			children = (
 				F3061B9FD4AA9D8035A7C221 /* APIClientTests.swift */,
+				F6BB4AEC17219292C21B7743 /* AppLockTests.swift */,
 				06975FCFF956C0FBC4EF27DD /* AuthTests.swift */,
 				9CB0FCE20BD60AE61683D868 /* CaptureModelTests.swift */,
 				DF29EF1F09EBBE0E7B3634C7 /* CaptureSummaryTests.swift */,
@@ -364,6 +371,7 @@
 			children = (
 				216226A4C8DB9FF8E3A9EF36 /* APIClient.swift */,
 				367D309AB44D54F1E17736CE /* APIError.swift */,
+				913F0E658EA64B58DF3FFC0C /* AppLock.swift */,
 				7D8BF2B3D5E0734BD32607BB /* AuthSession.swift */,
 				C98000122D707CD9D63BE9CB /* Cognito.swift */,
 				6CB10AC96F0F822958B1B12B /* FootprintLoader.swift */,
@@ -400,6 +408,7 @@
 			isa = PBXGroup;
 			children = (
 				090E0B71411AA90C9CBE8B9E /* HomeView.swift */,
+				C08F8FCEF770AE0B01290427 /* LockView.swift */,
 				EA254F97B1E0775012C67294 /* OnboardingView.swift */,
 				6FD14843CADB323F4B75D0ED /* ProviderButton.swift */,
 				3966DE8C095F8EF485DD420A /* RootView.swift */,
@@ -704,6 +713,7 @@
 				569169D7E05052487A7AD579 /* APIError.swift in Sources */,
 				4719484517F58E74E76C86C6 /* Account.swift in Sources */,
 				4A5292055D5209FAD8D9A359 /* AgeSign.swift in Sources */,
+				6EA3B487D8AE02A0945BDDE8 /* AppLock.swift in Sources */,
 				948F74A975AC46148AF80B54 /* AuthSession.swift in Sources */,
 				22F499AD74FD6BCDEB68E868 /* CaptureInput.swift in Sources */,
 				34E579C17DA2813CFDB8924E /* CaptureModel.swift in Sources */,
@@ -731,6 +741,7 @@
 				929D9CF3F4D30C66B8583F4B /* HouseholdView.swift in Sources */,
 				284616DF6CA720B7B66197CC /* KeychainTokenStore.swift in Sources */,
 				F154221829B77270829C5523 /* LocationFeed.swift in Sources */,
+				F4B572EE492A464FBE7FF00E /* LockView.swift in Sources */,
 				E5A328B9C9B692A93E2F1AE0 /* MapDock.swift in Sources */,
 				91CFCEF6A54D0CBBC8F9301E /* MapHeader.swift in Sources */,
 				9D97EF7EAC917A6B9D8F827D /* MapHomeModel.swift in Sources */,
@@ -792,6 +803,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F021A024D0B1587E8C3A922A /* APIClientTests.swift in Sources */,
+				CFAB339272AB92429B3CFED3 /* AppLockTests.swift in Sources */,
 				B412967EB852B07001EFEF6F /* AuthTests.swift in Sources */,
 				C4BB020175D631532819294F /* CaptureModelTests.swift in Sources */,
 				0C3F681CB533D0C935F56F10 /* CaptureSummaryTests.swift in Sources */,
@@ -844,6 +856,7 @@
 				INFOPLIST_FILE = Curbside/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Curbside;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Curbside uses Face ID to keep your notes about the street locked.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Curbside uses your location to center the map on your street and to show which houses you're walking past.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Curbside listens while the stop sign says STOP, and turns what you say into text on this iPhone.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Curbside turns what you say into text on this iPhone. Your voice never leaves it.";
@@ -1051,6 +1064,7 @@
 				INFOPLIST_FILE = Curbside/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Curbside;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Curbside uses Face ID to keep your notes about the street locked.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Curbside uses your location to center the map on your street and to show which houses you're walking past.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Curbside listens while the stop sign says STOP, and turns what you say into text on this iPhone.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Curbside turns what you say into text on this iPhone. Your voice never leaves it.";

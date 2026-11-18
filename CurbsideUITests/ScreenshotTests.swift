@@ -137,6 +137,16 @@ final class ScreenshotTests: XCTestCase {
         try snap("capture-saved", app)
     }
 
+    /// Needs Face ID enrolled in the simulator; the test runner then answers the prompt with a match notification:
+    /// `xcrun simctl spawn <device> notifyutil -s com.apple.BiometricKit.enrollmentChanged 1` and `-p` the same name.
+    func testLock() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-demo", "street", "-lock"]
+        app.launch()
+        XCTAssert(app.buttons["Unlock"].waitForExistence(timeout: 10))
+        try snap("locked", app)
+    }
+
     func launch(_ scenario: String) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = ["-demo", scenario]

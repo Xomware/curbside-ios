@@ -15,6 +15,7 @@ final class RootModel {
 
     let auth: AuthSession
     let api: APIClient
+    let lock: AppLock
     private var state = Route.loading
     private(set) var isBusy = false
     private(set) var errorMessage: String?
@@ -24,9 +25,10 @@ final class RootModel {
         auth.isSignedIn ? state : .signedOut
     }
 
-    init(auth: AuthSession, api: APIClient) {
+    init(auth: AuthSession, api: APIClient, lock: AppLock = AppLock()) {
         self.auth = auth
         self.api = api
+        self.lock = lock
     }
 
     static func live() -> RootModel {
