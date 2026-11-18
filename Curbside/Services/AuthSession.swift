@@ -22,7 +22,11 @@ final class AuthSession: TokenProvider {
 
     /// `authenticate` presents the authorize URL and returns the `curbside://` callback URL.
     func signIn(with provider: IdentityProvider, authenticate: (URL) async throws -> URL) async throws {
-        let tokens = try await authorize(with: provider, authenticate: authenticate)
+        try adopt(try await authorize(with: provider, authenticate: authenticate))
+    }
+
+    /// Makes tokens from `authorize` the session, e.g. the fresh sign-in account deletion needs.
+    func adopt(_ tokens: Tokens) throws {
         try store.save(tokens)
         self.tokens = tokens
     }

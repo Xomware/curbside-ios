@@ -161,6 +161,15 @@ final class ScreenshotTests: XCTestCase {
         app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.95)).tap()
         app.swipeUp()
         try snap("settings-scrolled", app)
+        app.buttons["Export my data"].tap()
+        // The share sheet runs out of process, so there's nothing in it to wait on; snap() waits a beat.
+        try snap("settings-export", app)
+        app.swipeDown(velocity: .fast)
+        let delete = app.buttons["Delete account"]
+        XCTAssert(delete.waitForExistence(timeout: 5))
+        delete.tap()
+        XCTAssert(app.staticTexts["Delete your account?"].waitForExistence(timeout: 5))
+        try snap("settings-delete", app)
     }
 
     func launch(_ scenario: String) -> XCUIApplication {

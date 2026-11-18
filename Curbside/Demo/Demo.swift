@@ -32,6 +32,7 @@ enum Demo {
         let path = (request.url?.path() ?? "").replacing(/\/[0-9A-HJKMNP-TV-Z]{26}/, with: "/{id}")
         switch (scenario, request.httpMethod ?? "GET", path) {
         case (_, "GET", "/v1/me"): return "demo-me.json"
+        case (_, "GET", "/v1/me/export"): return "demo-export.json"
         case ("new", "GET", "/v1/maps"): return "demo-maps-none.json"
         case (_, "GET", "/v1/maps"): return "demo-maps.json"
         case (_, "GET", "/v1/maps/{id}"): return "demo-map.json"
