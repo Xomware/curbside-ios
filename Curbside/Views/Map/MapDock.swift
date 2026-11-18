@@ -1,10 +1,11 @@
 import SwiftUI
 
-/// Bottom of the map: the empty-street sign, the OSM credit, and the "Near me" sign.
+/// Bottom of the map: the empty-street sign, the OSM credit, the "Near me" sign and the TALK stop sign.
 struct MapDock: View {
     let isEmpty: Bool
     let showsCredit: Bool
     let nearMe: () -> Void
+    let talk: () -> Void
 
     var body: some View {
         VStack(spacing: 0) {
@@ -23,15 +24,18 @@ struct MapDock: View {
                 }
             }
             .padding(Spacing.sm)
-            Button(action: nearMe) {
-                Label("Near me", systemImage: "location.north.line.fill")
-                    .font(CurbsideFont.button)
-                    .textCase(.uppercase)
-                    .foregroundStyle(Palette.signWhite)
-                    .frame(maxWidth: .infinity, minHeight: 48)
-                    .signFace(Palette.infoBlue, rule: Palette.signWhite)
+            HStack(spacing: Spacing.md) {
+                Button(action: nearMe) {
+                    Label("Near me", systemImage: "location.north.line.fill")
+                        .font(CurbsideFont.button)
+                        .textCase(.uppercase)
+                        .foregroundStyle(Palette.signWhite)
+                        .frame(maxWidth: .infinity, minHeight: 48)
+                        .signFace(Palette.infoBlue, rule: Palette.signWhite)
+                }
+                .buttonStyle(SignPressStyle())
+                StopSignButton(title: "TALK", accessibilityLabel: "Talk: capture by voice or text", action: talk)
             }
-            .buttonStyle(SignPressStyle())
             .padding([.horizontal, .bottom], Spacing.md)
         }
     }

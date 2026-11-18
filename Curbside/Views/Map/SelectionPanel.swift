@@ -6,6 +6,7 @@ struct SelectionPanel: View {
     let households: [Household]
     let open: (Household) -> Void
     let add: () -> Void
+    let talk: () -> Void
     let close: () -> Void
 
     var body: some View {
@@ -36,13 +37,26 @@ struct SelectionPanel: View {
                 }
                 .buttonStyle(SignPressStyle())
             }
-            // Always offered: a building with one household can still be a duplex.
-            Button(action: add) {
-                HousePlaque(number: nil, name: nil)
-                    .frame(minHeight: 44)
+            HStack {
+                // Always offered: a building with one household can still be a duplex.
+                Button(action: add) {
+                    HousePlaque(number: nil, name: nil)
+                        .frame(minHeight: 44)
+                }
+                .buttonStyle(SignPressStyle())
+                .accessibilityLabel("Add a household here")
+                Spacer()
+                Button(action: talk) {
+                    Text("TALK")
+                        .font(CurbsideFont.button)
+                        .foregroundStyle(Palette.signWhite)
+                        .padding(.horizontal, Spacing.md)
+                        .frame(minHeight: 44)
+                        .background(Palette.stop, in: Octagon())
+                }
+                .buttonStyle(SignPressStyle())
+                .accessibilityLabel(households.isEmpty ? "Talk: capture a new house here" : "Talk: capture about this house")
             }
-            .buttonStyle(SignPressStyle())
-            .accessibilityLabel("Add a household here")
         }
         .padding(Spacing.md)
         .frame(maxWidth: .infinity, alignment: .leading)

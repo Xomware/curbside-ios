@@ -1,0 +1,22 @@
+{
+ "data": [
+  {
+   "op": "create_household",
+   "id": "01JDEM0HH0000000000000000X"
+  },
+  {
+   "op": "add_note",
+   "id": "01JDEM0N0TE00000000000000X"
+  },
+  {
+   "op": "update_person",
+   "id": "01JDEM00000000000000000004"
+  },
+  {
+   "op": "add_person",
+   "id": "01JDEM0000000000000000000X"
+  }
+ ],
+ "error": null,
+ "meta": {}
+}
