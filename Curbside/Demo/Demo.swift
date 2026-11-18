@@ -4,7 +4,8 @@ import Foundation
 /// this file. Screenshots and UI tests use it because nobody can sign in on a simulator. Release builds exclude this
 /// folder (`EXCLUDED_SOURCE_FILE_NAMES` in project.yml), so the call site is `#if DEBUG`.
 enum Demo {
-    /// `street` (the default) is a loaded block; `new` is an account with no place yet.
+    /// `street` (the default) is a loaded block; `new` is an account with no place yet; `onboarding` is a sign-in with
+    /// no account.
     static var scenario: String? {
         let args = ProcessInfo.processInfo.arguments
         guard let flag = args.firstIndex(of: "-demo") else { return nil }
@@ -31,6 +32,7 @@ enum Demo {
         if request.url?.host() == "footprints.demo.invalid" { return "demo-footprints.geojson.gz" }
         let path = (request.url?.path() ?? "").replacing(/\/[0-9A-HJKMNP-TV-Z]{26}/, with: "/{id}")
         switch (scenario, request.httpMethod ?? "GET", path) {
+        case ("onboarding", "GET", "/v1/me"): return "demo-me.404.json"
         case (_, "GET", "/v1/me"): return "demo-me.json"
         case (_, "GET", "/v1/me/export"): return "demo-export.json"
         case ("new", "GET", "/v1/maps"): return "demo-maps-none.json"
@@ -53,9 +55,11 @@ final class DemoURLProtocol: URLProtocol {
 
     override func startLoading() {
         // A missing route answers 404 so the screen under test shows its error state instead of hanging.
+        // A `*.404.json` fixture is an API error body, answered with its status.
         let url = Demo.fixture(for: request).flatMap { Bundle.main.url(forResource: $0, withExtension: nil) }
         let body = url.flatMap { try? Data(contentsOf: $0) } ?? Data(#"{"data": null, "error": {"code": "demo_missing", "message": "No demo fixture"}, "meta": {}}"#.utf8)
-        let response = HTTPURLResponse(url: request.url ?? Config.apiBaseURL, statusCode: url == nil ? 404 : 200, httpVersion: nil, headerFields: nil)
+        let status = url.map { $0.lastPathComponent.hasSuffix(".404.json") ? 404 : 200 } ?? 404
+        let response = HTTPURLResponse(url: request.url ?? Config.apiBaseURL, statusCode: status, httpVersion: nil, headerFields: nil)
         if let response {
             client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
         }

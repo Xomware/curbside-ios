@@ -147,6 +147,12 @@ final class ScreenshotTests: XCTestCase {
         try snap("locked", app)
     }
 
+    func testOnboarding() throws {
+        let app = launch("onboarding")
+        XCTAssert(app.staticTexts["New here"].waitForExistence(timeout: 10))
+        try snap("onboarding", app)
+    }
+
     func testSettings() throws {
         let app = launch("street")
         let settings = app.buttons["Settings"]

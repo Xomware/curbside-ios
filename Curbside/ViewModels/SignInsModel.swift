@@ -40,7 +40,7 @@ final class SignInsModel {
         message = nil
         do {
             let tokens = try await auth.authorize(with: provider, authenticate: authenticate)
-            let _: Identity = try await api.request("/v1/me/identities", method: "POST", body: LinkBody(idToken: tokens.id))
+            _ = try await api.link(idToken: tokens.id)
             await load()
         } catch let error as ASWebAuthenticationSessionError where error.code == .canceledLogin {
             return
@@ -71,13 +71,5 @@ final class SignInsModel {
     private func accept(_ account: Account) {
         identities = account.identities ?? []
         updated(account)
-    }
-}
-
-private struct LinkBody: Encodable, Sendable {
-    let idToken: String
-
-    enum CodingKeys: String, CodingKey {
-        case idToken = "id_token"
     }
 }

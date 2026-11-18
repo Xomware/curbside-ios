@@ -87,6 +87,49 @@ final class RootModel {
         }
     }
 
+    /// Onboarding's "I already use Curbside": sign in to that account with `provider`, then add the sign-in this phone
+    /// holds to it and switch to the account. The server wants an ID token under 10 minutes old, so a stale one costs
+    /// a fresh sign-in with the same provider. Nothing is adopted until the link lands.
+    func linkExisting(_ provider: IdentityProvider, authenticate: (URL) async throws -> URL) async {
+        guard let orphan = auth.tokens else { return }
+        errorMessage = nil
+        isBusy = true
+        defer { isBusy = false }
+        do {
+            let existing = try await auth.authorize(with: provider, authenticate: authenticate)
+            let api = APIClient(baseURL: api.baseURL, tokens: Bearer(access: existing.access), session: api.session)
+            do {
+                try await Self.link(orphan.id, with: api)
+            } catch APIError.server(status: 400, code: "invalid_id_token") {
+                guard let again = orphan.provider else { throw AuthError.malformed }
+                try await Self.link(try await auth.authorize(with: again, authenticate: authenticate).id, with: api)
+            }
+            try auth.adopt(existing)
+        } catch let error as ASWebAuthenticationSessionError where error.code == .canceledLogin {
+            return
+        } catch is AuthError {
+            errorMessage = "Sign-in didn't finish. Try again."
+            return
+        } catch APIError.needsOnboarding {
+            errorMessage = "That sign-in doesn't have a Curbside account either. Pick the one you set Curbside up with."
+            return
+        } catch APIError.conflict(code: "identity_in_use") {
+            errorMessage = "That sign-in has its own Curbside account. Accounts can't be merged: export and delete one first."
+            return
+        } catch {
+            errorMessage = "Couldn't add this sign-in to that account. Try again."
+            return
+        }
+        await load()
+    }
+
+    /// `already_linked` is a retry of a link that landed.
+    private static func link(_ idToken: String, with api: APIClient) async throws {
+        do {
+            _ = try await api.link(idToken: idToken)
+        } catch APIError.conflict(code: "already_linked") {}
+    }
+
     /// Settings changed the account (a sign-in added or removed).
     func update(_ account: Account) {
         if case .home = state { state = .home(account) }
@@ -104,4 +147,13 @@ private struct NewAccount: Encodable, Sendable {
     enum CodingKeys: String, CodingKey {
         case displayName = "display_name"
     }
+}
+
+/// A fixed access token for one call made as another account. Fresh from sign-in, so there is nothing to refresh.
+private struct Bearer: TokenProvider {
+    let access: String
+
+    func accessToken() async -> String? { access }
+    func refreshAccessToken() async throws -> String { throw AuthError.signedOut }
+    func signOut() async {}
 }

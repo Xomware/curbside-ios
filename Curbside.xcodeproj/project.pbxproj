@@ -56,6 +56,7 @@
 		5F493F1C8F0DEC6C21A3BA8B /* Cognito.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98000122D707CD9D63BE9CB /* Cognito.swift */; };
 		6335EB212BD3698373510079 /* Tokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736BBDA814E95E0FC989834A /* Tokens.swift */; };
 		6425F249413F0860624BDF24 /* CaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884384544DA66C3D33B65459 /* CaptureView.swift */; };
+		65B2B1C69BF8037C5D31DC45 /* demo-me.404.json in Resources */ = {isa = PBXBuildFile; fileRef = 8550D5D8C3D18FB3D04C854B /* demo-me.404.json */; };
 		6726359C3B779C3497A3AA15 /* demo-household-01JDEM0HH0000000000000000P.json in Resources */ = {isa = PBXBuildFile; fileRef = D4DBDF8D769A157FAEC851EE /* demo-household-01JDEM0HH0000000000000000P.json */; };
 		6A157660CA2920A93CBEB08A /* SignPressStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FC1700C1A74B2798EEB2D7 /* SignPressStyle.swift */; };
 		6A85ED2444AAAE0C39BE0926 /* HouseholdModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3E0D6546E18AEA6D28211 /* HouseholdModel.swift */; };
@@ -86,6 +87,7 @@
 		A02E3237C18F99053C3ABE03 /* demo-me.json in Resources */ = {isa = PBXBuildFile; fileRef = 13A2932AF19DCEA335A9EC43 /* demo-me.json */; };
 		A286E6A76491901DE1271F5C /* CaptureReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3678823A57278477587180 /* CaptureReview.swift */; };
 		A57B3C0C368A3A04B77A1BED /* Geo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADD4F8826CE9B2D8B756C60 /* Geo.swift */; };
+		A76FAA28A8A3DA40F6C154E9 /* LinkIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3CC3F5A16E36EE5F84C59D /* LinkIdentity.swift */; };
 		A7A00E9AA1D37AACC8CF824C /* OpEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55714133401F0FA7F4E208 /* OpEditor.swift */; };
 		A98E8B6557B9A56840CE7EFA /* PersonDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D486FDC308DD758DA16C47 /* PersonDraft.swift */; };
 		AEC9ACA2F52D54AE68988641 /* StubURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F1B3ECE744C92F8973488 /* StubURLProtocol.swift */; };
@@ -238,6 +240,7 @@
 		7D8BF2B3D5E0734BD32607BB /* AuthSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSession.swift; sourceTree = "<group>"; };
 		83A3DC5F6A9F98AB703219AB /* demo-capture-parse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-capture-parse.json"; sourceTree = "<group>"; };
 		84DB86968683CD6B973DA17D /* AccountDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDataModel.swift; sourceTree = "<group>"; };
+		8550D5D8C3D18FB3D04C854B /* demo-me.404.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-me.404.json"; sourceTree = "<group>"; };
 		855E3B6735CE4E20AD240AC7 /* JSONTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTree.swift; sourceTree = "<group>"; };
 		87075CD0D0C103E5367BFF21 /* CaptureOp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureOp.swift; sourceTree = "<group>"; };
 		884384544DA66C3D33B65459 /* CaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureView.swift; sourceTree = "<group>"; };
@@ -266,6 +269,7 @@
 		B1FDE49A99DFA9E8190C1D21 /* CaptureSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureSummary.swift; sourceTree = "<group>"; };
 		B2C3E0D6546E18AEA6D28211 /* HouseholdModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseholdModel.swift; sourceTree = "<group>"; };
 		B2F84320EBD5480A671F3C6A /* PersonEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonEditor.swift; sourceTree = "<group>"; };
+		BB3CC3F5A16E36EE5F84C59D /* LinkIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkIdentity.swift; sourceTree = "<group>"; };
 		BC3F4C499162CD1D4C2E7E22 /* CurbsideUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = CurbsideUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD4990A06E05AED23C4D7432 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		C08F8FCEF770AE0B01290427 /* LockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockView.swift; sourceTree = "<group>"; };
@@ -408,6 +412,7 @@
 				5ADD4F8826CE9B2D8B756C60 /* Geo.swift */,
 				3B727845E54A95C07B554D60 /* Gzip.swift */,
 				DB4E36C2AABFE7FE144A33F3 /* KeychainTokenStore.swift */,
+				BB3CC3F5A16E36EE5F84C59D /* LinkIdentity.swift */,
 				ED6362632636F02FA6B7BBCF /* LocationFeed.swift */,
 				55344A9288137D13955E5ECC /* Patch.swift */,
 				06B3FA5E23842F90C3756E28 /* PKCE.swift */,
@@ -544,6 +549,7 @@
 				0D2D3523673AE523A4DC4464 /* demo-map.json */,
 				723CA5132B0207854CB47311 /* demo-maps-none.json */,
 				42B2683AAE10EDAAF7D66CC9 /* demo-maps.json */,
+				8550D5D8C3D18FB3D04C854B /* demo-me.404.json */,
 				13A2932AF19DCEA335A9EC43 /* demo-me.json */,
 				07AD5623720BB5D730E11BF8 /* Demo.swift */,
 			);
@@ -734,6 +740,7 @@
 				C30D4BDB89261AC138A65E8C /* demo-map.json in Resources */,
 				EA513BBF8AA3AEFCAEAAC6A8 /* demo-maps-none.json in Resources */,
 				C16DBF0EC658447A9666048C /* demo-maps.json in Resources */,
+				65B2B1C69BF8037C5D31DC45 /* demo-me.404.json in Resources */,
 				A02E3237C18F99053C3ABE03 /* demo-me.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -779,6 +786,7 @@
 				929D9CF3F4D30C66B8583F4B /* HouseholdView.swift in Sources */,
 				CA4140CFCAC9872404B138EE /* JSONTree.swift in Sources */,
 				284616DF6CA720B7B66197CC /* KeychainTokenStore.swift in Sources */,
+				A76FAA28A8A3DA40F6C154E9 /* LinkIdentity.swift in Sources */,
 				F154221829B77270829C5523 /* LocationFeed.swift in Sources */,
 				F4B572EE492A464FBE7FF00E /* LockView.swift in Sources */,
 				E5A328B9C9B692A93E2F1AE0 /* MapDock.swift in Sources */,
