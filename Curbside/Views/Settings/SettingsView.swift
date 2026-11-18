@@ -1,15 +1,18 @@
 import SwiftUI
 
-/// Account, sign-ins, privacy and credits.
+/// Account, sign-ins, privacy, your data and credits.
 struct SettingsView: View {
     let root: RootModel
 
     @Environment(\.dismiss) private var dismiss
     @State private var signIns: SignInsModel
+    @State private var data: AccountDataModel
+    @State private var exported: ExportFile?
 
     init(root: RootModel) {
         self.root = root
         _signIns = State(initialValue: SignInsModel(api: root.api, auth: root.auth, updated: root.update))
+        _data = State(initialValue: AccountDataModel(api: root.api, auth: root.auth))
     }
 
     var body: some View {
@@ -22,6 +25,7 @@ struct SettingsView: View {
                 }
                 SignInsSection(model: signIns)
                 lock
+                DataSection(model: data, identities: signIns.identities) { exported = ExportFile(url: $0) }
                 about
                 Section {
                     Button("Sign out", role: .destructive) {
@@ -40,6 +44,12 @@ struct SettingsView: View {
             }
         }
         .tint(Palette.ink)
+        .sheet(item: $exported, onDismiss: removeExport) { ShareSheet(url: $0.url) }
+    }
+
+    private func removeExport() {
+        // A leftover file in tmp is cleared by the system; nothing else to do if this fails.
+        if let url = exported?.url { try? FileManager.default.removeItem(at: url) }
     }
 
     private var lock: some View {
