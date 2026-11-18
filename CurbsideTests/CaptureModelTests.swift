@@ -203,3 +203,22 @@ extension StubbedNetwork {
         }
     }
 }
+
+extension StubbedNetwork {
+    @MainActor @Suite struct CaptureEditTests {
+        @Test func retypedFieldsGoOutWithApply() async throws {
+            let model = capture([CaptureFixtures.newHousehold, CaptureFixtures.applied])
+            await model.parse()
+            model.place("new:1", at: Spot(here, buildingID: nil))
+
+            model.edit(1, ["name": " Markus ", "notes": "  ", "role": "kid"])
+            model.edit(0, ["label": "   "])
+
+            #expect(model.ops[1].fields == ["name": .string("Markus"), "role": .string("adult")])
+            #expect(model.ops[0].fields["label"] == .string("Gray house"))
+            #expect(await model.apply())
+            let ops = try #require(try sent(1)["operations"] as? [NSDictionary])
+            #expect((ops[1]["fields"] as? NSDictionary) == ["name": "Markus", "role": "adult"] as NSDictionary)
+        }
+    }
+}

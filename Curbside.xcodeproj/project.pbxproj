@@ -81,6 +81,7 @@
 		A02E3237C18F99053C3ABE03 /* demo-me.json in Resources */ = {isa = PBXBuildFile; fileRef = 13A2932AF19DCEA335A9EC43 /* demo-me.json */; };
 		A286E6A76491901DE1271F5C /* CaptureReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3678823A57278477587180 /* CaptureReview.swift */; };
 		A57B3C0C368A3A04B77A1BED /* Geo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADD4F8826CE9B2D8B756C60 /* Geo.swift */; };
+		A7A00E9AA1D37AACC8CF824C /* OpEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55714133401F0FA7F4E208 /* OpEditor.swift */; };
 		A98E8B6557B9A56840CE7EFA /* PersonDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D486FDC308DD758DA16C47 /* PersonDraft.swift */; };
 		AEC9ACA2F52D54AE68988641 /* StubURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F1B3ECE744C92F8973488 /* StubURLProtocol.swift */; };
 		AFEB6896E0D6D30C1D184494 /* CheckboxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01109626334B35EEF99F28C2 /* CheckboxStyle.swift */; };
@@ -178,6 +179,7 @@
 		393E707504D36C7D23E1C7F5 /* NearMeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearMeTests.swift; sourceTree = "<group>"; };
 		3966DE8C095F8EF485DD420A /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		3B727845E54A95C07B554D60 /* Gzip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gzip.swift; sourceTree = "<group>"; };
+		3F55714133401F0FA7F4E208 /* OpEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpEditor.swift; sourceTree = "<group>"; };
 		402E6CFC7ED3447EB2B6D4B0 /* demo-household-01JDEM0HH0000000000000000J.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-household-01JDEM0HH0000000000000000J.json"; sourceTree = "<group>"; };
 		40C91F17F9354CB6D9EF72A6 /* demo-capture-apply.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-capture-apply.json"; sourceTree = "<group>"; };
 		4111370F99725CB770578CBA /* demo-household-01JDEM0HH00000000000000009.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-household-01JDEM0HH00000000000000009.json"; sourceTree = "<group>"; };
@@ -461,6 +463,7 @@
 				43C40C75B3BFCEA6A66D5BF8 /* CaptureInput.swift */,
 				AC3678823A57278477587180 /* CaptureReview.swift */,
 				884384544DA66C3D33B65459 /* CaptureView.swift */,
+				3F55714133401F0FA7F4E208 /* OpEditor.swift */,
 				8DDFDEC0AD45BA8F76595CF9 /* OpRow.swift */,
 				ECCD1F1F3EB44F68D42C9AE8 /* PlacePicker.swift */,
 			);
@@ -740,6 +743,7 @@
 				27160BE3626A19225D66D8D7 /* Note.swift in Sources */,
 				D1FD22663857C7F0F3313910 /* NoteEditor.swift in Sources */,
 				DDACF4C561C1FF1F186A3CE3 /* OnboardingView.swift in Sources */,
+				A7A00E9AA1D37AACC8CF824C /* OpEditor.swift in Sources */,
 				3E987F19C9B41716A441E201 /* OpRow.swift in Sources */,
 				3944961879F687B04D29F479 /* PKCE.swift in Sources */,
 				303214A91839802365DDF580 /* Palette.swift in Sources */,
