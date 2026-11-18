@@ -10,6 +10,7 @@ struct CaptureReview: View {
     let discard: () -> Void
 
     @State private var placing: NewRef?
+    @State private var editing: Int?
 
     var body: some View {
         ScrollView {
@@ -33,6 +34,8 @@ struct CaptureReview: View {
                             model.toggle(index)
                         } placeIt: {
                             placing = NewRef(id: op.householdRef, label: newLabels[op.householdRef] ?? "the new house")
+                        } edit: {
+                            editing = index
                         }
                     }
                 }
@@ -43,6 +46,10 @@ struct CaptureReview: View {
             .padding(Spacing.md)
         }
         .safeAreaInset(edge: .bottom) { actions }
+        .sheet(item: Binding(get: { editing.map(EditIndex.init) }, set: { editing = $0?.id })) { target in
+            OpEditor(op: model.ops[target.id]) { model.edit(target.id, $0) }
+                .presentationDetents([.medium, .large])
+        }
         .sheet(item: $placing) { ref in
             PlacePicker(place: place, footprints: footprints, households: model.households, label: ref.label) {
                 model.place(ref.id, at: $0)
@@ -118,6 +125,10 @@ struct CaptureReview: View {
             .padding(.bottom, Spacing.xs)
             .accessibilityAddTraits(.isHeader)
     }
+}
+
+private struct EditIndex: Identifiable {
+    let id: Int
 }
 
 private struct NewRef: Identifiable {

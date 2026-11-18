@@ -114,6 +114,20 @@ final class CaptureModel: Identifiable {
         }
     }
 
+    /// Fields a person can retype on the review screen, in form order. Numbers and flags are fixed on the card.
+    nonisolated static let editable = ["label", "address", "name", "species", "birthday", "notes", "text"]
+    /// Blank would fail apply's validation, so these keep their old value instead.
+    nonisolated static let required: Set = ["label", "name", "text"]
+
+    /// The op's text fields, retyped. Only fields it already has; optional ones left blank are cleared.
+    func edit(_ index: Int, _ values: [String: String]) {
+        for (key, raw) in values where Self.editable.contains(key) && ops[index].fields[key]?.text != nil {
+            let value = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+            if value.isEmpty, Self.required.contains(key) { continue }
+            ops[index].fields[key] = value.isEmpty ? nil : .string(value)
+        }
+    }
+
     func place(_ ref: String, at spot: Spot) {
         placements[ref] = spot
     }

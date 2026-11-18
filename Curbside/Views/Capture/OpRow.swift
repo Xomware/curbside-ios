@@ -9,6 +9,7 @@ struct OpRow: View {
     let placed: Spot?
     let toggle: () -> Void
     let placeIt: () -> Void
+    let edit: () -> Void
 
     var body: some View {
         HStack(alignment: .top, spacing: Spacing.sm) {
@@ -35,6 +36,17 @@ struct OpRow: View {
                             .padding(.horizontal, Spacing.xs)
                             .background(Palette.workZone, in: .rect(cornerRadius: 3))
                             .accessibilityLabel("Check this: placed by position, not by name")
+                    }
+                    Spacer()
+                    if op.fields.contains(where: { CaptureModel.editable.contains($0.key) && $0.value.text != nil }) {
+                        Button(action: edit) {
+                            Image(systemName: "pencil")
+                                .font(.headline)
+                                .foregroundStyle(Palette.ink)
+                                .frame(width: 44, height: 44)
+                        }
+                        .buttonStyle(SignPressStyle())
+                        .accessibilityLabel("Edit: \(summary.change)")
                     }
                 }
                 Text(summary.change)
@@ -80,7 +92,7 @@ struct OpRow: View {
     ]
     VStack(spacing: 0) {
         ForEach(Array(ops.enumerated()), id: \.offset) { index, op in
-            OpRow(number: index + 1, op: op, summary: CaptureSummary(op, households: [], newLabels: ["new:1": "Gray house"]), placed: nil) {} placeIt: {}
+            OpRow(number: index + 1, op: op, summary: CaptureSummary(op, households: [], newLabels: ["new:1": "Gray house"]), placed: nil) {} placeIt: {} edit: {}
         }
     }
     .padding()
