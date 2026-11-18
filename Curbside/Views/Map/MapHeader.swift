@@ -1,17 +1,15 @@
 import SwiftUI
 
-/// The place's street sign with a household count, and the options menu.
+/// The place's street sign with a household count, and the way into settings.
 struct MapHeader: View {
     let name: String
     let count: Int
-    let signOut: () -> Void
+    let settings: () -> Void
 
     var body: some View {
         HStack(spacing: Spacing.sm) {
             StreetSign(name: name, detail: count == 1 ? "1 HOME" : "\(count) HOMES")
-            Menu {
-                Button("Sign out", role: .destructive, action: signOut)
-            } label: {
+            Button(action: settings) {
                 Image(systemName: "ellipsis")
                     .font(.headline)
                     .foregroundStyle(Palette.ink)
@@ -19,7 +17,7 @@ struct MapHeader: View {
                     .background(Palette.surface, in: .rect(cornerRadius: 8))
             }
             .buttonStyle(SignPressStyle())
-            .accessibilityLabel("Map options")
+            .accessibilityLabel("Settings")
         }
         .padding(.horizontal, Spacing.md)
         .padding(.bottom, Spacing.sm)

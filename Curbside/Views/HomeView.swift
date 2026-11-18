@@ -2,19 +2,21 @@ import SwiftUI
 
 /// Signed-in home: the place's map, or place setup when the account has none yet. Household cards push by id.
 struct HomeView: View {
-    let signOut: () -> Void
+    let root: RootModel
 
     @State private var model: MapHomeModel
     @State private var path: [String] = []
+    @State private var settings = false
 
-    init(api: APIClient, signOut: @escaping () -> Void) {
-        self.signOut = signOut
-        _model = State(initialValue: MapHomeModel(api: api))
+    init(root: RootModel) {
+        self.root = root
+        _model = State(initialValue: MapHomeModel(api: root.api))
     }
 
     var body: some View {
         content
             .task { await model.load() }
+            .sheet(isPresented: $settings) { SettingsView(root: root) }
     }
 
     @ViewBuilder private var content: some View {
@@ -37,7 +39,7 @@ struct HomeView: View {
         case .ready:
             if let place = model.place {
                 NavigationStack(path: $path) {
-                    PlaceMap(model: model, place: place, signOut: signOut) { path.append($0.id) }
+                    PlaceMap(model: model, place: place, settings: { settings = true }) { path.append($0.id) }
                         .navigationTitle("Block")
                         .toolbar(.hidden, for: .navigationBar)
                         .navigationDestination(for: String.self) { id in

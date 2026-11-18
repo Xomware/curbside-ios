@@ -92,7 +92,7 @@ final class ScreenshotTests: XCTestCase {
         XCTAssert(app.textFields["Place name"].waitForExistence(timeout: 10))
         try snap("setup-located", app)
         app.buttons["Make the map"].tap()
-        XCTAssert(app.buttons["Map options"].waitForExistence(timeout: 10))
+        XCTAssert(app.buttons["Settings"].waitForExistence(timeout: 10))
         try snap("setup-created", app)
     }
 
@@ -145,6 +145,17 @@ final class ScreenshotTests: XCTestCase {
         app.launch()
         XCTAssert(app.buttons["Unlock"].waitForExistence(timeout: 10))
         try snap("locked", app)
+    }
+
+    func testSettings() throws {
+        let app = launch("street")
+        let settings = app.buttons["Settings"]
+        XCTAssert(settings.waitForExistence(timeout: 10))
+        settings.tap()
+        XCTAssert(app.navigationBars["Settings"].waitForExistence(timeout: 5))
+        try snap("settings", app)
+        app.swipeUp()
+        try snap("settings-scrolled", app)
     }
 
     func launch(_ scenario: String) -> XCUIApplication {

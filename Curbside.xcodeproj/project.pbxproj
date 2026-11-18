@@ -46,6 +46,7 @@
 		5852652CDB31BFFC9DD6D0ED /* HouseholdHero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E28914808827DA074D3DE9E /* HouseholdHero.swift */; };
 		58855408B4E09E7500FC92EE /* demo-capture-parse.json in Resources */ = {isa = PBXBuildFile; fileRef = 83A3DC5F6A9F98AB703219AB /* demo-capture-parse.json */; };
 		58FB2AE34F373797F4FBEC97 /* SectionSign.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FB3719C27C59B0E6FBAA89 /* SectionSign.swift */; };
+		5A5E44DB0D84E34A712D81BD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D06DC127D8044EC66A706A /* SettingsView.swift */; };
 		5A60EC8C4760A0EEC985A87B /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3966DE8C095F8EF485DD420A /* RootView.swift */; };
 		5A76EC159082DE2CC11D9493 /* HouseholdModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71AE430F7A891534C91485F /* HouseholdModelTests.swift */; };
 		5E3F6A020065882062392657 /* PlaceSetupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90DAE38B3F9F1E355D31559 /* PlaceSetupModel.swift */; };
@@ -218,6 +219,7 @@
 		736BBDA814E95E0FC989834A /* Tokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokens.swift; sourceTree = "<group>"; };
 		7702239C187E8C05A2173557 /* MapHomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHomeModel.swift; sourceTree = "<group>"; };
 		770980ECC0FDCF167E7D1405 /* CurbsideTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = CurbsideTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		78D06DC127D8044EC66A706A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		7C55F93398A62F97D23D8719 /* NearMeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearMeSheet.swift; sourceTree = "<group>"; };
 		7D8BF2B3D5E0734BD32607BB /* AuthSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSession.swift; sourceTree = "<group>"; };
 		83A3DC5F6A9F98AB703219AB /* demo-capture-parse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-capture-parse.json"; sourceTree = "<group>"; };
@@ -299,6 +301,14 @@
 				DC78FB47C9A005B3431CC194 /* CurbsideApp.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		45F990B2D9D5A764B0FE39AD /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				78D06DC127D8044EC66A706A /* SettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		5FEBC1A0B4395D44A451D54D /* CurbsideTests */ = {
@@ -418,6 +428,7 @@
 				D9D138B1370295543A883229 /* Map */,
 				8598CA26A43C4E7C11728787 /* NearMe */,
 				8FB3CD86632C2288FED5CA27 /* PlaceSetup */,
+				45F990B2D9D5A764B0FE39AD /* Settings */,
 				C013A95E41D2879E669B8F15 /* Signs */,
 			);
 			path = Views;
@@ -777,6 +788,7 @@
 				5A60EC8C4760A0EEC985A87B /* RootView.swift in Sources */,
 				58FB2AE34F373797F4FBEC97 /* SectionSign.swift in Sources */,
 				04181971E4E3C947FC2BD585 /* SelectionPanel.swift in Sources */,
+				5A5E44DB0D84E34A712D81BD /* SettingsView.swift in Sources */,
 				C1A1C2532C22A01F91D3B139 /* SignButton.swift in Sources */,
 				B70E758174A3A4401EBD42CD /* SignInView.swift in Sources */,
 				6A157660CA2920A93CBEB08A /* SignPressStyle.swift in Sources */,
