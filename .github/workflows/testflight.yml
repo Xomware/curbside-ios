@@ -1,0 +1,148 @@
+name: TestFlight
+
+# Manual until the App Store Connect app record exists; until then the upload step has nowhere to go.
+# Switch to `push: branches: [main]` once the first build has gone through.
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: testflight
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Archive and upload
+    runs-on: macos-26
+    timeout-minutes: 45
+    permissions:
+      id-token: write # Infisical OIDC
+      contents: read
+
+    steps:
+      # APPLE_TEAM_ID, ASC_API_ISSUER_ID, ASC_API_KEY_ID, ASC_API_KEY_P8. /curbside wins if it defines its own.
+      - uses: Xomware/github-actions/actions/load-infisical-secrets@v1
+        with:
+          path: /shared
+      - uses: Xomware/github-actions/actions/load-infisical-secrets@v1
+        with:
+          path: /curbside
+      - uses: actions/checkout@v6
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Write App Store Connect API key
+        run: |
+          mkdir -p ~/.appstoreconnect/private_keys
+          key=~/.appstoreconnect/private_keys/AuthKey_${ASC_API_KEY_ID}.p8
+          # Infisical holds either the raw PEM or base64 of it.
+          if printf "%s" "$ASC_API_KEY_P8" | grep -q -- "-----BEGIN PRIVATE KEY-----"; then
+            printf "%s" "$ASC_API_KEY_P8" > "$key"
+          else
+            printf "%s" "$ASC_API_KEY_P8" | base64 --decode > "$key"
+          fi
+          chmod 600 "$key"
+
+      - name: Version and build number
+        id: version
+        run: |
+          echo "marketing=$(sed -n 's/^ *MARKETING_VERSION: "\(.*\)"/\1/p' project.yml)" >> "$GITHUB_OUTPUT"
+          # Unique and increasing across reruns, or ASC rejects the upload (ITMS-90189).
+          echo "build=$(date -u +%Y%m%d%H%M%S)${GITHUB_RUN_ID: -3}" >> "$GITHUB_OUTPUT"
+
+      - name: Install Python deps for ASC API
+        run: pip3 install --quiet --break-system-packages PyJWT cryptography requests
+
+      # Same team as xomfit-ios: every automatic-signing archive on a fresh runner mints an Apple Development
+      # cert, and the team's limit is two.
+      - name: Free Apple Development cert slot (revoke oldest if at limit)
+        continue-on-error: true
+        env:
+          ASC_API_KEY_ID: ${{ env.ASC_API_KEY_ID }}
+          ASC_API_ISSUER_ID: ${{ env.ASC_API_ISSUER_ID }}
+        run: |
+          python3 <<'PY'
+          import os, sys, time, jwt, requests
+          key_id = os.environ["ASC_API_KEY_ID"]
+          issuer = os.environ["ASC_API_ISSUER_ID"]
+          with open(os.path.expanduser(f"~/.appstoreconnect/private_keys/AuthKey_{key_id}.p8")) as f:
+              pk = f.read()
+          def tok():
+              return jwt.encode(
+                  {"iss": issuer, "iat": int(time.time()), "exp": int(time.time()) + 1200, "aud": "appstoreconnect-v1"},
+                  pk, algorithm="ES256", headers={"kid": key_id, "typ": "JWT"})
+          h = {"Authorization": f"Bearer {tok()}"}
+          base = "https://api.appstoreconnect.apple.com/v1"
+          r = requests.get(f"{base}/certificates", headers=h, params={"limit": 200})
+          r.raise_for_status()
+          all_certs = r.json()["data"]
+          dev = [c for c in all_certs if c["attributes"].get("certificateType") in ("IOS_DEVELOPMENT", "DEVELOPMENT")]
+          dev.sort(key=lambda c: c["attributes"].get("expirationDate", ""))
+          print(f"Found {len(dev)} development cert(s):")
+          for c in dev:
+              print(f"  {c['id']} type={c['attributes'].get('certificateType')} name={c['attributes'].get('name')} expires={c['attributes'].get('expirationDate')}")
+          # Apple limit is 2 Apple Development certs per team. Keep newest, revoke rest.
+          keep_n = 1
+          if len(dev) > keep_n:
+              for c in dev[:len(dev) - keep_n]:
+                  print(f"Revoking {c['id']} ({c['attributes'].get('name')})")
+                  rr = requests.delete(f"{base}/certificates/{c['id']}", headers=h)
+                  if rr.status_code >= 400:
+                      print(f"!! Failed to revoke {c['id']}: {rr.status_code} {rr.text}", file=sys.stderr)
+                  else:
+                      print(f"Revoked {c['id']}")
+          else:
+              print("Under limit, no revocation needed")
+          PY
+      - name: Archive
+        run: |
+          set -o pipefail
+          xcodebuild archive \
+            -project Curbside.xcodeproj \
+            -scheme Curbside \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/Curbside.xcarchive" \
+            -allowProvisioningUpdates \
+            -authenticationKeyID "$ASC_API_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_API_ISSUER_ID" \
+            -authenticationKeyPath "$HOME/.appstoreconnect/private_keys/AuthKey_${ASC_API_KEY_ID}.p8" \
+            MARKETING_VERSION=${{ steps.version.outputs.marketing }} \
+            CURRENT_PROJECT_VERSION=${{ steps.version.outputs.build }}
+
+      - name: Export IPA
+        run: |
+          cat > "$RUNNER_TEMP/ExportOptions.plist" <<PLIST
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>destination</key><string>export</string>
+              <key>method</key><string>app-store-connect</string>
+              <key>signingStyle</key><string>automatic</string>
+              <key>teamID</key><string>${APPLE_TEAM_ID}</string>
+              <key>uploadSymbols</key><true/>
+          </dict>
+          </plist>
+          PLIST
+          set -o pipefail
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/Curbside.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
+            -exportPath "$RUNNER_TEMP/export" \
+            -allowProvisioningUpdates \
+            -authenticationKeyID "$ASC_API_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_API_ISSUER_ID" \
+            -authenticationKeyPath "$HOME/.appstoreconnect/private_keys/AuthKey_${ASC_API_KEY_ID}.p8"
+
+      # Needs the App Store Connect app record for com.Xomware.Curbside; fails until Dom creates it.
+      - name: Upload to TestFlight
+        run: |
+          xcrun altool --upload-app -t ios \
+            -f "$(find "$RUNNER_TEMP/export" -name '*.ipa' | head -1)" \
+            --apiKey "$ASC_API_KEY_ID" \
+            --apiIssuer "$ASC_API_ISSUER_ID"
+
+      - name: Remove API key
+        if: always()
+        run: rm -f ~/.appstoreconnect/private_keys/*.p8
