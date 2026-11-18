@@ -96,6 +96,39 @@ final class ScreenshotTests: XCTestCase {
         try snap("setup-created", app)
     }
 
+    /// The simulator has no on-device speech model, so this types and also shows the voice-unavailable message.
+    /// Needs location granted first, like `testPlaceSetup`.
+    func testCapture() throws {
+        XCUIDevice.shared.location = XCUILocation(location: CLLocation(latitude: 37.4475, longitude: -122.1395))
+        let app = launch("street")
+        let talk = app.buttons["Talk: capture by voice or text"]
+        XCTAssert(talk.waitForExistence(timeout: 10))
+        talk.tap()
+        let field = app.textFields["What happened"]
+        XCTAssert(field.waitForExistence(timeout: 5))
+        field.tap()
+        field.typeText("Ran into Clementine Pumpernickel walking Waffles. Odo just turned five and starts kindergarten in the fall. Marguerite next door got a second cat named Pickles. Looks like a new family moved into the yellow house, the mom is Wren. Also the guy with the red truck asked about the block party.")
+        app.buttons["Talk"].tap()
+        XCTAssert(app.staticTexts["Voice isn't available on this iPhone. Type it instead."].waitForExistence(timeout: 5))
+        try snap("capture-input", app)
+        app.buttons["Read it"].tap()
+        XCTAssert(app.staticTexts["CHANGES AHEAD"].waitForExistence(timeout: 10))
+        try snap("capture-review", app)
+        app.swipeUp()
+        try snap("capture-review-scrolled", app)
+        app.buttons["Place it on the map"].tap()
+        XCTAssert(app.buttons["Put it here"].waitForExistence(timeout: 5))
+        app.maps.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.12, dy: 0.62)).tap()
+        try snap("capture-place", app)
+        app.buttons["Put it here"].tap()
+        let save = app.buttons["Save 4 changes"]
+        XCTAssert(save.waitForExistence(timeout: 5))
+        try snap("capture-placed", app)
+        save.tap()
+        XCTAssert(talk.waitForExistence(timeout: 10))
+        try snap("capture-saved", app)
+    }
+
     func launch(_ scenario: String) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = ["-demo", scenario]

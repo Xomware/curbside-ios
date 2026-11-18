@@ -33,6 +33,8 @@ enum Demo {
         case (_, "GET", "/v1/maps/{id}/footprints"): return "demo-footprints-info.json"
         case (_, "POST", "/v1/maps"): return "demo-map-created.json"
         case (_, "POST", "/v1/maps/{id}/households"): return "demo-household-created.json"
+        case (_, "POST", "/v1/maps/{id}/capture/parse"): return "demo-capture-parse.json"
+        case (_, "POST", "/v1/maps/{id}/capture/apply"): return "demo-capture-apply.json"
         case (_, "GET", "/v1/maps/{id}/households/{id}"): return "demo-household-\(request.url?.lastPathComponent ?? "").json"
         default: return nil
         }

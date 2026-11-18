@@ -4,7 +4,7 @@ import Observation
 /// Talk or type → parse → the user checks the proposed changes → apply. The transcript lives only here and is never
 /// written anywhere on the device; it goes when this model does.
 @MainActor @Observable
-final class CaptureModel {
+final class CaptureModel: Identifiable {
     enum Phase: Equatable {
         case input
         case parsing
@@ -61,7 +61,7 @@ final class CaptureModel {
         phase = .parsing
         message = nil
         let center = CLLocationCoordinate2D(latitude: place.center.lat, longitude: place.center.lng)
-        let here = if let selection { selection.coordinate } else { (try? await geo.locate()) ?? center }
+        let here = if let selection { selection.coordinate } else { await locate() ?? center }
         let request = ParseRequest(
             transcript: text,
             source: source,
@@ -82,6 +82,21 @@ final class CaptureModel {
         } catch {
             phase = .input
             message = Self.message(for: error)
+        }
+    }
+
+    /// One fix, or nil after 3 s: a fix that never comes (indoors, location off) mustn't hold up the parse.
+    private func locate() async -> CLLocationCoordinate2D? {
+        let geo = geo
+        return await withTaskGroup(of: CLLocationCoordinate2D?.self) { group in
+            group.addTask { try? await geo.locate() }
+            group.addTask {
+                try? await Task.sleep(for: .seconds(3))
+                return nil
+            }
+            let first = await group.next() ?? nil
+            group.cancelAll()
+            return first
         }
     }
 

@@ -1,0 +1,80 @@
+{
+ "data": {
+  "operations": [
+   {
+    "op": "add_note",
+    "household_ref": "01JDEM0HH00000000000000006",
+    "target_id": null,
+    "fields": {
+     "text": "Ran into Clementine walking Waffles. Odo starts kindergarten in the fall."
+    },
+    "evidence": "Ran into Clementine Pumpernickel walking Waffles",
+    "confidence": 0.9,
+    "needs_review": false,
+    "checked": true
+   },
+   {
+    "op": "update_person",
+    "household_ref": "01JDEM0HH00000000000000006",
+    "target_id": "01JDEM00000000000000000004",
+    "fields": {
+     "birth_year": 2021
+    },
+    "evidence": "Odo just turned five",
+    "confidence": 0.9,
+    "needs_review": false,
+    "checked": true
+   },
+   {
+    "op": "add_pet",
+    "household_ref": "01JDEM0HH00000000000000009",
+    "target_id": null,
+    "fields": {
+     "name": "Pickles",
+     "species": "cat"
+    },
+    "evidence": "got a second cat named Pickles",
+    "confidence": 0.6,
+    "needs_review": true,
+    "checked": false
+   },
+   {
+    "op": "create_household",
+    "household_ref": "new:1",
+    "target_id": null,
+    "fields": {
+     "label": "Yellow house"
+    },
+    "evidence": "a new family moved into the yellow house",
+    "confidence": 0.9,
+    "needs_review": false,
+    "checked": true
+   },
+   {
+    "op": "add_person",
+    "household_ref": "new:1",
+    "target_id": null,
+    "fields": {
+     "name": "Wren",
+     "role": "adult"
+    },
+    "evidence": "the mom is Wren",
+    "confidence": 0.9,
+    "needs_review": false,
+    "checked": true
+   }
+  ],
+  "unresolved": [
+   "the guy with the red truck"
+  ],
+  "base_versions": {
+   "01JDEM0HH00000000000000006": 1,
+   "01JDEM00000000000000000004": 1,
+   "01JDEM0HH00000000000000009": 1,
+   "01JDEM00000000000000000007": 1,
+   "01JDEM00000000000000000008": 1
+  }
+ },
+ "error": null,
+ "meta": {}
+}

@@ -13,6 +13,7 @@ struct PlaceMap: View {
     @State private var showsNames = true
     @State private var adding: Spot?
     @State private var nearMe = false
+    @State private var capturing: CaptureModel?
 
     init(model: MapHomeModel, place: Place, signOut: @escaping () -> Void, open: @escaping (Household) -> Void) {
         self.model = model
@@ -81,13 +82,20 @@ struct PlaceMap: View {
             }
             .presentationDetents([.medium, .large])
         }
+        .sheet(item: $capturing) { capture in
+            CaptureView(model: capture, place: place, footprints: model.footprints) { await model.refresh() }
+        }
+    }
+
+    private func talk() {
+        capturing = model.capture()
     }
 
     @ViewBuilder private var bottom: some View {
         if let spot = model.selection {
-            SelectionPanel(spot: spot, households: model.selectedHouseholds, open: open, add: { adding = spot }, close: model.clearSelection)
+            SelectionPanel(spot: spot, households: model.selectedHouseholds, open: open, add: { adding = spot }, talk: talk, close: model.clearSelection)
         } else {
-            MapDock(isEmpty: model.households.isEmpty, showsCredit: !model.footprints.isEmpty) { nearMe = true }
+            MapDock(isEmpty: model.households.isEmpty, showsCredit: !model.footprints.isEmpty, nearMe: { nearMe = true }, talk: talk)
         }
     }
 }

@@ -64,6 +64,7 @@ struct CaptureReview: View {
     }
 
     private var actions: some View {
+        // SignButton fills its width, so each side gets a fixed share, 1 : 1.6 as in the mockup.
         HStack(spacing: Spacing.sm) {
             Button("Discard", action: discard)
                 .font(CurbsideFont.button)
@@ -71,8 +72,8 @@ struct CaptureReview: View {
                 .frame(maxWidth: .infinity, minHeight: 48)
                 .background(Palette.surface, in: .rect(cornerRadius: 8))
                 .buttonStyle(SignPressStyle())
+                .containerRelativeFrame(.horizontal) { width, _ in (width - Spacing.md * 2 - Spacing.sm) / 2.6 }
             SignButton(title: saveTitle, action: save)
-                .layoutPriority(1)
                 .disabled(!model.canSave)
                 .opacity(model.canSave ? 1 : 0.5)
         }
