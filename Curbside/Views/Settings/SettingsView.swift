@@ -1,10 +1,16 @@
 import SwiftUI
 
-/// Account, privacy and credits. Sign-in methods and your data join this list in the next sections.
+/// Account, sign-ins, privacy and credits.
 struct SettingsView: View {
     let root: RootModel
 
     @Environment(\.dismiss) private var dismiss
+    @State private var signIns: SignInsModel
+
+    init(root: RootModel) {
+        self.root = root
+        _signIns = State(initialValue: SignInsModel(api: root.api, auth: root.auth, updated: root.update))
+    }
 
     var body: some View {
         NavigationStack {
@@ -14,6 +20,7 @@ struct SettingsView: View {
                         LabeledContent("Display name", value: account.displayName)
                     }
                 }
+                SignInsSection(model: signIns)
                 lock
                 about
                 Section {

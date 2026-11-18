@@ -13,7 +13,8 @@ enum Demo {
 
     @MainActor static func rootModel() -> RootModel {
         let store = KeychainTokenStore(service: "com.Xomware.Curbside.demo")
-        try? store.save(Tokens(access: "demo", id: "demo", refresh: "demo"))
+        // The ID token carries a sub so settings can mark "Signed in on this iPhone"; nothing verifies it.
+        try? store.save(Tokens(access: "demo", id: "e30.eyJzdWIiOiJkZW1vLWdvb2dsZSIsImNvZ25pdG86dXNlcm5hbWUiOiJHb29nbGVfZGVtbyJ9.demo", refresh: "demo"))
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [DemoURLProtocol.self]
         let session = URLSession(configuration: config)

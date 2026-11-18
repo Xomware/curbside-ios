@@ -68,7 +68,7 @@ extension StubbedNetwork {
 
         @Test(arguments: [
             (404, #"{"data": null, "error": {"code": "needs_onboarding", "message": "No account"}, "meta": {}}"#, APIError.needsOnboarding),
-            (409, #"{"data": null, "error": {"code": "conflict", "message": "Taken"}, "meta": {}}"#, .conflict(message: "Taken")),
+            (409, #"{"data": null, "error": {"code": "conflict", "message": "Taken"}, "meta": {}}"#, .conflict(code: "conflict")),
             (429, #"{"message": "Too Many Requests"}"#, .rateLimited),
             (400, #"{"data": null, "error": {"code": "invalid_request", "message": "Bad"}, "meta": {}}"#, .server(status: 400, code: "invalid_request")),
             (502, "<html>Bad Gateway</html>", .server(status: 502, code: nil)),

@@ -27,6 +27,7 @@
 		2865685D2507ED361EFF3A76 /* YardSign.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DBF4F652EFFFCCC3FAC0B0 /* YardSign.swift */; };
 		2EE8B89CE62BCDC0216619FE /* PlacePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCD1F1F3EB44F68D42C9AE8 /* PlacePicker.swift */; };
 		303214A91839802365DDF580 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1805C305C2D3F1983052B3 /* Palette.swift */; };
+		31678AE5BED23A1393F37BFF /* SignInsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6C424A6225DF69A569D299 /* SignInsModel.swift */; };
 		31B4730CDAB43DCC297DEF28 /* NewHouseholdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A58763E695FC69E9D8A3148 /* NewHouseholdView.swift */; };
 		34B6DBCF1EF0C9F7291ECA40 /* demo-household-01JDEM0HH0000000000000000Z.json in Resources */ = {isa = PBXBuildFile; fileRef = C193783F9B9CB3D5BAA23333 /* demo-household-01JDEM0HH0000000000000000Z.json */; };
 		34E579C17DA2813CFDB8924E /* CaptureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0847897203F4A9394F4A7AB /* CaptureModel.swift */; };
@@ -107,6 +108,7 @@
 		CE4D1EA138D2802C0EBF8E21 /* NearbyRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497BF76D0C277AFC20E43FD0 /* NearbyRow.swift */; };
 		CED7E808517684533F801E93 /* StopSignButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A38765A9ABDF232AC4DAFB /* StopSignButton.swift */; };
 		CFAB339272AB92429B3CFED3 /* AppLockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BB4AEC17219292C21B7743 /* AppLockTests.swift */; };
+		D0FFAF8DDEC093E185A25FE7 /* SignInsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623B56C6B7B1ED8054C60140 /* SignInsTests.swift */; };
 		D1FD22663857C7F0F3313910 /* NoteEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB9BF323F811767AE79AD9E /* NoteEditor.swift */; };
 		D41AE2FE93BB4738C8CA8295 /* Gzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B727845E54A95C07B554D60 /* Gzip.swift */; };
 		D62CFBDE4BD567D46B78FF48 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC249AE21D1A91C9CDE5B728 /* Config.swift */; };
@@ -120,6 +122,7 @@
 		EA513BBF8AA3AEFCAEAAC6A8 /* demo-maps-none.json in Resources */ = {isa = PBXBuildFile; fileRef = 723CA5132B0207854CB47311 /* demo-maps-none.json */; };
 		EA54E3E22073EFE67E293B90 /* NearMeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461F6BC839BEDA1ACC26FDAA /* NearMeModel.swift */; };
 		EB4EB85746308D6A908269EE /* RootModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BD4175C0B6DBF11752E8BE /* RootModel.swift */; };
+		EC81722AAC1EE2976547995C /* SignInsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8591B49820F0CADC5FACF5 /* SignInsSection.swift */; };
 		EE0D1BE8A7EB932519EAD023 /* demo-household-01JDEM0HH0000000000000000F.json in Resources */ = {isa = PBXBuildFile; fileRef = 46FB022A12F5FA6446A26704 /* demo-household-01JDEM0HH0000000000000000F.json */; };
 		EEE90BEC2F17D421764AE62F /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A315AE2BE2036C530F3A8B9C /* Spacing.swift */; };
 		F021A024D0B1587E8C3A922A /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3061B9FD4AA9D8035A7C221 /* APIClientTests.swift */; };
@@ -163,6 +166,7 @@
 		090E0B71411AA90C9CBE8B9E /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		0949A8A6EA21A82B7119863E /* SelectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionTests.swift; sourceTree = "<group>"; };
 		0D2D3523673AE523A4DC4464 /* demo-map.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-map.json"; sourceTree = "<group>"; };
+		0E8591B49820F0CADC5FACF5 /* SignInsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInsSection.swift; sourceTree = "<group>"; };
 		10ADBC3695F610FF4622A0A5 /* demo-footprints-info.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-footprints-info.json"; sourceTree = "<group>"; };
 		11F7241D303E1B145E2884BB /* CurbsideFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurbsideFont.swift; sourceTree = "<group>"; };
 		13A2932AF19DCEA335A9EC43 /* demo-me.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-me.json"; sourceTree = "<group>"; };
@@ -210,10 +214,12 @@
 		5CC2BC0DB0942147D4CADF79 /* Nearby.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nearby.swift; sourceTree = "<group>"; };
 		5D410863F693D8484113C05F /* StreetSign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreetSign.swift; sourceTree = "<group>"; };
 		6147031BB412E577DB93EED2 /* TestHostTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHostTests.swift; sourceTree = "<group>"; };
+		623B56C6B7B1ED8054C60140 /* SignInsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInsTests.swift; sourceTree = "<group>"; };
 		68D0E13875333B9CE30D7A46 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6CB10AC96F0F822958B1B12B /* FootprintLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootprintLoader.swift; sourceTree = "<group>"; };
 		6E28914808827DA074D3DE9E /* HouseholdHero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseholdHero.swift; sourceTree = "<group>"; };
 		6E9E5AA71CAEC42B15CDF2D5 /* NotesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTests.swift; sourceTree = "<group>"; };
+		6F6C424A6225DF69A569D299 /* SignInsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInsModel.swift; sourceTree = "<group>"; };
 		6FD14843CADB323F4B75D0ED /* ProviderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderButton.swift; sourceTree = "<group>"; };
 		723CA5132B0207854CB47311 /* demo-maps-none.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-maps-none.json"; sourceTree = "<group>"; };
 		736BBDA814E95E0FC989834A /* Tokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokens.swift; sourceTree = "<group>"; };
@@ -307,6 +313,7 @@
 			isa = PBXGroup;
 			children = (
 				78D06DC127D8044EC66A706A /* SettingsView.swift */,
+				0E8591B49820F0CADC5FACF5 /* SignInsSection.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -332,6 +339,7 @@
 				423CF06AC3DAC78C83F25FA4 /* PlaceSetupModelTests.swift */,
 				E39C5034DAFEC45F0FDD707E /* RootModelTests.swift */,
 				0949A8A6EA21A82B7119863E /* SelectionTests.swift */,
+				623B56C6B7B1ED8054C60140 /* SignInsTests.swift */,
 				2F6F1B3ECE744C92F8973488 /* StubURLProtocol.swift */,
 				6147031BB412E577DB93EED2 /* TestHostTests.swift */,
 				B11C513B584FBAC3D04EBFC2 /* ThemeTests.swift */,
@@ -561,6 +569,7 @@
 				8C4BD5134DEA33D6CE078A56 /* NewHouseholdModel.swift */,
 				D90DAE38B3F9F1E355D31559 /* PlaceSetupModel.swift */,
 				42BD4175C0B6DBF11752E8BE /* RootModel.swift */,
+				6F6C424A6225DF69A569D299 /* SignInsModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -791,6 +800,8 @@
 				5A5E44DB0D84E34A712D81BD /* SettingsView.swift in Sources */,
 				C1A1C2532C22A01F91D3B139 /* SignButton.swift in Sources */,
 				B70E758174A3A4401EBD42CD /* SignInView.swift in Sources */,
+				31678AE5BED23A1393F37BFF /* SignInsModel.swift in Sources */,
+				EC81722AAC1EE2976547995C /* SignInsSection.swift in Sources */,
 				6A157660CA2920A93CBEB08A /* SignPressStyle.swift in Sources */,
 				6AC2B58FA810070E79B5006F /* SignShapes.swift in Sources */,
 				EEE90BEC2F17D421764AE62F /* Spacing.swift in Sources */,
@@ -832,6 +843,7 @@
 				F6DA2B8605945496BCD1E8E1 /* PlaceSetupModelTests.swift in Sources */,
 				98C99173B944B410EBCBE09D /* RootModelTests.swift in Sources */,
 				BD6A97B9D8241627AC457546 /* SelectionTests.swift in Sources */,
+				D0FFAF8DDEC093E185A25FE7 /* SignInsTests.swift in Sources */,
 				AEC9ACA2F52D54AE68988641 /* StubURLProtocol.swift in Sources */,
 				1B65ADA162923AECD5343A44 /* TestHostTests.swift in Sources */,
 				9C62ADB60E26BAE7FDBA3ED5 /* ThemeTests.swift in Sources */,

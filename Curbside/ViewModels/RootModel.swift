@@ -87,6 +87,11 @@ final class RootModel {
         }
     }
 
+    /// Settings changed the account (a sign-in added or removed).
+    func update(_ account: Account) {
+        if case .home = state { state = .home(account) }
+    }
+
     func signOut() {
         errorMessage = nil
         auth.signOut()
