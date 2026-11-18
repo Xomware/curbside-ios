@@ -18,7 +18,11 @@ enum Demo {
         config.protocolClasses = [DemoURLProtocol.self]
         let session = URLSession(configuration: config)
         let auth = AuthSession(cognito: Config.cognito, store: store, session: session)
-        return RootModel(auth: auth, api: APIClient(baseURL: Config.apiBaseURL, tokens: auth, session: session))
+        // Screenshots run unattended, so the demo locks only with `-lock`. Its own suite keeps the real setting untouched.
+        let defaults = UserDefaults(suiteName: "com.Xomware.Curbside.demo") ?? .standard
+        defaults.set(ProcessInfo.processInfo.arguments.contains("-lock"), forKey: AppLock.key)
+        let lock = AppLock(defaults: defaults)
+        return RootModel(auth: auth, api: APIClient(baseURL: Config.apiBaseURL, tokens: auth, session: session), lock: lock)
     }
 
     /// Fixture file for a request, keyed by method and path with ids replaced by `{id}`.
