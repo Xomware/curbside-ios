@@ -10,6 +10,10 @@ struct RootView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Palette.background)
             .overlay { cover }
+            // Universal links arrive here too. Other URLs have nothing to open.
+            .onOpenURL { url in
+                if let link = InviteLink(url) { model.pendingInvite = link }
+            }
             .task {
                 await model.lock.unlock()
                 await model.load()

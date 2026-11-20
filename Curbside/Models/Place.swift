@@ -16,15 +16,21 @@ struct Place: Decodable, Equatable, Identifiable, Sendable {
         let version: Int
     }
 
+    /// The caller's role. A member edits everything on the street; only the owner renames, deletes, invites and removes.
+    enum Role: String, Decodable, Sendable {
+        case owner, member
+    }
+
     let id: String
     let name: String
     let center: Center
     let radiusM: Int
     let footprint: Footprint
     let version: Int
+    let role: Role
 
     enum CodingKeys: String, CodingKey {
-        case id, name, center, footprint, version
+        case id, name, center, footprint, version, role
         case radiusM = "radius_m"
     }
 

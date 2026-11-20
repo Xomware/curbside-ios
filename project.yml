@@ -21,6 +21,12 @@ targets:
     sources:
       - path: Curbside
         excludes: ["**/.gitkeep"]
+    # Invite links open the app once curbside.xomware.com serves the AASA file for /invite/*.
+    entitlements:
+      path: Curbside/Resources/Curbside.entitlements
+      properties:
+        com.apple.developer.associated-domains:
+          - applinks:curbside.xomware.com
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.Xomware.Curbside

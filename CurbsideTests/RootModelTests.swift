@@ -81,6 +81,37 @@ extension StubbedNetwork {
             #expect(requested() == ["GET /v1/me"])
         }
 
+        @Test func renameSendsTheTrimmedNameAndKeepsTheAnswer() async throws {
+            let renamed = StubURLProtocol.Reply(status: 200, body: me.body.replacingOccurrences(of: "Pumpernickel", with: "Rosalind"))
+            let (model, store) = try model(signedIn: signedIn, [me, renamed])
+            defer { try? store.delete() }
+            await model.load()
+
+            #expect(await model.rename(to: " Rosalind  "))
+
+            #expect(model.route == .home(Account(accountID: "acc1", displayName: "Rosalind", identities: [])))
+            let patch = try #require(StubURLProtocol.requests.withLock { $0.last })
+            #expect(patch.httpMethod == "PATCH")
+            #expect(patch.url?.path() == "/v1/me")
+            #expect(StubURLProtocol.body(of: patch) == #"{"display_name":"Rosalind"}"#)
+        }
+
+        @Test func aFailedRenameKeepsTheOldName() async throws {
+            let (model, store) = try model(signedIn: signedIn, [me, .init(status: 500, body: "{}")])
+            defer { try? store.delete() }
+            await model.load()
+            #expect(await model.rename(to: "Rosalind") == false)
+            #expect(model.route == .home(pumpernickel))
+        }
+
+        @Test func aBlankRenameIsNotSent() async throws {
+            let (model, store) = try model(signedIn: signedIn, [me])
+            defer { try? store.delete() }
+            await model.load()
+            #expect(await model.rename(to: "   ") == false)
+            #expect(requested() == ["GET /v1/me"])
+        }
+
         @Test func deadRefreshTokenReturnsToSignIn() async throws {
             let (model, store) = try model(signedIn: signedIn, [
                 .init(status: 401, body: #"{"message": "Unauthorized"}"#),
