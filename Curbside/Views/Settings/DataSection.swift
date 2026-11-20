@@ -29,7 +29,7 @@ struct DataSection: View {
         .confirmationDialog("Delete your account?", isPresented: $confirming, titleVisibility: .visible) {
             Button("Delete everything", role: .destructive) { Task { await delete() } }
         } message: {
-            Text("This deletes your account, every map you own with everyone on it, and your sign-ins. It can't be undone. You'll sign in with \(model.reauthProvider(identities) == .apple ? "Apple" : "Google") first to confirm.")
+            Text("This deletes your account, your sign-ins, and every street only you are on. A street you share passes to whoever has been on it longest. It can't be undone. You'll sign in with \(model.reauthProvider(identities) == .apple ? "Apple" : "Google") first to confirm.")
         }
         .alert("Account deleted", isPresented: .constant(manualRevoke != nil)) {
             Button("Open Apple's instructions") {
