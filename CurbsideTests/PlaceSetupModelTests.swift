@@ -71,7 +71,7 @@ extension StubbedNetwork {
         }
 
         @Test func createdPlaceOpensAnEmptyMap() async throws {
-            let home = MapHomeModel(api: stubAPI([MapFixtures.none]))
+            let home = MapHomeModel(api: stubAPI([MapFixtures.none]), defaults: freshDefaults())
             await home.load()
             home.show(try JSONDecoder().decode(Place.self, from: Data(MapFixtures.place.utf8)))
             #expect(home.state == .ready)

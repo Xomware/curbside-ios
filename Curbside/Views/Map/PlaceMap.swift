@@ -6,7 +6,7 @@ import SwiftUI
 struct PlaceMap: View {
     let model: MapHomeModel
     let place: Place
-    let settings: () -> Void
+    let header: MapHeader
     let open: (Household) -> Void
 
     @State private var position: MapCameraPosition
@@ -15,10 +15,10 @@ struct PlaceMap: View {
     @State private var nearMe = false
     @State private var capturing: CaptureModel?
 
-    init(model: MapHomeModel, place: Place, settings: @escaping () -> Void, open: @escaping (Household) -> Void) {
+    init(model: MapHomeModel, place: Place, header: MapHeader, open: @escaping (Household) -> Void) {
         self.model = model
         self.place = place
-        self.settings = settings
+        self.header = header
         self.open = open
         _position = State(initialValue: .region(place.region))
     }
@@ -66,7 +66,7 @@ struct PlaceMap: View {
             })
         }
         .sensoryFeedback(.selection, trigger: model.selection)
-        .safeAreaInset(edge: .top) { MapHeader(name: place.name, count: model.households.count, settings: settings) }
+        .safeAreaInset(edge: .top) { header }
         .safeAreaInset(edge: .bottom) { bottom }
         .sheet(item: $adding) { spot in
             NewHouseholdView(model: NewHouseholdModel(spot: spot, mapID: place.id, api: model.api)) { household in

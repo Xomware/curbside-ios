@@ -19,9 +19,7 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 if case .home(let account) = root.route {
-                    Section("Account") {
-                        LabeledContent("Display name", value: account.displayName)
-                    }
+                    DisplayNameSection(root: root, saved: account.displayName)
                 }
                 SignInsSection(model: signIns)
                 lock

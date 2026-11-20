@@ -4,13 +4,17 @@ import Foundation
 /// this file. Screenshots and UI tests use it because nobody can sign in on a simulator. Release builds exclude this
 /// folder (`EXCLUDED_SOURCE_FILE_NAMES` in project.yml), so the call site is `#if DEBUG`.
 enum Demo {
-    /// `street` (the default) is a loaded block; `new` is an account with no place yet; `onboarding` is a sign-in with
-    /// no account.
+    /// `street` (the default) is a loaded block, plus a second street shared with the demo account; `new` is an account
+    /// with no place yet; `onboarding` is a sign-in with no account. `-invite <code>` opens an invite link on launch;
+    /// `usedInvite` is the one that's spent.
     static var scenario: String? {
         let args = ProcessInfo.processInfo.arguments
         guard let flag = args.firstIndex(of: "-demo") else { return nil }
         return args.indices.contains(flag + 1) ? args[flag + 1] : "street"
     }
+
+    static let sharedMapID = "01JDEM0MAP0000000000000002"
+    static let usedInvite = "SPENT00000"
 
     @MainActor static func rootModel() -> RootModel {
         let store = KeychainTokenStore(service: "com.Xomware.Curbside.demo")
@@ -24,20 +28,36 @@ enum Demo {
         let defaults = UserDefaults(suiteName: "com.Xomware.Curbside.demo") ?? .standard
         defaults.set(ProcessInfo.processInfo.arguments.contains("-lock"), forKey: AppLock.key)
         let lock = AppLock(defaults: defaults)
-        return RootModel(auth: auth, api: APIClient(baseURL: Config.apiBaseURL, tokens: auth, session: session), lock: lock)
+        // Every run opens on the first street, whichever one the last run switched to.
+        defaults.removeObject(forKey: MapHomeModel.openKey)
+        let root = RootModel(auth: auth, api: APIClient(baseURL: Config.apiBaseURL, tokens: auth, session: session), lock: lock, defaults: defaults)
+        let args = ProcessInfo.processInfo.arguments
+        if let flag = args.firstIndex(of: "-invite"), args.indices.contains(flag + 1) {
+            root.pendingInvite = InviteLink(code: args[flag + 1])
+        }
+        return root
     }
 
     /// Fixture file for a request, keyed by method and path with ids replaced by `{id}`.
     static func fixture(for request: URLRequest) -> String? {
         if request.url?.host() == "footprints.demo.invalid" { return "demo-footprints.geojson.gz" }
-        let path = (request.url?.path() ?? "").replacing(/\/[0-9A-HJKMNP-TV-Z]{26}/, with: "/{id}")
+        let path = (request.url?.path() ?? "")
+            .replacing(/\/[0-9A-HJKMNP-TV-Z]{26}/, with: "/{id}")
+            .replacing(/\/invites\/[0-9A-HJKMNP-TV-Z]{10}/, with: "/invites/{code}")
+        let shared = request.url?.path().contains(sharedMapID) == true
         switch (scenario, request.httpMethod ?? "GET", path) {
         case ("onboarding", "GET", "/v1/me"): return "demo-me.404.json"
         case (_, "GET", "/v1/me"): return "demo-me.json"
         case (_, "GET", "/v1/me/export"): return "demo-export.json"
         case ("new", "GET", "/v1/maps"): return "demo-maps-none.json"
         case (_, "GET", "/v1/maps"): return "demo-maps.json"
-        case (_, "GET", "/v1/maps/{id}"): return "demo-map.json"
+        case (_, "GET", "/v1/maps/{id}"): return shared ? "demo-map-shared.json" : "demo-map.json"
+        case (_, "GET", "/v1/maps/{id}/members"): return shared ? "demo-members-shared.json" : "demo-members.json"
+        case (_, "DELETE", "/v1/maps/{id}/members/{id}"): return "demo-member-removed.json"
+        case (_, "POST", "/v1/maps/{id}/invites"): return "demo-invite-created.json"
+        case (_, "GET", "/v1/invites/{code}"): return request.url?.lastPathComponent == usedInvite ? "demo-invite.404.json" : "demo-invite.json"
+        case (_, "POST", "/v1/invites/{code}/accept"): return "demo-invite-accepted.json"
+        case (_, "PATCH", "/v1/me"): return "demo-me.json"
         case (_, "GET", "/v1/maps/{id}/footprints"): return "demo-footprints-info.json"
         case (_, "POST", "/v1/maps"): return "demo-map-created.json"
         case (_, "POST", "/v1/maps/{id}/households"): return "demo-household-created.json"

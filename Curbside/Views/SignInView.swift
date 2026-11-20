@@ -10,7 +10,7 @@ struct SignInView: View {
         VStack(spacing: Spacing.md) {
             Spacer()
             StreetSign(name: "Curbside")
-            Text("Remember who lives where on your street.")
+            Text(model.pendingInvite == nil ? "Remember who lives where on your street." : "Someone shared their street with you. Sign in to see who and join.")
                 .font(CurbsideFont.body)
                 .foregroundStyle(Palette.inkSecondary)
                 .multilineTextAlignment(.center)

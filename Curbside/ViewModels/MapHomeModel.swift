@@ -2,9 +2,12 @@ import CoreLocation
 import Foundation
 import Observation
 
-/// Loads the account's place and its households. MVP has one place per account: the first map in `GET /maps`.
+/// Loads the open street and its households. An account can have several (its own and ones shared with it); the open
+/// one is remembered by id, falling back to the first in `GET /maps`.
 @MainActor @Observable
 final class MapHomeModel {
+    nonisolated static let openKey = "openMapID"
+
     enum State: Equatable {
         case loading
         case noPlace
@@ -13,6 +16,7 @@ final class MapHomeModel {
     }
 
     private(set) var state = State.loading
+    private(set) var places: [Place] = []
     private(set) var place: Place?
     private(set) var households: [Household] = []
     /// Empty until the file loads, and for good when the place has none; households then stand alone as pins.
@@ -22,11 +26,13 @@ final class MapHomeModel {
     let api: APIClient
     private let footprintLoader: FootprintLoader
     private let geo: Geo
+    private let defaults: UserDefaults
 
-    init(api: APIClient, footprintLoader: FootprintLoader? = nil, geo: Geo = .live) {
+    init(api: APIClient, footprintLoader: FootprintLoader? = nil, geo: Geo = .live, defaults: UserDefaults = .standard) {
         self.api = api
         self.footprintLoader = footprintLoader ?? FootprintLoader(api: api)
         self.geo = geo
+        self.defaults = defaults
     }
 
     /// Households in the selected building. Duplexes and apartments put several in one outline.
@@ -38,14 +44,18 @@ final class MapHomeModel {
     func load() async {
         state = .loading
         do {
-            let places: [Place] = try await api.request("/v1/maps")
-            guard let first = places.first else {
+            places = try await api.request("/v1/maps")
+            // The remembered street may be gone: left, removed by its owner, or deleted.
+            let remembered = defaults.string(forKey: Self.openKey)
+            guard let open = places.first(where: { $0.id == remembered }) ?? places.first else {
                 state = .noPlace
                 return
             }
-            let loaded: Loaded = try await api.request("/v1/maps/\(first.id)")
+            let loaded: Loaded = try await api.request("/v1/maps/\(open.id)")
             place = loaded.map
             households = loaded.households
+            footprints = []
+            selection = nil
             state = .ready
             await loadFootprints()
         } catch APIError.unauthorized {
@@ -55,8 +65,16 @@ final class MapHomeModel {
         }
     }
 
+    /// Switches streets; nil forgets the open one, so the first left in `GET /maps` opens, or place setup.
+    func open(_ id: String?) async {
+        defaults.set(id, forKey: Self.openKey)
+        await load()
+    }
+
     /// A place just created: no households yet, footprints still pending.
     func show(_ place: Place) {
+        places.append(place)
+        defaults.set(place.id, forKey: Self.openKey)
         self.place = place
         households = []
         footprints = []

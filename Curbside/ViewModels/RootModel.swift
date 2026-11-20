@@ -16,6 +16,9 @@ final class RootModel {
     let auth: AuthSession
     let api: APIClient
     let lock: AppLock
+    let defaults: UserDefaults
+    /// An opened invite link waits here through sign-in and onboarding; home shows it.
+    var pendingInvite: InviteLink?
     private var state = Route.loading
     private(set) var isBusy = false
     private(set) var errorMessage: String?
@@ -25,10 +28,11 @@ final class RootModel {
         auth.isSignedIn ? state : .signedOut
     }
 
-    init(auth: AuthSession, api: APIClient, lock: AppLock = AppLock()) {
+    init(auth: AuthSession, api: APIClient, lock: AppLock = AppLock(), defaults: UserDefaults = .standard) {
         self.auth = auth
         self.api = api
         self.lock = lock
+        self.defaults = defaults
     }
 
     static func live() -> RootModel {
@@ -79,7 +83,7 @@ final class RootModel {
         isBusy = true
         defer { isBusy = false }
         do {
-            state = .home(try await api.request("/v1/me", method: "POST", body: NewAccount(displayName: name)))
+            state = .home(try await api.request("/v1/me", method: "POST", body: DisplayName(displayName: name)))
         } catch APIError.unauthorized {
             // Signed out by APIClient; `route` follows.
         } catch {
@@ -130,6 +134,17 @@ final class RootModel {
         } catch APIError.conflict(code: "already_linked") {}
     }
 
+    /// Settings' name change. False leaves the old name.
+    func rename(to raw: String) async -> Bool {
+        guard let name = Self.validName(raw) else { return false }
+        do {
+            update(try await api.request("/v1/me", method: "PATCH", body: DisplayName(displayName: name)))
+            return true
+        } catch {
+            return false
+        }
+    }
+
     /// Settings changed the account (a sign-in added or removed).
     func update(_ account: Account) {
         if case .home = state { state = .home(account) }
@@ -141,7 +156,7 @@ final class RootModel {
     }
 }
 
-private struct NewAccount: Encodable, Sendable {
+private struct DisplayName: Encodable, Sendable {
     let displayName: String
 
     enum CodingKeys: String, CodingKey {

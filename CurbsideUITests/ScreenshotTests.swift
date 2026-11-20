@@ -92,7 +92,7 @@ final class ScreenshotTests: XCTestCase {
         XCTAssert(app.textFields["Place name"].waitForExistence(timeout: 10))
         try snap("setup-located", app)
         app.buttons["Make the map"].tap()
-        XCTAssert(app.buttons["Settings"].waitForExistence(timeout: 10))
+        XCTAssert(app.buttons["More"].waitForExistence(timeout: 10))
         try snap("setup-created", app)
     }
 
@@ -155,9 +155,11 @@ final class ScreenshotTests: XCTestCase {
 
     func testSettings() throws {
         let app = launch("street")
-        let settings = app.buttons["Settings"]
-        XCTAssert(settings.waitForExistence(timeout: 10))
-        settings.tap()
+        let more = app.buttons["More"]
+        XCTAssert(more.waitForExistence(timeout: 10))
+        more.tap()
+        try snap("more-menu", app)
+        app.buttons["Settings"].tap()
         XCTAssert(app.navigationBars["Settings"].waitForExistence(timeout: 5))
         try snap("settings", app)
         app.buttons["Remove"].tap()
@@ -178,9 +180,54 @@ final class ScreenshotTests: XCTestCase {
         try snap("settings-delete", app)
     }
 
-    func launch(_ scenario: String) -> XCUIApplication {
+    func testSharing() throws {
+        let app = launch("street")
+        let more = app.buttons["More"]
+        XCTAssert(more.waitForExistence(timeout: 10))
+        more.tap()
+        app.buttons["Sharing"].tap()
+        XCTAssert(app.staticTexts["Rosalind"].waitForExistence(timeout: 5))
+        try snap("sharing", app)
+        app.buttons["Invite someone"].tap()
+        XCTAssert(app.buttons["Share invite link"].waitForExistence(timeout: 5))
+        try snap("sharing-invite", app)
+        app.buttons["Remove Rosalind"].tap()
+        XCTAssert(app.staticTexts["Remove Rosalind?"].waitForExistence(timeout: 5))
+        try snap("sharing-remove", app)
+        app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.95)).tap()
+        app.buttons["Done"].tap()
+
+        more.tap()
+        app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Bramblewick Ct'")).firstMatch.tap()
+        XCTAssert(app.staticTexts["Bramblewick Ct"].waitForExistence(timeout: 10))
+        try snap("shared-street", app)
+        more.tap()
+        app.buttons["Sharing"].tap()
+        XCTAssert(app.staticTexts["Odette"].waitForExistence(timeout: 5))
+        try snap("sharing-member", app)
+        app.buttons["Leave this street"].tap()
+        XCTAssert(app.staticTexts["Leave Bramblewick Ct?"].waitForExistence(timeout: 5))
+        try snap("sharing-leave", app)
+    }
+
+    func testInvite() throws {
+        let app = launch("street", "-invite", "7KQ2M9XH4D")
+        let join = app.buttons["Join Bramblewick Ct"]
+        XCTAssert(join.waitForExistence(timeout: 10))
+        try snap("invite", app)
+        join.tap()
+        XCTAssert(app.staticTexts["Bramblewick Ct"].waitForExistence(timeout: 10))
+        try snap("invite-joined", app)
+
+        app.terminate()
+        let spent = launch("street", "-invite", "SPENT00000")
+        XCTAssert(spent.staticTexts["Invite used up"].waitForExistence(timeout: 10))
+        try snap("invite-used-up", spent)
+    }
+
+    func launch(_ scenario: String, _ extra: String...) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments = ["-demo", scenario]
+        app.launchArguments = ["-demo", scenario] + extra
         app.launch()
         return app
     }
