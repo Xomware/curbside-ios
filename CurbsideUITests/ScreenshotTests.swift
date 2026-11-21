@@ -84,12 +84,12 @@ final class ScreenshotTests: XCTestCase {
             .press(forDuration: 0.1, thenDragTo: map.coordinate(withNormalizedOffset: CGVector(dx: 0.45, dy: 0.5)))
         let duplex = app.buttons["10A, Hobnob household"]
         XCTAssert(duplex.waitForExistence(timeout: 10))
-        // Just left of the plaque: still the duplex outline, but not the plaque button.
-        duplex.coordinate(withNormalizedOffset: CGVector(dx: -0.4, dy: 0.3)).tap()
+        // Just below the plaque: still the duplex outline, but not the plaque button.
+        duplex.coordinate(withNormalizedOffset: CGVector(dx: 0.3, dy: 1.5)).tap()
         XCTAssert(app.buttons["Close"].waitForExistence(timeout: 5))
         try snap("building-selected", app)
         app.buttons["10B, Wigglesworth household"].firstMatch.tap()
-        XCTAssert(app.staticTexts["Delphine"].waitForExistence(timeout: 5))
+        XCTAssert(app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Delphine'")).firstMatch.waitForExistence(timeout: 5))
         app.navigationBars.buttons.firstMatch.tap()
         app.buttons["Close"].tap()
         try snap("before-tap", app)
@@ -105,6 +105,19 @@ final class ScreenshotTests: XCTestCase {
         app.buttons["Add them"].tap()
         XCTAssert(app.staticTexts["Newcombe"].waitForExistence(timeout: 5))
         try snap("added-card", app)
+    }
+
+    /// A plaque sits on top of the map, so its tap must not also reach the map's tap and drop a pin.
+    func testPlaqueTapDropsNoPin() throws {
+        let app = launch("street")
+        let plaque = app.buttons["11, Pumpernickel household"]
+        XCTAssert(plaque.waitForExistence(timeout: 10))
+        plaque.tap()
+        XCTAssert(app.staticTexts["Clementine's mom is staying through Thanksgiving."].waitForExistence(timeout: 5))
+        app.navigationBars.buttons.firstMatch.tap()
+        XCTAssert(app.buttons["Add a house"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["Close"].exists)
+        try snap("back-from-card", app)
     }
 
     func testAddAHouse() throws {
