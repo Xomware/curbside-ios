@@ -21,13 +21,14 @@ struct PlaceMap: View {
         self.place = place
         self.header = header
         self.open = open
-        _position = State(initialValue: .camera(Self.start(place)))
-        _center = State(initialValue: Self.start(place).centerCoordinate)
+        let start = Self.start(model.home?.coordinate ?? place.coordinate)
+        _position = State(initialValue: .camera(start))
+        _center = State(initialValue: start.centerCoordinate)
     }
 
     /// Close enough that a house is a thumb-sized target.
-    private static func start(_ place: Place) -> MapCamera {
-        MapCamera(centerCoordinate: place.coordinate, distance: 250)
+    private static func start(_ coordinate: CLLocationCoordinate2D) -> MapCamera {
+        MapCamera(centerCoordinate: coordinate, distance: 250)
     }
 
     private var bounds: MapCameraBounds {
@@ -119,7 +120,7 @@ struct PlaceMap: View {
                 isEmpty: model.households.isEmpty,
                 showsCredit: !model.footprints.isEmpty,
                 add: { Task { await model.tap(center) } },
-                recenter: { withAnimation { position = .camera(Self.start(place)) } },
+                recenter: { withAnimation { position = .camera(Self.start(model.home?.coordinate ?? place.coordinate)) } },
                 nearMe: { nearMe = true },
                 talk: talk
             )

@@ -5,7 +5,7 @@ import Foundation
 /// folder (`EXCLUDED_SOURCE_FILE_NAMES` in project.yml), so the call site is `#if DEBUG`.
 enum Demo {
     /// `street` (the default) is a loaded block, plus a second street shared with the demo account; `new` is an account
-    /// with no place yet; `onboarding` is a sign-in with no account. `-invite <code>` and `-friend <code>` open an
+    /// with no place yet; `onboarding` is a sign-in with no account, which then gets no place either. `-invite <code>` and `-friend <code>` open an
     /// invite or friend link on launch; `usedInvite` is the spent code for either.
     static var scenario: String? {
         let args = ProcessInfo.processInfo.arguments
@@ -28,8 +28,10 @@ enum Demo {
         let defaults = UserDefaults(suiteName: "com.Xomware.Curbside.demo") ?? .standard
         defaults.set(ProcessInfo.processInfo.arguments.contains("-lock"), forKey: AppLock.key)
         let lock = AppLock(defaults: defaults)
-        // Every run opens on the first street, whichever one the last run switched to.
+        // Every run opens on the first street, whichever one the last run switched to, and first run shows its tour.
         defaults.removeObject(forKey: MapHomeModel.openKey)
+        defaults.removeObject(forKey: MapHomeModel.homeKey)
+        defaults.removeObject(forKey: FirstRunModel.touredKey)
         let root = RootModel(auth: auth, api: APIClient(baseURL: Config.apiBaseURL, tokens: auth, session: session), lock: lock, defaults: defaults)
         let args = ProcessInfo.processInfo.arguments
         if let flag = args.firstIndex(of: "-invite"), args.indices.contains(flag + 1) {
@@ -51,9 +53,9 @@ enum Demo {
         let shared = request.url?.path().contains(sharedMapID) == true
         switch (scenario, request.httpMethod ?? "GET", path) {
         case ("onboarding", "GET", "/v1/me"): return "demo-me.404.json"
-        case (_, "GET", "/v1/me"): return "demo-me.json"
+        case (_, "GET", "/v1/me"), (_, "POST", "/v1/me"): return "demo-me.json"
         case (_, "GET", "/v1/me/export"): return "demo-export.json"
-        case ("new", "GET", "/v1/maps"): return "demo-maps-none.json"
+        case ("new", "GET", "/v1/maps"), ("onboarding", "GET", "/v1/maps"): return "demo-maps-none.json"
         case (_, "GET", "/v1/maps"): return "demo-maps.json"
         case (_, "GET", "/v1/maps/{id}"): return shared ? "demo-map-shared.json" : "demo-map.json"
         case (_, "GET", "/v1/maps/{id}/members"): return shared ? "demo-members-shared.json" : "demo-members.json"
@@ -73,6 +75,8 @@ enum Demo {
         case (_, "GET", "/v1/maps/{id}/footprints"): return "demo-footprints-info.json"
         case (_, "POST", "/v1/maps"): return "demo-map-created.json"
         case (_, "POST", "/v1/maps/{id}/households"): return "demo-household-created.json"
+        case (_, "POST", "/v1/maps/{id}/households/{id}/people"): return "demo-person-created.json"
+        case (_, "POST", "/v1/maps/{id}/households/{id}/pets"): return "demo-pet-created.json"
         case (_, "POST", "/v1/maps/{id}/capture/parse"): return "demo-capture-parse.json"
         case (_, "POST", "/v1/maps/{id}/capture/apply"): return "demo-capture-apply.json"
         case (_, "GET", "/v1/maps/{id}/households/{id}"): return "demo-household-\(request.url?.lastPathComponent ?? "").json"

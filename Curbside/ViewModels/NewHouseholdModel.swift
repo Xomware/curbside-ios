@@ -46,7 +46,7 @@ final class NewHouseholdModel {
 }
 
 /// nil fields are left out: the backend rejects unknown keys but takes absent optionals.
-private struct NewHousehold: Encodable, Sendable {
+struct NewHousehold: Encodable, Sendable {
     let label: String
     let address: String?
     let lat: Double

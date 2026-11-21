@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Signed-in home: the open street's map, or place setup when the account has none yet. Household cards push by id.
+/// Signed-in home: the open street's map, or first run when the account has none yet. Household cards push by id.
 struct HomeView: View {
     /// One slot, so an invite or friend link arriving over settings or sharing replaces it instead of being dropped.
     enum Sheet: Identifiable {
@@ -29,6 +29,7 @@ struct HomeView: View {
     @State private var activity: ActivityModel
     @State private var path: [String] = []
     @State private var sheet: Sheet?
+    @State private var firstRun: FirstRunModel?
     @Environment(\.scenePhase) private var phase
 
     init(root: RootModel) {
@@ -54,6 +55,10 @@ struct HomeView: View {
                 guard pending else { return }
                 root.pendingActivity = false
                 sheet = .activity
+            }
+            .onChange(of: model.state, initial: true) { _, state in
+                guard state == .noPlace, firstRun == nil, case .home(let account) = root.route else { return }
+                firstRun = FirstRunModel(api: root.api, displayName: account.displayName, defaults: root.defaults)
             }
             .onChange(of: model.households) { _, households in
                 guard let place = model.place else { return }
@@ -85,8 +90,13 @@ struct HomeView: View {
                 case .invite(let link):
                     InviteSheet(model: InviteModel(link: link, api: root.api)) { id in
                         self.sheet = nil
-                        open(id)
-                        Task { await root.notifications.ask() }
+                        path = []
+                        Task {
+                            await model.open(id)
+                            // Joined from the home step: the home goes on this street instead of a new one.
+                            if let place = model.place { firstRun?.join(place) }
+                            await root.notifications.ask()
+                        }
                     }
                     .presentationDetents([.medium, .large])
                 case .friends:
@@ -105,9 +115,27 @@ struct HomeView: View {
         Task { await model.open(id) }
     }
 
+    private func finishFirstRun(_ run: FirstRunModel) {
+        firstRun = nil
+        guard let place = run.place else { return }
+        if run.isJoining {
+            if let home = run.home { model.upsert(home) }
+        } else {
+            model.show(place, households: run.home.map { [$0] } ?? [])
+        }
+    }
+
     @ViewBuilder private var content: some View {
+        if let firstRun {
+            FirstRunView(model: firstRun) { finishFirstRun(firstRun) }
+        } else {
+            map
+        }
+    }
+
+    @ViewBuilder private var map: some View {
         switch model.state {
-        case .loading:
+        case .loading, .noPlace:
             ProgressView()
                 .controlSize(.large)
                 .tint(Palette.signGreen)
@@ -120,8 +148,6 @@ struct HomeView: View {
                 SignButton(title: "Try again") { Task { await model.load() } }
             }
             .padding(Spacing.md)
-        case .noPlace:
-            PlaceSetupView(api: model.api, created: model.show)
         case .ready:
             if let place = model.place {
                 NavigationStack(path: $path) {

@@ -11,8 +11,9 @@ struct OnboardingView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.md) {
+                StepLabel(number: 1)
                 StreetSign(name: "New here")
-                Text("Pick a display name. Only people on maps you share can see it.")
+                Text("What should neighbors call you? Only people on streets you share can see it.")
                     .font(CurbsideFont.body)
                     .foregroundStyle(Palette.ink)
                 TextField("Display name", text: $name)
