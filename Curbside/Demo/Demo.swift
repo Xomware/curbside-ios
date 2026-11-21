@@ -44,6 +44,7 @@ enum Demo {
         let path = (request.url?.path() ?? "")
             .replacing(/\/[0-9A-HJKMNP-TV-Z]{26}/, with: "/{id}")
             .replacing(/\/invites\/[0-9A-HJKMNP-TV-Z]{10}/, with: "/invites/{code}")
+            .replacing(/\/devices\/[0-9a-f]+/, with: "/devices/{token}")
         let shared = request.url?.path().contains(sharedMapID) == true
         switch (scenario, request.httpMethod ?? "GET", path) {
         case ("onboarding", "GET", "/v1/me"): return "demo-me.404.json"
@@ -58,6 +59,8 @@ enum Demo {
         case (_, "GET", "/v1/invites/{code}"): return request.url?.lastPathComponent == usedInvite ? "demo-invite.404.json" : "demo-invite.json"
         case (_, "POST", "/v1/invites/{code}/accept"): return "demo-invite-accepted.json"
         case (_, "PATCH", "/v1/me"): return "demo-me.json"
+        case (_, "GET", "/v1/activity"): return "demo-activity.json"
+        case (_, "POST", "/v1/activity/seen"), (_, "PUT", "/v1/devices/{token}"), (_, "DELETE", "/v1/devices/{token}"): return "demo-empty.204.json"
         case (_, "GET", "/v1/maps/{id}/footprints"): return "demo-footprints-info.json"
         case (_, "POST", "/v1/maps"): return "demo-map-created.json"
         case (_, "POST", "/v1/maps/{id}/households"): return "demo-household-created.json"
@@ -75,10 +78,12 @@ final class DemoURLProtocol: URLProtocol {
 
     override func startLoading() {
         // A missing route answers 404 so the screen under test shows its error state instead of hanging.
-        // A `*.404.json` fixture is an API error body, answered with its status.
+        // A `*.404.json` fixture is an API error body, answered with its status; a `*.204.json` is an empty answer.
         let url = Demo.fixture(for: request).flatMap { Bundle.main.url(forResource: $0, withExtension: nil) }
         let body = url.flatMap { try? Data(contentsOf: $0) } ?? Data(#"{"data": null, "error": {"code": "demo_missing", "message": "No demo fixture"}, "meta": {}}"#.utf8)
-        let status = url.map { $0.lastPathComponent.hasSuffix(".404.json") ? 404 : 200 } ?? 404
+        let status = url.map { name in
+            name.lastPathComponent.hasSuffix(".404.json") ? 404 : name.lastPathComponent.hasSuffix(".204.json") ? 204 : 200
+        } ?? 404
         let response = HTTPURLResponse(url: request.url ?? Config.apiBaseURL, statusCode: status, httpVersion: nil, headerFields: nil)
         if let response {
             client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)

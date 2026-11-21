@@ -3,14 +3,16 @@ import SwiftUI
 /// Account, sign-ins, privacy, your data and credits.
 struct SettingsView: View {
     let root: RootModel
+    let street: (name: String, due: Int)?
 
     @Environment(\.dismiss) private var dismiss
     @State private var signIns: SignInsModel
     @State private var data: AccountDataModel
     @State private var exported: ExportFile?
 
-    init(root: RootModel) {
+    init(root: RootModel, street: (name: String, due: Int)?) {
         self.root = root
+        self.street = street
         _signIns = State(initialValue: SignInsModel(api: root.api, auth: root.auth, updated: root.update))
         _data = State(initialValue: AccountDataModel(api: root.api, auth: root.auth))
     }
@@ -22,6 +24,7 @@ struct SettingsView: View {
                     DisplayNameSection(root: root, saved: account.displayName)
                 }
                 SignInsSection(model: signIns)
+                NotificationsSection(notifications: root.notifications, street: street)
                 lock
                 DataSection(model: data, identities: signIns.identities) { exported = ExportFile(url: $0) }
                 about

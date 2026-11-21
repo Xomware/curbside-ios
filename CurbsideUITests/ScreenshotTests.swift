@@ -199,6 +199,22 @@ final class ScreenshotTests: XCTestCase {
         try snap("settings-delete", app)
     }
 
+    func testActivity() throws {
+        let app = launch("street")
+        let bell = app.buttons["Activity, 2 new"]
+        XCTAssert(bell.waitForExistence(timeout: 10))
+        try snap("activity-badge", app)
+        bell.tap()
+        XCTAssert(app.staticTexts["You and Odette are friends"].waitForExistence(timeout: 5))
+        try snap("activity", app)
+        app.buttons["Done"].tap()
+        XCTAssert(app.buttons["Activity"].waitForExistence(timeout: 5))
+        app.buttons["More"].tap()
+        app.buttons["Settings"].tap()
+        XCTAssert(app.switches["Weekly hello reminder"].waitForExistence(timeout: 5))
+        try snap("settings-notifications", app)
+    }
+
     func testSharing() throws {
         let app = launch("street")
         let more = app.buttons["More"]

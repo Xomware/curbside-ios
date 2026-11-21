@@ -21,14 +21,11 @@ targets:
     sources:
       - path: Curbside
         excludes: ["**/.gitkeep"]
-    # Invite links open the app once curbside.xomware.com serves the AASA file for /invite/*.
-    entitlements:
-      path: Curbside/Resources/Curbside.entitlements
-      properties:
-        com.apple.developer.associated-domains:
-          - applinks:curbside.xomware.com
+    # Two entitlements files because aps-environment differs by config: development tokens only work on the APNs
+    # sandbox. Both carry applinks:curbside.xomware.com for invite and friend links; keep them in step.
     settings:
       base:
+        CODE_SIGN_ENTITLEMENTS: Curbside/Resources/Curbside.entitlements
         PRODUCT_BUNDLE_IDENTIFIER: com.Xomware.Curbside
         # XcodeGen defaults iOS apps to "1,2"; iPad would make App Store require every orientation.
         TARGETED_DEVICE_FAMILY: "1"
@@ -49,6 +46,8 @@ targets:
         CURBSIDE_COGNITO_DOMAIN: xomware-curbside.auth.us-east-1.amazoncognito.com
         CURBSIDE_COGNITO_CLIENT_ID: 5e36kviu5jas2sip0aj7mat0ga
       configs:
+        Debug:
+          CODE_SIGN_ENTITLEMENTS: Curbside/Resources/Curbside-Debug.entitlements
         Release:
           EXCLUDED_SOURCE_FILE_NAMES: "*/Demo/*"
 

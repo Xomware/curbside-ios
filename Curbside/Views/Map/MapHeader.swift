@@ -1,11 +1,13 @@
 import SwiftUI
 
-/// The open street's sign with a household count, and a menu to switch streets, see who's on it, and reach settings.
+/// The open street's sign with a household count, the activity bell, and a menu to switch streets, see who's on it, and reach settings.
 struct MapHeader: View {
     let place: Place
     let places: [Place]
     let count: Int
+    let unread: Int
     let open: (String) -> Void
+    let activity: () -> Void
     let sharing: () -> Void
     let settings: () -> Void
 
@@ -15,6 +17,26 @@ struct MapHeader: View {
                 // A wrapped name doubles the header's height over the map.
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
+            Button(action: activity) {
+                Image(systemName: "bell")
+                    .font(.headline)
+                    .foregroundStyle(Palette.ink)
+                    .frame(width: 48, height: 48)
+                    .background(Palette.surface, in: .rect(cornerRadius: 8))
+                    .overlay(alignment: .topTrailing) {
+                        if unread > 0 {
+                            Text(unread > 9 ? "9+" : "\(unread)")
+                                .font(CurbsideFont.label)
+                                .foregroundStyle(Palette.signWhite)
+                                .padding(.horizontal, Spacing.xs)
+                                .frame(minWidth: 20, minHeight: 20)
+                                .background(Palette.stop, in: .capsule)
+                                .offset(x: Spacing.xs, y: -Spacing.xs)
+                        }
+                    }
+            }
+            .buttonStyle(SignPressStyle())
+            .accessibilityLabel(unread > 0 ? "Activity, \(unread) new" : "Activity")
             Menu {
                 if places.count > 1 {
                     Picker("Street", selection: Binding(get: { place.id }, set: { open($0) })) {

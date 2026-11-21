@@ -5,12 +5,14 @@ struct HomeView: View {
     /// One slot, so an invite link arriving over settings or sharing replaces it instead of being dropped.
     enum Sheet: Identifiable {
         case settings
+        case activity
         case sharing(Place)
         case invite(InviteLink)
 
         var id: String {
             switch self {
             case .settings: "settings"
+            case .activity: "activity"
             case .sharing(let place): "sharing-\(place.id)"
             case .invite(let link): "invite-\(link.code)"
             }
@@ -20,17 +22,34 @@ struct HomeView: View {
     let root: RootModel
 
     @State private var model: MapHomeModel
+    @State private var activity: ActivityModel
     @State private var path: [String] = []
     @State private var sheet: Sheet?
+    @Environment(\.scenePhase) private var phase
 
     init(root: RootModel) {
         self.root = root
         _model = State(initialValue: MapHomeModel(api: root.api, defaults: root.defaults))
+        _activity = State(initialValue: ActivityModel(api: root.api))
     }
 
     var body: some View {
         content
             .task { await model.load() }
+            .task { await activity.refresh() }
+            .task { await root.notifications.refresh() }
+            .onChange(of: phase) { _, phase in
+                if phase == .active { Task { await activity.refresh() } }
+            }
+            .onChange(of: root.pendingActivity, initial: true) { _, pending in
+                guard pending else { return }
+                root.pendingActivity = false
+                sheet = .activity
+            }
+            .onChange(of: model.households) { _, households in
+                guard let place = model.place else { return }
+                Task { await root.notifications.updateReminder(due: Notifications.due(households), street: place.name) }
+            }
             .onChange(of: root.pendingInvite, initial: true) { _, link in
                 guard let link else { return }
                 root.pendingInvite = nil
@@ -39,18 +58,26 @@ struct HomeView: View {
             .sheet(item: $sheet) { sheet in
                 switch sheet {
                 case .settings:
-                    SettingsView(root: root)
+                    SettingsView(root: root, street: model.place.map { ($0.name, Notifications.due(model.households)) })
+                case .activity:
+                    ActivityView(model: activity) { id in
+                        self.sheet = nil
+                        open(id)
+                    }
                 case .sharing(let place):
                     if case .home(let account) = root.route {
                         SharingView(model: SharingModel(place: place, accountID: account.accountID, api: root.api)) {
                             self.sheet = nil
                             open(nil)
+                        } invited: {
+                            Task { await root.notifications.ask() }
                         }
                     }
                 case .invite(let link):
                     InviteSheet(model: InviteModel(link: link, api: root.api)) { id in
                         self.sheet = nil
                         open(id)
+                        Task { await root.notifications.ask() }
                     }
                     .presentationDetents([.medium, .large])
                 }
@@ -101,7 +128,9 @@ struct HomeView: View {
             place: place,
             places: model.places,
             count: model.households.count,
+            unread: activity.unread,
             open: { open($0) },
+            activity: { sheet = .activity },
             sharing: { sheet = .sharing(place) },
             settings: { sheet = .settings }
         )

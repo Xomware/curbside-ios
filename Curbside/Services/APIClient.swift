@@ -56,6 +56,7 @@ struct APIClient: Sendable {
         let status = (response as? HTTPURLResponse)?.statusCode ?? 0
         let envelope = try? JSONDecoder().decode(Envelope<T>.self, from: data)
 
+        if status == 204, let none = NoContent() as? T { return none }
         if (200..<300).contains(status) {
             guard let value = envelope?.data else { throw APIError.malformed }
             return value
@@ -68,6 +69,15 @@ struct APIClient: Sendable {
         case (_, "needs_onboarding"): throw APIError.needsOnboarding
         case (_, let code): throw APIError.server(status: status, code: code)
         }
+    }
+}
+
+/// A 204's answer: no envelope, nothing to decode.
+struct NoContent: Decodable, Sendable {}
+
+extension APIClient {
+    func send(_ path: String, method: String, body: (any Encodable & Sendable)? = nil) async throws {
+        let _: NoContent = try await request(path, method: method, body: body)
     }
 }
 
