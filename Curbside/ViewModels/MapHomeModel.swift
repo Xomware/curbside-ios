@@ -7,6 +7,8 @@ import Observation
 @MainActor @Observable
 final class MapHomeModel {
     nonisolated static let openKey = "openMapID"
+    /// The household first run put the user in. The map opens on it.
+    nonisolated static let homeKey = "homeHouseholdID"
 
     enum State: Equatable {
         case loading
@@ -49,6 +51,11 @@ final class MapHomeModel {
         return households.filter { $0.buildingID == id }
     }
 
+    var home: Household? {
+        let id = defaults.string(forKey: Self.homeKey)
+        return households.first { $0.id == id }
+    }
+
     func load() async {
         state = .loading
         do {
@@ -78,12 +85,12 @@ final class MapHomeModel {
         await load()
     }
 
-    /// A place just created: no households yet, footprints still pending.
-    func show(_ place: Place) {
+    /// A place just created, with what first run put on it. Footprints are still pending.
+    func show(_ place: Place, households: [Household] = []) {
         places.append(place)
         defaults.set(place.id, forKey: Self.openKey)
         self.place = place
-        households = []
+        self.households = households
         footprints = []
         state = .ready
     }

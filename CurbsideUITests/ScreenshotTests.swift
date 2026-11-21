@@ -134,21 +134,37 @@ final class ScreenshotTests: XCTestCase {
     }
 
     /// Needs location granted first: `xcrun simctl privacy <device> grant location com.Xomware.Curbside`.
-    func testPlaceSetup() throws {
+    func testFirstRun() throws {
         XCUIDevice.shared.location = XCUILocation(location: CLLocation(latitude: 37.4475, longitude: -122.1395))
         let app = launch("new")
-        XCTAssert(app.staticTexts["New place"].waitForExistence(timeout: 10))
-        try snap("setup", app)
+        XCTAssert(app.staticTexts["Your home"].waitForExistence(timeout: 10))
+        try snap("first-run-home", app)
         app.buttons["Use my location"].tap()
-        XCTAssert(app.textFields["Place name"].waitForExistence(timeout: 10))
-        try snap("setup-located", app)
-        app.buttons["Make the map"].tap()
+        XCTAssert(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'FOUND'")).firstMatch.waitForExistence(timeout: 10))
+        try snap("first-run-home-found", app)
+        app.buttons["Put me on the map"].tap()
+        XCTAssert(app.staticTexts["Who lives with you?"].waitForExistence(timeout: 10))
+        let name = app.textFields["Name"]
+        name.tap()
+        name.typeText("Juniper")
+        app.buttons["Kid"].tap()
+        app.buttons["Add"].tap()
+        XCTAssert(app.staticTexts["Juniper, kid"].waitForExistence(timeout: 5))
+        try snap("first-run-people", app)
+        app.buttons["Next"].tap()
+        XCTAssert(app.staticTexts["Tap a house"].waitForExistence(timeout: 5))
+        try snap("first-run-tour", app)
+        app.buttons["Next"].tap()
+        app.buttons["Next"].tap()
+        XCTAssert(app.staticTexts["Share the street"].waitForExistence(timeout: 5))
+        try snap("first-run-tour-last", app)
+        app.buttons["Open my street"].tap()
         XCTAssert(app.buttons["More"].waitForExistence(timeout: 10))
-        try snap("setup-created", app)
+        try snap("first-run-done", app)
     }
 
     /// The simulator has no on-device speech model, so this types and also shows the voice-unavailable message.
-    /// Needs location granted first, like `testPlaceSetup`.
+    /// Needs location granted first, like `testFirstRun`.
     func testCapture() throws {
         XCUIDevice.shared.location = XCUILocation(location: CLLocation(latitude: 37.4475, longitude: -122.1395))
         let app = launch("street")
@@ -202,6 +218,12 @@ final class ScreenshotTests: XCTestCase {
         let app = launch("onboarding")
         XCTAssert(app.staticTexts["New here"].waitForExistence(timeout: 10))
         try snap("onboarding", app)
+        let name = app.textFields["Display name"]
+        name.tap()
+        name.typeText("Rosalind")
+        app.buttons["Start mapping"].tap()
+        XCTAssert(app.staticTexts["Your home"].waitForExistence(timeout: 10))
+        XCTAssertEqual(app.textFields["Name on your sign"].value as? String, "Demo's")
     }
 
     func testSettings() throws {

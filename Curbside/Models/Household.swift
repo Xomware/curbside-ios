@@ -40,7 +40,10 @@ struct Household: Decodable, Equatable, Identifiable, Sendable {
 
     /// "11" from "11 Quillfeather Ln", "10A" from "10A Quillfeather Ln".
     var houseNumber: String? {
-        guard let address = mine.address, let match = address.firstMatch(of: /^\d+[A-Za-z]?\b/) else { return nil }
-        return String(match.output)
+        mine.address.flatMap(Self.houseNumber)
+    }
+
+    static func houseNumber(in address: String) -> String? {
+        address.firstMatch(of: /^\d+[A-Za-z]?\b/).map { String($0.output) }
     }
 }
