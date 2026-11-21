@@ -8,6 +8,7 @@ struct PersonEditor: View {
     @State private var draft: PersonDraft
     @State private var message: String?
     @State private var isBusy = false
+    @State private var importing = false
     @Environment(\.dismiss) private var dismiss
 
     init(model: HouseholdModel, person: Person?) {
@@ -19,6 +20,7 @@ struct PersonEditor: View {
     var body: some View {
         NavigationStack {
             Form {
+                Button("Import from Contacts", systemImage: "person.crop.circle") { importing = true }
                 LabeledContent("Name") {
                     TextField("Name", text: $draft.name)
                         .textContentType(.givenName)
@@ -35,6 +37,20 @@ struct PersonEditor: View {
                         .multilineTextAlignment(.trailing)
                 }
                 Toggle("The year is a guess", isOn: $draft.approx)
+                LabeledContent("Phone") {
+                    TextField("Phone", text: $draft.phone, prompt: Text("Optional"))
+                        .keyboardType(.phonePad)
+                        .textContentType(.telephoneNumber)
+                        .multilineTextAlignment(.trailing)
+                }
+                LabeledContent("Email") {
+                    TextField("Email", text: $draft.email, prompt: Text("Optional"))
+                        .keyboardType(.emailAddress)
+                        .textContentType(.emailAddress)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                        .multilineTextAlignment(.trailing)
+                }
                 TextField("Notes", text: $draft.notes, axis: .vertical)
                     .lineLimit(3...8)
                 if let message = message ?? draft.problem() {
@@ -42,6 +58,7 @@ struct PersonEditor: View {
                         .foregroundStyle(Palette.ink)
                 }
                 if let person {
+                    PersonContactSection(person: person)
                     Button("Remove \(person.name)", role: .destructive) { Task { await remove(person) } }
                 }
             }
@@ -60,6 +77,7 @@ struct PersonEditor: View {
                 }
             }
             .disabled(isBusy)
+            .background(ContactPicker(isPresented: $importing) { draft.fill(from: $0) })
         }
         .tint(Palette.ink)
     }
