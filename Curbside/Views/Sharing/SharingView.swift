@@ -4,15 +4,18 @@ import SwiftUI
 struct SharingView: View {
     /// Called once this account is off the street.
     let left: () -> Void
+    /// Called once an invite link exists: the moment to ask about notifications.
+    let invited: () -> Void
 
     @Environment(\.dismiss) private var dismiss
     @State private var model: SharingModel
     @State private var removing: Member?
     @State private var leaving = false
 
-    init(model: SharingModel, left: @escaping () -> Void) {
+    init(model: SharingModel, left: @escaping () -> Void, invited: @escaping () -> Void) {
         _model = State(initialValue: model)
         self.left = left
+        self.invited = invited
     }
 
     var body: some View {
@@ -46,6 +49,9 @@ struct SharingView: View {
         .tint(Palette.ink)
         .disabled(model.isBusy)
         .task { await model.load() }
+        .onChange(of: model.invite) { _, invite in
+            if invite != nil { invited() }
+        }
         .confirmationDialog("Remove \(removing?.displayName ?? "")?", isPresented: Binding(get: { removing != nil }, set: { if !$0 { removing = nil } }), titleVisibility: .visible, presenting: removing) { member in
             Button("Remove", role: .destructive) { Task { await model.remove(member) } }
         } message: { _ in

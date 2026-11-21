@@ -17,8 +17,11 @@ final class RootModel {
     let api: APIClient
     let lock: AppLock
     let defaults: UserDefaults
+    let notifications: Notifications
     /// An opened invite link waits here through sign-in and onboarding; home shows it.
     var pendingInvite: InviteLink?
+    /// A tapped push: home opens the activity feed.
+    var pendingActivity = false
     private var state = Route.loading
     private(set) var isBusy = false
     private(set) var errorMessage: String?
@@ -33,6 +36,7 @@ final class RootModel {
         self.api = api
         self.lock = lock
         self.defaults = defaults
+        notifications = Notifications(api: api, defaults: defaults)
     }
 
     static func live() -> RootModel {
@@ -152,6 +156,11 @@ final class RootModel {
 
     func signOut() {
         errorMessage = nil
+        // The device DELETE has to sign as the outgoing account, so it gets that token before sign-out clears it.
+        if let access = auth.tokens?.access {
+            let outgoing = APIClient(baseURL: api.baseURL, tokens: Bearer(access: access), session: api.session)
+            Task { await notifications.forget(using: outgoing) }
+        }
         auth.signOut()
     }
 }
