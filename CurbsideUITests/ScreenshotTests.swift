@@ -77,18 +77,24 @@ final class ScreenshotTests: XCTestCase {
 
     func testSelection() throws {
         let app = launch("street")
+        XCTAssert(app.buttons["11, Pumpernickel household"].waitForExistence(timeout: 10))
+        // The duplex opens at the screen's right edge; bring it in.
+        let map = app.maps.firstMatch
+        map.coordinate(withNormalizedOffset: CGVector(dx: 0.8, dy: 0.5))
+            .press(forDuration: 0.1, thenDragTo: map.coordinate(withNormalizedOffset: CGVector(dx: 0.45, dy: 0.5)))
         let duplex = app.buttons["10A, Hobnob household"]
         XCTAssert(duplex.waitForExistence(timeout: 10))
-        // Just left of the plaque: still the duplex outline, but not the plaque button.
-        duplex.coordinate(withNormalizedOffset: CGVector(dx: -0.4, dy: 0.3)).tap()
+        // Just below the plaque: still the duplex outline, but not the plaque button.
+        duplex.coordinate(withNormalizedOffset: CGVector(dx: 0.3, dy: 1.5)).tap()
         XCTAssert(app.buttons["Close"].waitForExistence(timeout: 5))
         try snap("building-selected", app)
         app.buttons["10B, Wigglesworth household"].firstMatch.tap()
-        XCTAssert(app.staticTexts["Delphine"].waitForExistence(timeout: 5))
+        XCTAssert(app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Delphine'")).firstMatch.waitForExistence(timeout: 5))
         app.navigationBars.buttons.firstMatch.tap()
         app.buttons["Close"].tap()
-        app.maps.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.12, dy: 0.62)).press(forDuration: 1)
-        XCTAssert(app.staticTexts["Nobody added here yet."].waitForExistence(timeout: 5))
+        try snap("before-tap", app)
+        app.maps.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.12, dy: 0.62)).tap()
+        XCTAssert(app.staticTexts["Nobody added here yet. Tap the map to move the pin."].waitForExistence(timeout: 5))
         try snap("pin-dropped", app)
         app.buttons["Add a household here"].tap()
         let name = app.textFields["Family or household name"]
@@ -99,6 +105,32 @@ final class ScreenshotTests: XCTestCase {
         app.buttons["Add them"].tap()
         XCTAssert(app.staticTexts["Newcombe"].waitForExistence(timeout: 5))
         try snap("added-card", app)
+    }
+
+    /// A plaque sits on top of the map, so its tap must not also reach the map's tap and drop a pin.
+    func testPlaqueTapDropsNoPin() throws {
+        let app = launch("street")
+        let plaque = app.buttons["11, Pumpernickel household"]
+        XCTAssert(plaque.waitForExistence(timeout: 10))
+        plaque.tap()
+        XCTAssert(app.staticTexts["Clementine's mom is staying through Thanksgiving."].waitForExistence(timeout: 5))
+        app.navigationBars.buttons.firstMatch.tap()
+        XCTAssert(app.buttons["Add a house"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["Close"].exists)
+        try snap("back-from-card", app)
+    }
+
+    func testAddAHouse() throws {
+        let app = launch("street")
+        let add = app.buttons["Add a house"]
+        XCTAssert(add.waitForExistence(timeout: 10))
+        add.tap()
+        XCTAssert(app.buttons["Add a household here"].waitForExistence(timeout: 5))
+        try snap("add-a-house", app)
+        app.buttons["Close"].tap()
+        app.maps.firstMatch.swipeLeft()
+        app.buttons["Recenter the map"].tap()
+        try snap("recentered", app)
     }
 
     /// Needs location granted first: `xcrun simctl privacy <device> grant location com.Xomware.Curbside`.

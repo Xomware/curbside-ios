@@ -70,6 +70,7 @@
 		5F493F1C8F0DEC6C21A3BA8B /* Cognito.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98000122D707CD9D63BE9CB /* Cognito.swift */; };
 		6335EB212BD3698373510079 /* Tokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736BBDA814E95E0FC989834A /* Tokens.swift */; };
 		6425F249413F0860624BDF24 /* CaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884384544DA66C3D33B65459 /* CaptureView.swift */; };
+		6571DD14EE540D0F42186EA2 /* PanelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846D5A2E20D5EE2ABFA249C7 /* PanelButton.swift */; };
 		65B2B1C69BF8037C5D31DC45 /* demo-me.404.json in Resources */ = {isa = PBXBuildFile; fileRef = 8550D5D8C3D18FB3D04C854B /* demo-me.404.json */; };
 		6726359C3B779C3497A3AA15 /* demo-household-01JDEM0HH0000000000000000P.json in Resources */ = {isa = PBXBuildFile; fileRef = D4DBDF8D769A157FAEC851EE /* demo-household-01JDEM0HH0000000000000000P.json */; };
 		68C9447D56BE243D96F1070E /* AddFriendSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524A02B059963A678DFB158 /* AddFriendSection.swift */; };
@@ -298,6 +299,7 @@
 		8004886E28224F7302883C64 /* InviteSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteSection.swift; sourceTree = "<group>"; };
 		80F89032C004405E2A4225ED /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		83A3DC5F6A9F98AB703219AB /* demo-capture-parse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-capture-parse.json"; sourceTree = "<group>"; };
+		846D5A2E20D5EE2ABFA249C7 /* PanelButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelButton.swift; sourceTree = "<group>"; };
 		84DB86968683CD6B973DA17D /* AccountDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDataModel.swift; sourceTree = "<group>"; };
 		8550D5D8C3D18FB3D04C854B /* demo-me.404.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "demo-me.404.json"; sourceTree = "<group>"; };
 		855E3B6735CE4E20AD240AC7 /* JSONTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTree.swift; sourceTree = "<group>"; };
@@ -588,6 +590,7 @@
 			isa = PBXGroup;
 			children = (
 				5C010F4BEC2C31F042244712 /* HousePlaque.swift */,
+				846D5A2E20D5EE2ABFA249C7 /* PanelButton.swift */,
 				1C6EA5A9A6C979959F5A8C02 /* SignButton.swift */,
 				59A38765A9ABDF232AC4DAFB /* StopSignButton.swift */,
 				5D410863F693D8484113C05F /* StreetSign.swift */,
@@ -988,6 +991,7 @@
 				3E987F19C9B41716A441E201 /* OpRow.swift in Sources */,
 				3944961879F687B04D29F479 /* PKCE.swift in Sources */,
 				303214A91839802365DDF580 /* Palette.swift in Sources */,
+				6571DD14EE540D0F42186EA2 /* PanelButton.swift in Sources */,
 				80F1C24369CB5774B0CB4EB8 /* Patch.swift in Sources */,
 				B68CE2502EF03EF7A9311A48 /* Pentagon.swift in Sources */,
 				95071D00471AB395232FA2CB /* Person.swift in Sources */,

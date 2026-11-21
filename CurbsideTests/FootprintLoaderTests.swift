@@ -37,7 +37,7 @@ extension StubbedNetwork {
         @Test func downloadsInflatesAndCaches() async throws {
             let loader = loader([FootprintFixtures.info("ready", version: 1, url: presigned), .init(status: 200, data: FootprintFixtures.gzipped)])
 
-            let footprints = try await loader.load(try place())
+            let footprints = try #require(try await loader.load(try place()))
 
             #expect(footprints.map(\.id) == ["osm:way/11", "osm:way/12", "osm:relation/13"])
             #expect(footprints.map(\.accessory) == [false, true, false])
@@ -54,7 +54,7 @@ extension StubbedNetwork {
             _ = try await warm.load(try place())
 
             let cold = FootprintLoader(api: stubAPI([]), cache: warm.cache)
-            #expect(try await cold.load(try place()).count == 3)
+            #expect(try await cold.load(try place())?.count == 3)
             #expect(requestLog().isEmpty)
         }
 
@@ -66,16 +66,21 @@ extension StubbedNetwork {
                 FootprintFixtures.info("ready", version: 2, url: presigned),
                 .init(status: 200, data: Data(FootprintFixtures.geojson.utf8)),
             ]), cache: warm.cache)
-            #expect(try await next.load(try place(version: 2)).count == 3)
+            #expect(try await next.load(try place(version: 2))?.count == 3)
             #expect(FileManager.default.fileExists(atPath: next.file(MapFixtures.mapID, 2).path()))
             #expect(!FileManager.default.fileExists(atPath: next.file(MapFixtures.mapID, 1).path()))
         }
 
-        @Test(arguments: ["pending", "empty", "failed"])
+        @Test(arguments: ["empty", "failed"])
         func noFileMeansNoFootprints(_ status: String) async throws {
             let loader = loader([FootprintFixtures.info(status, version: 0, url: nil)])
-            #expect(try await loader.load(try place(status, version: 0)).isEmpty)
+            #expect(try await loader.load(try place(status, version: 0))?.isEmpty == true)
             #expect(requestLog() == ["GET /v1/maps/\(MapFixtures.mapID)/footprints"])
+        }
+
+        @Test func pendingIsNotYetRatherThanNone() async throws {
+            let loader = loader([FootprintFixtures.info("pending", version: 0, url: nil)])
+            #expect(try await loader.load(try place("pending", version: 0)) == nil)
         }
 
         @Test func expiredLinkThrowsSoTheMapKeepsPins() async throws {

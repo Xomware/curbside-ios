@@ -7,12 +7,13 @@ struct FootprintLoader {
     let api: APIClient
     var cache = URL.cachesDirectory.appending(path: "footprints")
 
-    /// Building outlines, or none while the file is pending, empty or failed.
-    func load(_ place: Place) async throws -> [Footprint] {
+    /// Building outlines; nil while the file is still pending, none when it is empty or failed.
+    func load(_ place: Place) async throws -> [Footprint]? {
         if place.footprint.status == .ready, let data = try? Data(contentsOf: file(place.id, place.footprint.version)) {
             return try Footprint.decode(data)
         }
         let info: Info = try await api.request("/v1/maps/\(place.id)/footprints")
+        if info.status == .pending { return nil }
         guard info.status == .ready, let url = info.url, let version = info.version else { return [] }
         let file = file(place.id, version)
         if let data = try? Data(contentsOf: file) {

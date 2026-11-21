@@ -27,12 +27,20 @@ final class MapHomeModel {
     private let footprintLoader: FootprintLoader
     private let geo: Geo
     private let defaults: UserDefaults
+    private let pollInterval: Duration
 
-    init(api: APIClient, footprintLoader: FootprintLoader? = nil, geo: Geo = .live, defaults: UserDefaults = .standard) {
+    init(
+        api: APIClient,
+        footprintLoader: FootprintLoader? = nil,
+        geo: Geo = .live,
+        defaults: UserDefaults = .standard,
+        pollInterval: Duration = .seconds(3)
+    ) {
         self.api = api
         self.footprintLoader = footprintLoader ?? FootprintLoader(api: api)
         self.geo = geo
         self.defaults = defaults
+        self.pollInterval = pollInterval
     }
 
     /// Households in the selected building. Duplexes and apartments put several in one outline.
@@ -57,7 +65,6 @@ final class MapHomeModel {
             footprints = []
             selection = nil
             state = .ready
-            await loadFootprints()
         } catch APIError.unauthorized {
             // APIClient signed out; RootModel's route follows.
         } catch {
@@ -81,18 +88,11 @@ final class MapHomeModel {
         state = .ready
     }
 
-    /// A tap selects the building under it; accessory buildings and open ground clear the selection.
+    /// A tap selects the building under it. Anywhere else (open ground, a shed, a street with no outlines yet) it drops
+    /// a pin, so a house can always be added where the user taps.
     func tap(_ coordinate: CLLocationCoordinate2D) async {
-        guard let building = footprints.first(where: { !$0.accessory && $0.contains(coordinate) }) else {
-            selection = nil
-            return
-        }
-        await select(Spot(coordinate, buildingID: building.id))
-    }
-
-    /// A long-press drops a pin anywhere: the fallback for houses with no outline.
-    func drop(_ coordinate: CLLocationCoordinate2D) async {
-        await select(Spot(coordinate, buildingID: nil))
+        let building = footprints.first { !$0.accessory && $0.contains(coordinate) }
+        await select(Spot(coordinate, buildingID: building?.id))
     }
 
     /// The card for a household on this map, wired to keep the map's copy current.
@@ -141,10 +141,24 @@ final class MapHomeModel {
         selection?.address = address
     }
 
+    /// A new street's outlines take a few seconds to fetch, so a pending file is asked about again, for about a minute.
+    /// Runs from the map's `.task`, which cancels it when the street changes.
     func loadFootprints() async {
-        guard let place else { return }
-        // Any failure leaves pins only, which is the designed fallback; the next appear tries again.
-        footprints = (try? await footprintLoader.load(place)) ?? []
+        guard footprints.isEmpty, let place else { return }
+        for attempt in 0..<20 {
+            if attempt > 0 {
+                try? await Task.sleep(for: pollInterval)
+            }
+            guard !Task.isCancelled, self.place?.id == place.id else { return }
+            do {
+                guard let loaded = try await footprintLoader.load(place) else { continue }
+                footprints = loaded
+            } catch {
+                // Pins only, which is the designed fallback; the next appear tries again.
+                footprints = []
+            }
+            return
+        }
     }
 }
 

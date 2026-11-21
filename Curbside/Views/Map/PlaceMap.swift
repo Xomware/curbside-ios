@@ -2,7 +2,7 @@ import MapKit
 import SwiftUI
 
 /// The block: a muted map with building outlines, one house plaque per household, and the place's street sign on top.
-/// Tap a building to pick it; long-press anywhere to drop a pin where there is no outline.
+/// Tap a building to pick it, or anywhere else to drop a pin there. Flat and north-up, held to the street's area.
 struct PlaceMap: View {
     let model: MapHomeModel
     let place: Place
@@ -10,6 +10,7 @@ struct PlaceMap: View {
     let open: (Household) -> Void
 
     @State private var position: MapCameraPosition
+    @State private var center: CLLocationCoordinate2D
     @State private var showsNames = true
     @State private var adding: Spot?
     @State private var nearMe = false
@@ -20,12 +21,27 @@ struct PlaceMap: View {
         self.place = place
         self.header = header
         self.open = open
-        _position = State(initialValue: .region(place.region))
+        _position = State(initialValue: .camera(Self.start(place)))
+        _center = State(initialValue: Self.start(place).centerCoordinate)
+    }
+
+    /// Close enough that a house is a thumb-sized target.
+    private static func start(_ place: Place) -> MapCamera {
+        MapCamera(centerCoordinate: place.coordinate, distance: 250)
+    }
+
+    private var bounds: MapCameraBounds {
+        let span = CLLocationDistance(place.radiusM * 3)
+        return MapCameraBounds(
+            centerCoordinateBounds: MKCoordinateRegion(center: place.coordinate, latitudinalMeters: span, longitudinalMeters: span),
+            minimumDistance: 60,
+            maximumDistance: 2500
+        )
     }
 
     var body: some View {
         MapReader { proxy in
-            Map(position: $position) {
+            Map(position: $position, bounds: bounds, interactionModes: [.pan, .zoom]) {
                 ForEach(model.footprints) { footprint in
                     let selected = footprint.id == model.selection?.buildingID
                     ForEach(footprint.polygons, id: \.self) { polygon in
@@ -52,9 +68,12 @@ struct PlaceMap: View {
                     .annotationTitles(.hidden)
                 }
             }
-            .mapStyle(.standard(emphasis: .muted, pointsOfInterest: .excludingAll))
+            .mapStyle(.standard(elevation: .flat, emphasis: .muted, pointsOfInterest: .excludingAll))
             // Past ~400 m of altitude, houses sit closer than a name blade is wide.
-            .onMapCameraChange { showsNames = $0.camera.distance < 400 }
+            .onMapCameraChange { context in
+                showsNames = context.camera.distance < 400
+                center = context.camera.centerCoordinate
+            }
             .onTapGesture { point in
                 guard let coordinate = proxy.convert(point, from: .local) else { return }
                 Task { await model.tap(coordinate) }
@@ -62,9 +81,10 @@ struct PlaceMap: View {
             // Ends on finger lift: the only way to get a location out of a SwiftUI long-press.
             .simultaneousGesture(LongPressGesture(minimumDuration: 0.5).sequenced(before: DragGesture(minimumDistance: 0)).onEnded { value in
                 guard case .second(true, let drag?) = value, let coordinate = proxy.convert(drag.location, from: .local) else { return }
-                Task { await model.drop(coordinate) }
+                Task { await model.tap(coordinate) }
             })
         }
+        .task(id: place.id) { await model.loadFootprints() }
         .sensoryFeedback(.selection, trigger: model.selection)
         .safeAreaInset(edge: .top) { header }
         .safeAreaInset(edge: .bottom) { bottom }
@@ -95,7 +115,14 @@ struct PlaceMap: View {
         if let spot = model.selection {
             SelectionPanel(spot: spot, households: model.selectedHouseholds, open: open, add: { adding = spot }, talk: talk, close: model.clearSelection)
         } else {
-            MapDock(isEmpty: model.households.isEmpty, showsCredit: !model.footprints.isEmpty, nearMe: { nearMe = true }, talk: talk)
+            MapDock(
+                isEmpty: model.households.isEmpty,
+                showsCredit: !model.footprints.isEmpty,
+                add: { Task { await model.tap(center) } },
+                recenter: { withAnimation { position = .camera(Self.start(place)) } },
+                nearMe: { nearMe = true },
+                talk: talk
+            )
         }
     }
 }
