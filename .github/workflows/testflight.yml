@@ -1,8 +1,11 @@
 name: TestFlight
 
-# Manual until the App Store Connect app record exists; until then the upload step has nowhere to go.
-# Switch to `push: branches: [main]` once the first build has gone through.
 on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
   workflow_dispatch:
 
 concurrency:
@@ -142,6 +145,58 @@ jobs:
             -f "$(find "$RUNNER_TEMP/export" -name '*.ipa' | head -1)" \
             --apiKey "$ASC_API_KEY_ID" \
             --apiIssuer "$ASC_API_ISSUER_ID"
+
+      # An uploaded build reaches nobody until it finishes processing and sits in a group with testers.
+      - name: Hand build to TestFlight testers
+        env:
+          BUNDLE_ID: com.Xomware.Curbside
+          BUILD_NUMBER: ${{ steps.version.outputs.build }}
+        run: |
+          python3 <<'PY'
+          import os, sys, time, jwt, requests
+          key_id, issuer = os.environ["ASC_API_KEY_ID"], os.environ["ASC_API_ISSUER_ID"]
+          with open(os.path.expanduser(f"~/.appstoreconnect/private_keys/AuthKey_{key_id}.p8")) as f:
+              pk = f.read()
+          base = "https://api.appstoreconnect.apple.com/v1"
+          def get(path, **params):
+              tok = jwt.encode(
+                  {"iss": issuer, "iat": int(time.time()), "exp": int(time.time()) + 1200, "aud": "appstoreconnect-v1"},
+                  pk, algorithm="ES256", headers={"kid": key_id, "typ": "JWT"})
+              r = requests.get(f"{base}/{path}", headers={"Authorization": f"Bearer {tok}"}, params=params)
+              r.raise_for_status()
+              return r.json()["data"], tok
+          apps, _ = get("apps", **{"filter[bundleId]": os.environ["BUNDLE_ID"]})
+          if not apps:
+              sys.exit("No App Store Connect app for com.Xomware.Curbside")
+          app_id = apps[0]["id"]
+          build = None
+          for attempt in range(90):
+              builds, _ = get("builds", **{"filter[app]": app_id, "filter[version]": os.environ["BUILD_NUMBER"]})
+              state = builds[0]["attributes"]["processingState"] if builds else None
+              print(f"processingState={state}")
+              if state == "VALID":
+                  build = builds[0]
+                  break
+              if state in ("FAILED", "INVALID"):
+                  sys.exit(f"Build processing {state}; Apple emails the reason to the account holder")
+              time.sleep(20)
+          if not build:
+              sys.exit("Build never finished processing")
+          groups, _ = get("betaGroups", **{"filter[app]": app_id})
+          if not groups:
+              sys.exit("No TestFlight group for Curbside: App Store Connect > TestFlight > Internal Testing > add a group and yourself")
+          for g in groups:
+              a = g["attributes"]
+              testers, tok = get(f"betaGroups/{g['id']}/betaTesters", limit=200)
+              print(f"group {a['name']!r} internal={a.get('isInternalGroup')} testers={len(testers)}")
+              r = requests.post(
+                  f"{base}/betaGroups/{g['id']}/relationships/builds",
+                  headers={"Authorization": f"Bearer {tok}"},
+                  json={"data": [{"type": "builds", "id": build["id"]}]})
+              print(f"  assign build: {r.status_code} {r.text[:200]}")
+              if not testers:
+                  print(f"!! group {a['name']!r} has no testers; nobody sees builds through it")
+          PY
 
       - name: Remove API key
         if: always()
