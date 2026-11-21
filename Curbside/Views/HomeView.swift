@@ -2,12 +2,14 @@ import SwiftUI
 
 /// Signed-in home: the open street's map, or place setup when the account has none yet. Household cards push by id.
 struct HomeView: View {
-    /// One slot, so an invite link arriving over settings or sharing replaces it instead of being dropped.
+    /// One slot, so an invite or friend link arriving over settings or sharing replaces it instead of being dropped.
     enum Sheet: Identifiable {
         case settings
         case activity
         case sharing(Place)
         case invite(InviteLink)
+        case friends
+        case friendInvite(FriendLink)
 
         var id: String {
             switch self {
@@ -15,6 +17,8 @@ struct HomeView: View {
             case .activity: "activity"
             case .sharing(let place): "sharing-\(place.id)"
             case .invite(let link): "invite-\(link.code)"
+            case .friends: "friends"
+            case .friendInvite(let link): "friend-\(link.code)"
             }
         }
     }
@@ -40,6 +44,11 @@ struct HomeView: View {
             .task { await root.notifications.refresh() }
             .onChange(of: phase) { _, phase in
                 if phase == .active { Task { await activity.refresh() } }
+            }
+            .onChange(of: root.pendingFriend, initial: true) { _, link in
+                guard let link else { return }
+                root.pendingFriend = nil
+                sheet = .friendInvite(link)
             }
             .onChange(of: root.pendingActivity, initial: true) { _, pending in
                 guard pending else { return }
@@ -77,6 +86,13 @@ struct HomeView: View {
                     InviteSheet(model: InviteModel(link: link, api: root.api)) { id in
                         self.sheet = nil
                         open(id)
+                        Task { await root.notifications.ask() }
+                    }
+                    .presentationDetents([.medium, .large])
+                case .friends:
+                    FriendsView(model: FriendsModel(api: root.api))
+                case .friendInvite(let link):
+                    FriendInviteSheet(model: FriendInviteModel(link: link, api: root.api)) {
                         Task { await root.notifications.ask() }
                     }
                     .presentationDetents([.medium, .large])
@@ -132,6 +148,7 @@ struct HomeView: View {
             open: { open($0) },
             activity: { sheet = .activity },
             sharing: { sheet = .sharing(place) },
+            friends: { sheet = .friends },
             settings: { sheet = .settings }
         )
     }

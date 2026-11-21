@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Who's on the open street. The owner invites and removes; a member can leave.
+/// Who's on the open street. Anyone on it can add a friend; the owner invites and removes; a member can leave.
 struct SharingView: View {
     /// Called once this account is off the street.
     let left: () -> Void
@@ -29,6 +29,7 @@ struct SharingView: View {
                             .font(CurbsideFont.detail)
                             .foregroundStyle(Palette.ink)
                     }
+                    AddFriendSection(model: model)
                     if model.isOwner {
                         InviteSection(model: model)
                             .padding(.top, Spacing.sm)
@@ -49,6 +50,7 @@ struct SharingView: View {
         .tint(Palette.ink)
         .disabled(model.isBusy)
         .task { await model.load() }
+        .task { await model.loadFriends() }
         .onChange(of: model.invite) { _, invite in
             if invite != nil { invited() }
         }

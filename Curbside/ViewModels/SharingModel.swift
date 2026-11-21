@@ -7,6 +7,8 @@ final class SharingModel {
     /// Nil while loading, and after a failed load (with `message` set).
     private(set) var members: [Member]?
     private(set) var invite: Invite?
+    /// Nil until loaded; a failed load leaves "Add a friend" hidden rather than blocking the screen.
+    private(set) var friends: [Friend]?
     private(set) var isBusy = false
     private(set) var message: String?
 
@@ -22,6 +24,12 @@ final class SharingModel {
 
     var isOwner: Bool { place.role == .owner }
 
+    /// Friends who aren't on this street yet.
+    var addable: [Friend] {
+        let on = Set(members?.map(\.accountID) ?? [])
+        return (friends ?? []).filter { !on.contains($0.accountID) }
+    }
+
     /// Nobody has joined yet.
     var isAlone: Bool { members?.count == 1 }
 
@@ -33,6 +41,18 @@ final class SharingModel {
             members = try await api.request("\(path)/members")
         } catch {
             message = "Couldn't load who's on this street."
+        }
+    }
+
+    func loadFriends() async {
+        friends = try? await api.request("/v1/friends")
+    }
+
+    /// Puts a friend straight on the street, no link. Already being on it answers with the member too.
+    func add(_ friend: Friend) async {
+        await run("Couldn't add \(friend.displayName).") {
+            let member: Member = try await api.request("\(path)/members", method: "POST", body: NewMember(accountID: friend.accountID))
+            if members?.contains(where: { $0.id == member.id }) == false { members?.append(member) }
         }
     }
 
@@ -73,6 +93,14 @@ final class SharingModel {
         } catch {
             message = failure
         }
+    }
+}
+
+private struct NewMember: Encodable, Sendable {
+    let accountID: String
+
+    enum CodingKeys: String, CodingKey {
+        case accountID = "account_id"
     }
 }
 

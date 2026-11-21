@@ -13,6 +13,7 @@ struct RootView: View {
             // Universal links arrive here too. Other URLs have nothing to open.
             .onOpenURL { url in
                 if let link = InviteLink(url) { model.pendingInvite = link }
+                if let link = FriendLink(url) { model.pendingFriend = link }
             }
             .task {
                 await model.lock.unlock()

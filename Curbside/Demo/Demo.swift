@@ -5,8 +5,8 @@ import Foundation
 /// folder (`EXCLUDED_SOURCE_FILE_NAMES` in project.yml), so the call site is `#if DEBUG`.
 enum Demo {
     /// `street` (the default) is a loaded block, plus a second street shared with the demo account; `new` is an account
-    /// with no place yet; `onboarding` is a sign-in with no account. `-invite <code>` opens an invite link on launch;
-    /// `usedInvite` is the one that's spent.
+    /// with no place yet; `onboarding` is a sign-in with no account. `-invite <code>` and `-friend <code>` open an
+    /// invite or friend link on launch; `usedInvite` is the spent code for either.
     static var scenario: String? {
         let args = ProcessInfo.processInfo.arguments
         guard let flag = args.firstIndex(of: "-demo") else { return nil }
@@ -35,6 +35,9 @@ enum Demo {
         if let flag = args.firstIndex(of: "-invite"), args.indices.contains(flag + 1) {
             root.pendingInvite = InviteLink(code: args[flag + 1])
         }
+        if let flag = args.firstIndex(of: "-friend"), args.indices.contains(flag + 1) {
+            root.pendingFriend = FriendLink(code: args[flag + 1])
+        }
         return root
     }
 
@@ -60,6 +63,12 @@ enum Demo {
         case (_, "POST", "/v1/invites/{code}/accept"): return "demo-invite-accepted.json"
         case (_, "PATCH", "/v1/me"): return "demo-me.json"
         case (_, "GET", "/v1/activity"): return "demo-activity.json"
+        case (_, "GET", "/v1/friends"): return "demo-friends.json"
+        case (_, "DELETE", "/v1/friends/{id}"): return "demo-empty.204.json"
+        case (_, "POST", "/v1/friends/invites"): return "demo-friend-invite-created.json"
+        case (_, "GET", "/v1/friends/invites/{code}"): return request.url?.lastPathComponent == usedInvite ? "demo-invite.404.json" : "demo-friend-invite.json"
+        case (_, "POST", "/v1/friends/invites/{code}/accept"): return "demo-friend-accepted.json"
+        case (_, "POST", "/v1/maps/{id}/members"): return "demo-member-added.json"
         case (_, "POST", "/v1/activity/seen"), (_, "PUT", "/v1/devices/{token}"), (_, "DELETE", "/v1/devices/{token}"): return "demo-empty.204.json"
         case (_, "GET", "/v1/maps/{id}/footprints"): return "demo-footprints-info.json"
         case (_, "POST", "/v1/maps"): return "demo-map-created.json"

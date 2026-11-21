@@ -245,6 +245,45 @@ final class ScreenshotTests: XCTestCase {
         try snap("sharing-leave", app)
     }
 
+    func testFriends() throws {
+        let app = launch("street")
+        let more = app.buttons["More"]
+        XCTAssert(more.waitForExistence(timeout: 10))
+        more.tap()
+        app.buttons["Friends"].tap()
+        XCTAssert(app.staticTexts["Wendell"].waitForExistence(timeout: 5))
+        try snap("friends", app)
+        app.buttons["Make a friend link"].tap()
+        XCTAssert(app.buttons["Share friend link"].waitForExistence(timeout: 5))
+        try snap("friends-link", app)
+        app.buttons["Done"].tap()
+
+        more.tap()
+        app.buttons["Sharing"].tap()
+        let add = app.buttons["Add a friend"]
+        XCTAssert(add.waitForExistence(timeout: 5))
+        try snap("sharing-add-friend", app)
+        add.tap()
+        app.buttons["Wendell"].tap()
+        XCTAssert(app.staticTexts["Wendell"].waitForExistence(timeout: 5))
+        try snap("sharing-friend-added", app)
+    }
+
+    func testFriendLink() throws {
+        let app = launch("street", "-friend", "4FRNDQ2K7M")
+        let accept = app.buttons["Be friends"]
+        XCTAssert(accept.waitForExistence(timeout: 10))
+        try snap("friend-link", app)
+        accept.tap()
+        XCTAssert(app.staticTexts["You and Wendell are friends. Add them to a street from its sharing screen."].waitForExistence(timeout: 5))
+        try snap("friend-link-accepted", app)
+
+        app.terminate()
+        let spent = launch("street", "-friend", "SPENT00000")
+        XCTAssert(spent.staticTexts["Link used up"].waitForExistence(timeout: 10))
+        try snap("friend-link-used-up", spent)
+    }
+
     func testInvite() throws {
         let app = launch("street", "-invite", "7KQ2M9XH4D")
         let join = app.buttons["Join Bramblewick Ct"]
