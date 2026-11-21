@@ -9,6 +9,7 @@ struct MapHeader: View {
     let open: (String) -> Void
     let activity: () -> Void
     let sharing: () -> Void
+    let friends: () -> Void
     let settings: () -> Void
 
     var body: some View {
@@ -47,6 +48,7 @@ struct MapHeader: View {
                     .pickerStyle(.inline)
                 }
                 Button("Sharing", systemImage: "person.2", action: sharing)
+                Button("Friends", systemImage: "person.crop.circle.badge.checkmark", action: friends)
                 Button("Settings", systemImage: "gearshape", action: settings)
             } label: {
                 Image(systemName: "ellipsis")
@@ -56,7 +58,7 @@ struct MapHeader: View {
                     .background(Palette.surface, in: .rect(cornerRadius: 8))
             }
             .accessibilityLabel("More")
-            .accessibilityHint(places.count > 1 ? "Switch streets, sharing and settings" : "Sharing and settings")
+            .accessibilityHint(places.count > 1 ? "Switch streets, sharing, friends and settings" : "Sharing, friends and settings")
         }
         .padding(.horizontal, Spacing.md)
         .padding(.bottom, Spacing.sm)

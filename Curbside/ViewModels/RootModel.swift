@@ -20,6 +20,7 @@ final class RootModel {
     let notifications: Notifications
     /// An opened invite link waits here through sign-in and onboarding; home shows it.
     var pendingInvite: InviteLink?
+    var pendingFriend: FriendLink?
     /// A tapped push: home opens the activity feed.
     var pendingActivity = false
     private var state = Route.loading
