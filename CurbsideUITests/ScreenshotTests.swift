@@ -42,6 +42,25 @@ final class ScreenshotTests: XCTestCase {
         try snap("new-note", app)
     }
 
+    /// The picker runs out of process, so the snap is all there is to check.
+    func testContacts() throws {
+        let app = launch("street")
+        let plaque = app.buttons["11, Pumpernickel household"]
+        XCTAssert(plaque.waitForExistence(timeout: 10))
+        plaque.tap()
+        app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Clementine'")).firstMatch.tap()
+        XCTAssert(app.navigationBars["Edit Clementine"].waitForExistence(timeout: 5))
+        app.swipeUp()
+        XCTAssert(app.buttons["Share contact card"].waitForExistence(timeout: 5))
+        try snap("person-contact", app)
+        app.swipeDown()
+        app.buttons["Import from Contacts"].tap()
+        try snap("contact-picker", app)
+        app.staticTexts["Kate Bell"].tap()
+        XCTAssert(app.textFields["Name"].waitForExistence(timeout: 5))
+        try snap("contact-imported", app)
+    }
+
     /// Walk a route first for LEFT/RIGHT (the simulator has no compass, so course stands in):
     /// `xcrun simctl location <device> start --speed=1.4 37.4470,-122.1393 37.4482,-122.1393`
     func testNearMe() throws {
