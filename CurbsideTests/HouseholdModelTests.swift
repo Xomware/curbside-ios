@@ -95,7 +95,7 @@ extension StubbedNetwork {
         }
 
         @Test func mapOpensCardsAndTakesTheirUpdates() async {
-            let map = MapHomeModel(api: stubAPI([MapFixtures.list, MapFixtures.loaded, MapFixtures.footprintsPending, HouseholdFixtures.got]))
+            let map = MapHomeModel(api: stubAPI([MapFixtures.list, MapFixtures.loaded, HouseholdFixtures.got]))
             await map.load()
             let card = map.card(for: HouseholdFixtures.id)
             #expect(card != nil)

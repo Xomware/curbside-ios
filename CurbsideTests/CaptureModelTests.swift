@@ -194,7 +194,7 @@ extension StubbedNetwork {
         }
 
         @Test func refreshAfterApplyPicksUpTheNewHouses() async {
-            let model = MapHomeModel(api: stubAPI([MapFixtures.list, MapFixtures.loaded, MapFixtures.footprintsPending, MapFixtures.loaded]))
+            let model = MapHomeModel(api: stubAPI([MapFixtures.list, MapFixtures.loaded, MapFixtures.loaded]))
             await model.load()
             await model.refresh()
             #expect(requestLog().last == "GET /v1/maps/\(MapFixtures.mapID)")

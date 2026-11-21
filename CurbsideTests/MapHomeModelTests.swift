@@ -40,11 +40,11 @@ func requestLog() -> [String] {
 extension StubbedNetwork {
     @MainActor @Suite struct MapHomeModelTests {
         @Test func loadsTheFirstPlaceAndItsHouseholds() async throws {
-            let model = MapHomeModel(api: stubAPI([MapFixtures.list, MapFixtures.loaded, MapFixtures.footprintsPending]))
+            let model = MapHomeModel(api: stubAPI([MapFixtures.list, MapFixtures.loaded]))
             await model.load()
 
             #expect(model.state == .ready)
-            #expect(requestLog() == ["GET /v1/maps", "GET /v1/maps/\(MapFixtures.mapID)", "GET /v1/maps/\(MapFixtures.mapID)/footprints"])
+            #expect(requestLog() == ["GET /v1/maps", "GET /v1/maps/\(MapFixtures.mapID)"])
             #expect(model.footprints.isEmpty)
             let place = try #require(model.place)
             #expect(place.radiusM == 300)
@@ -66,6 +66,7 @@ extension StubbedNetwork {
         @Test func footprintFailureStillShowsTheHouseholds() async {
             let model = MapHomeModel(api: stubAPI([MapFixtures.list, MapFixtures.loaded, .init(status: 500, body: "{}")]))
             await model.load()
+            await model.loadFootprints()
             #expect(model.state == .ready)
             #expect(model.households.count == 1)
             #expect(model.footprints.isEmpty)
@@ -74,7 +75,7 @@ extension StubbedNetwork {
         @Test func opensTheRememberedStreet() async throws {
             let defaults = freshDefaults()
             defaults.set(MapFixtures.sharedID, forKey: MapHomeModel.openKey)
-            let model = MapHomeModel(api: stubAPI([MapFixtures.both, MapFixtures.loadedShared, MapFixtures.footprintsPending]), defaults: defaults)
+            let model = MapHomeModel(api: stubAPI([MapFixtures.both, MapFixtures.loadedShared]), defaults: defaults)
             await model.load()
             #expect(requestLog().prefix(2) == ["GET /v1/maps", "GET /v1/maps/\(MapFixtures.sharedID)"])
             #expect(model.places.count == 2)
@@ -84,7 +85,7 @@ extension StubbedNetwork {
         @Test func aStreetThatsGoneFallsBackToTheFirst() async {
             let defaults = freshDefaults()
             defaults.set("01M7MYZ2HFPVH17HK973WZBB9Z", forKey: MapHomeModel.openKey)
-            let model = MapHomeModel(api: stubAPI([MapFixtures.both, MapFixtures.loaded, MapFixtures.footprintsPending]), defaults: defaults)
+            let model = MapHomeModel(api: stubAPI([MapFixtures.both, MapFixtures.loaded]), defaults: defaults)
             await model.load()
             #expect(model.place?.id == MapFixtures.mapID)
         }
@@ -92,8 +93,8 @@ extension StubbedNetwork {
         @Test func switchingRemembersTheStreetAndClearsTheOldOne() async throws {
             let defaults = freshDefaults()
             let model = MapHomeModel(api: stubAPI([
-                MapFixtures.both, MapFixtures.loaded, MapFixtures.footprintsPending,
-                MapFixtures.both, MapFixtures.loadedShared, MapFixtures.footprintsPending,
+                MapFixtures.both, MapFixtures.loaded,
+                MapFixtures.both, MapFixtures.loadedShared,
             ]), defaults: defaults)
             await model.load()
             #expect(model.households.count == 1)
@@ -121,6 +122,44 @@ extension StubbedNetwork {
             #expect(defaults.string(forKey: MapHomeModel.openKey) == MapFixtures.mapID)
             #expect(model.places.map(\.id) == [MapFixtures.mapID])
             #expect(model.state == .ready)
+        }
+
+        @Test func pendingOutlinesArePolledUntilReady() async throws {
+            let api = stubAPI([
+                MapFixtures.list, MapFixtures.loaded,
+                MapFixtures.footprintsPending, MapFixtures.footprintsPending,
+                FootprintFixtures.info("ready", version: 1, url: "https://bucket.example.test/v1.geojson.gz"),
+                .init(status: 200, data: FootprintFixtures.gzipped),
+            ])
+            let loader = FootprintLoader(api: api, cache: URL.temporaryDirectory.appending(path: "footprints-\(UUID())"))
+            let model = MapHomeModel(api: api, footprintLoader: loader, defaults: freshDefaults(), pollInterval: .zero)
+            await model.load()
+            await model.loadFootprints()
+
+            #expect(model.footprints.count == 3)
+            let footprints = "GET /v1/maps/\(MapFixtures.mapID)/footprints"
+            #expect(requestLog().filter { $0 == footprints }.count == 3)
+            #expect(requestLog().last == "GET /v1.geojson.gz")
+        }
+
+        @Test func pollingGivesUpAfterAMinute() async {
+            let model = MapHomeModel(
+                api: stubAPI([MapFixtures.list, MapFixtures.loaded] + Array(repeating: MapFixtures.footprintsPending, count: 25)),
+                defaults: freshDefaults(),
+                pollInterval: .zero
+            )
+            await model.load()
+            await model.loadFootprints()
+
+            #expect(model.footprints.isEmpty)
+            #expect(requestLog().count == 2 + 20)
+        }
+
+        @Test func aNewStreetPollsForItsOutlines() async throws {
+            let model = MapHomeModel(api: stubAPI([MapFixtures.footprintsPending, FootprintFixtures.info("empty", version: 1, url: nil)]), defaults: freshDefaults(), pollInterval: .zero)
+            model.show(try JSONDecoder().decode(Place.self, from: Data(MapFixtures.place.utf8)))
+            await model.loadFootprints()
+            #expect(requestLog() == Array(repeating: "GET /v1/maps/\(MapFixtures.mapID)/footprints", count: 2))
         }
 
         @Test func serverErrorOffersRetry() async {

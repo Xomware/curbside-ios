@@ -34,11 +34,15 @@ struct Place: Decodable, Equatable, Identifiable, Sendable {
         case radiusM = "radius_m"
     }
 
+    var coordinate: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: center.lat, longitude: center.lng)
+    }
+
     /// Opens on the middle of the place, not all of it: at the full radius every plaque is a dot.
     var region: MKCoordinateRegion {
         let span = CLLocationDistance(radiusM)
         return MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: center.lat, longitude: center.lng),
+            center: coordinate,
             latitudinalMeters: span,
             longitudinalMeters: span
         )

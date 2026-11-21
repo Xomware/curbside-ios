@@ -49,6 +49,7 @@ private func loadedModel(address: @escaping @Sendable (CLLocationCoordinate2D) a
     let loader = FootprintLoader(api: api, cache: URL.temporaryDirectory.appending(path: "footprints-\(UUID())"))
     let model = MapHomeModel(api: api, footprintLoader: loader, geo: geo)
     await model.load()
+    await model.loadFootprints()
     return model
 }
 
@@ -70,16 +71,18 @@ extension StubbedNetwork {
         }
 
         @Test(arguments: [shed, courtyard, street])
-        func accessoryHoleOrOpenGroundClearsTheSelection(_ point: CLLocationCoordinate2D) async {
+        func accessoryHoleOrOpenGroundDropsAPin(_ point: CLLocationCoordinate2D) async {
             let model = await loadedModel()
             await model.tap(house)
             await model.tap(point)
-            #expect(model.selection == nil)
+            #expect(model.selection?.buildingID == nil)
+            #expect(model.selection?.coordinate.latitude == point.latitude)
+            #expect(model.selectedHouseholds.isEmpty)
         }
 
-        @Test func longPressDropsAPinWithItsAddress() async {
+        @Test func tapOnOpenGroundDropsAPinWithItsAddress() async {
             let model = await loadedModel(address: { _ in "40 Bramblewick Ct" })
-            await model.drop(street)
+            await model.tap(street)
             #expect(model.selection?.buildingID == nil)
             #expect(model.selection?.coordinate.latitude == street.latitude)
             #expect(model.selection?.address == "40 Bramblewick Ct")
@@ -87,7 +90,7 @@ extension StubbedNetwork {
 
         @Test func noAddressStillDropsThePin() async {
             let model = await loadedModel(address: { _ in nil })
-            await model.drop(street)
+            await model.tap(street)
             #expect(model.selection != nil)
             #expect(model.selection?.address == nil)
         }

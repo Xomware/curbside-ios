@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// The picked building or dropped pin: its address and who lives there.
+/// The picked building or dropped pin: its address, who lives there, and adding someone.
 struct SelectionPanel: View {
     let spot: Spot
     let households: [Household]
@@ -26,7 +26,7 @@ struct SelectionPanel: View {
                 .accessibilityLabel("Close")
             }
             if households.isEmpty {
-                Text("Nobody added here yet.")
+                Text(spot.buildingID == nil ? "Nobody added here yet. Tap the map to move the pin." : "Nobody added here yet.")
                     .font(CurbsideFont.body)
                     .foregroundStyle(Palette.ink)
             }
@@ -37,21 +37,16 @@ struct SelectionPanel: View {
                 }
                 .buttonStyle(SignPressStyle())
             }
-            HStack {
+            HStack(spacing: Spacing.md) {
                 // Always offered: a building with one household can still be a duplex.
-                Button(action: add) {
-                    HousePlaque(number: nil, name: nil)
-                        .frame(minHeight: 44)
-                }
-                .buttonStyle(SignPressStyle())
-                .accessibilityLabel("Add a household here")
-                Spacer()
+                PanelButton(title: households.isEmpty ? "Add who lives here" : "Add another", systemImage: "plus", action: add)
+                    .accessibilityLabel("Add a household here")
                 Button(action: talk) {
                     Text("TALK")
                         .font(CurbsideFont.button)
                         .foregroundStyle(Palette.signWhite)
                         .padding(.horizontal, Spacing.md)
-                        .frame(minHeight: 44)
+                        .frame(minHeight: 48)
                         .background(Palette.stop, in: Octagon())
                 }
                 .buttonStyle(SignPressStyle())

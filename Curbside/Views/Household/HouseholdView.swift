@@ -16,6 +16,23 @@ struct HouseholdView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 HouseholdHero(household: model.household) { Task { await talkedToday() } }
+                HStack(spacing: Spacing.sm) {
+                    PanelButton(title: "Person", systemImage: "plus") { editingPerson = EditTarget(item: nil) }
+                        .accessibilityLabel("Add a person")
+                    PanelButton(title: "Pet", systemImage: "plus") { editingPet = EditTarget(item: nil) }
+                        .accessibilityLabel("Add a pet")
+                    PanelButton(title: "Note", systemImage: "plus") { writingNote = true }
+                        .accessibilityLabel("Add a note")
+                }
+                .padding([.horizontal, .bottom], Spacing.md)
+                if model.household.mine.people?.isEmpty != false, model.household.mine.pets?.isEmpty != false {
+                    Text("Nobody listed yet. Add the people and pets who live here, and note what you talk about.")
+                        .font(CurbsideFont.body)
+                        .foregroundStyle(Palette.inkSecondary)
+                        .padding(.horizontal, Spacing.md)
+                        .padding(.bottom, Spacing.sm)
+                }
+                Divider().overlay(Palette.inkSecondary.opacity(0.3))
                 ForEach(Array(model.sections.enumerated()), id: \.offset) { _, section in
                     HouseholdSection(section: section) { editingPerson = EditTarget(item: $0) } editPet: {
                         editingPet = EditTarget(item: $0)
@@ -37,14 +54,6 @@ struct HouseholdView: View {
                         .foregroundStyle(Palette.ink)
                         .padding(.horizontal, Spacing.md)
                 }
-                VStack(spacing: Spacing.sm) {
-                    SignButton(title: "Add a note") { writingNote = true }
-                    HStack(spacing: Spacing.sm) {
-                        SignButton(title: "Add a person") { editingPerson = EditTarget(item: nil) }
-                        SignButton(title: "Add a pet") { editingPet = EditTarget(item: nil) }
-                    }
-                }
-                .padding(Spacing.md)
                 if model.failed {
                     VStack(alignment: .leading, spacing: Spacing.sm) {
                         Text("Couldn't load their notes.")
